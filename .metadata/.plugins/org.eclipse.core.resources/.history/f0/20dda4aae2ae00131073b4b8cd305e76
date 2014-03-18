@@ -1,0 +1,65 @@
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+
+
+public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager 
+{
+
+	private HashMap<Integer, Quiz> quizMap = new HashMap<Integer, Quiz>(); 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected ServerManagerImpl() throws RemoteException 
+	{
+		super();		
+	}
+
+	@Override
+	public int addNewQuiz(String name, int questionNum) throws RemoteException 
+	{
+		QuizImpl quizTemp = new QuizImpl(name, questionNum);
+		int id = createQuizId(quizTemp);
+		return id;
+	}
+	
+		
+
+	@Override
+	public int createQuizId(Quiz quizTemp) 
+	{
+		
+		return 0;
+	}
+
+	
+	@Override
+	public Quiz getQuizFromID(int Id) throws RemoteException 
+	{	
+		Quiz quizFound = null;
+		if (quizMap.containsKey(Id))
+		{	
+			quizFound = quizMap.get(Id);		
+			System.out.println("****DEBUG**** Quiz: " + quizFound.getQuizName() + " found");
+		}	
+		else
+		{	
+				throw new IllegalArgumentException ("Quiz " + Id + " Does not exist");
+		}			
+		return quizFound;
+	}
+	
+	
+	
+	@Override
+	public void addQuestionToQuiz(Question q) 
+	{
+			
+		
+	}
+
+
+}

@@ -1,0 +1,19 @@
+
+public class ServerManagerImpl implements ServerManager 
+{
+
+	@Override
+	public int addNewQuiz(String name, int questionNum) 
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int createQuizId() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+}

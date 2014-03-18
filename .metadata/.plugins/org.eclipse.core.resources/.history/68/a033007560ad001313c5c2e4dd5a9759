@@ -1,0 +1,13 @@
+
+public interface Quiz 
+{
+	/**
+	 * Create a new empty Quiz with name and number of questions
+	 * returns the ID number to recall test
+	 * @param name
+	 * @param questionNum
+	 */
+	int addNewQuiz(String name, int questionNum);	
+	
+	void addQuestionToQuiz(Question quest);
+}

@@ -1,0 +1,19 @@
+
+public class ServerManagerImpl implements ServerManager 
+{
+
+	@Override
+	public int addNewQuiz(String name, int questionNum) 
+	{
+		
+		int id = createQuizId();
+		return id;
+	}
+
+	@Override
+	public int createQuizId() 
+	{
+		return 0;
+	}
+
+}

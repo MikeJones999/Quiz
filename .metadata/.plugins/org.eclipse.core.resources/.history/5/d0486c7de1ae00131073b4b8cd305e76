@@ -1,0 +1,12 @@
+import java.util.List;
+
+
+public interface Quiz 
+{	
+	
+	void addQuestionToQuiz(Question quest);
+	
+	String getQuizName();
+	
+	List<Question> getQuestions();
+}

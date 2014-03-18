@@ -1,0 +1,37 @@
+import java.util.List;
+
+
+public class QuizImpl implements Quiz
+{
+
+	private String quizName;
+	private int questionTotal;
+	private List<Question> quizQuestions; 
+	
+	
+	public QuizImpl(String quizName, int questionTotal)
+	{
+		this.quizName = quizName;
+		this.questionTotal = questionTotal;
+		
+	}
+
+
+	@Override
+	public void addQuestionToQuiz(Question quest)
+	{
+		quizQuestions.add(quest);
+		
+	}
+
+
+	@Override
+	public Question getQuestions() {
+		// TODO Auto-generated method stub
+		return quizQuestions;
+	}
+
+	
+	
+	
+}

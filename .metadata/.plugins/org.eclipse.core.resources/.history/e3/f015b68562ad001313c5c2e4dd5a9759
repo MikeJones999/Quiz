@@ -1,0 +1,8 @@
+
+public interface Quiz 
+{	
+	void addQuestionToQuiz(Question quest);
+	
+	
+	Question getQuestions();
+}

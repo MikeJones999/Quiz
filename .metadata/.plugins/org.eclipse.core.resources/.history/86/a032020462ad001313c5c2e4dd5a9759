@@ -1,0 +1,22 @@
+
+public class QuizImpl implements Quiz
+{
+
+	public QuizImpl(String quizName, int questionNum )
+	{
+		
+		
+	}
+
+
+	@Override
+	public void addQuestionToQuiz(Question quest)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+	
+}
