@@ -1,5 +1,6 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 /**
  * Interface to setup the Server Manager - that is the main port of contact
  * @author mikieJ
@@ -51,5 +52,24 @@ public interface ServerManager extends Remote
 	 */
 	void addQuestionToQuiz(int Id, Question q)  throws RemoteException;
 	
+	/**
+	 * Return HashMap of all quizzes on server
+	 * @return
+	 * @throws RemoteException 
+	 */
+	HashMap<Integer, Quiz> returnAllQuizzes() throws RemoteException;
+	
+		
+	
+	int addNewPlayer(String name) throws RemoteException;
+	
+	/**
+	 * 
+	 * @param name
+	 * @param Id
+	 */
+	void returningPlayer(String name, int Id) throws RemoteException;
+	
+	public Player getPlayerFromId(int Id) throws RemoteException;
 	
 }

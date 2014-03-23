@@ -1,5 +1,6 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -39,4 +40,9 @@ public interface Quiz extends Remote
 	 * @throws RemoteException
 	 */
 	void createQuizId(int id) throws RemoteException;
+	
+	
+	void addToPlayerScore(int Id, int score) throws RemoteException;
+	
+	public  HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException;
 }

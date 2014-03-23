@@ -44,8 +44,8 @@ public class EchoServer extends UnicastRemoteObject implements TestService
 	public void createNewPlayer(String name)
 	{
 		System.out.println(name + " has been Added to the Server");	
-		Player newP = new Player(3, name, 0.0);
-		pLayerList.add(newP);
+		//Player newP = new Player(3, name, 0.0);
+		//pLayerList.add(newP);
 	}
 	
 }

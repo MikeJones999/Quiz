@@ -71,7 +71,7 @@ public class ServerLauncher
 		System.out.println("Main thread ended");
 	}
 
-	
+	//java -Djava.security.policy=server.policy ServerLauncher
 	
 
 }

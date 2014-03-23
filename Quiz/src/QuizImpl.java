@@ -1,6 +1,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -15,6 +16,9 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	private int questionTotal;
 	private int quizId;
 	private List<Question> quizQuestions; 
+	
+	//adds players ID and Score to this Quiz
+	private HashMap<Integer, Integer> playerScore = new HashMap<Integer, Integer>();
 	
 	
 	public QuizImpl(String quizName, int questionTotal) throws RemoteException 
@@ -61,7 +65,19 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 		
 	}
 
+
 	
-	
+	public  HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException
+	{		
+		return playerScore;
+	}
+
+
+	@Override
+	public void addToPlayerScore(int Id, int score) throws RemoteException
+	{		
+		//need to have an overwrting element
+		playerScore.put(Id, score);
+	}
 	
 }

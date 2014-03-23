@@ -1,3 +1,4 @@
+
 /**
  * Since this class is to be used in
  * the return value for the interface method, it must be declared to implement the
@@ -15,14 +16,13 @@ public class Player implements java.io.Serializable
 	//Instance variables…
 	private int id;
 	private String name;
-	private double score;
 	
 	//Constructor…
-	public Player(int id, String name, double score)
+	public Player(int id, String name)
 	{
 		this.id = id;
 		this.name = name;
-		this.score = score;
+
 	}
 	
 	
@@ -36,10 +36,6 @@ public class Player implements java.io.Serializable
 	{
 		return name;
 	}
-	
-	public double getScore()
-	{
-		return score;
-	}
+
 	
 }

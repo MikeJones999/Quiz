@@ -1,6 +1,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager 
@@ -8,6 +9,11 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	private static int count = 0; 
 	
 	private HashMap<Integer, Quiz> quizMap = new HashMap<Integer, Quiz>(); 
+	private HashMap<Integer, Player> players = new HashMap<Integer, Player>(); 
+	
+	private static int playerId = 0;
+	private static int quizId = 0;		
+	
 	
 	/**
 	 * 
@@ -71,6 +77,60 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		temp.addQuestionToQuiz(q);
 		
 	}
+
+	@Override
+	public HashMap<Integer, Quiz> returnAllQuizzes() throws RemoteException 
+	{		
+		return quizMap;
+	}
+
+	@Override
+	public int addNewPlayer(String name) throws RemoteException 
+	{
+		//create ID - may need to synchronise this
+		int Id = quizId;
+		Player newPlayer = new Player(Id, name);
+		quizId = quizId + 1;
+		players.put(Id, newPlayer);
+		return Id;
+	}
+
+	@Override
+	public void returningPlayer(String name, int Id) throws RemoteException 
+	{
+		// TODO Auto-generated method stub
+		
+		//players.put(Id, newPlayer);
+	}
+	
+	
+	//loadPlayerFromFile
+	
+
+	@Override
+	public Player getPlayerFromId(int Id) throws RemoteException 
+	{
+		Player tempPlayer = null;
+		for(Map.Entry<Integer, Player> entry: players.entrySet())
+		{
+			if (entry.getKey() == Id)
+			{
+				tempPlayer = entry.getValue();
+				System.out.println("***DEBUG*** Player ID: " + entry.getKey() + ". " + "Player Name: " + entry.getValue().getName());
+			}
+		}
+		return tempPlayer;
+	
+	}
+	
+	
+	public int createPlayerID() throws RemoteException 
+	{
+		return 0;	
+		
+	}
+	
+	
 
 
 }
