@@ -45,4 +45,6 @@ public interface Quiz extends Remote
 	void addToPlayerScore(int Id, int score) throws RemoteException;
 	
 	public  HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException;
+	
+	public int getPlayersScore(int Id) throws RemoteException;
 }

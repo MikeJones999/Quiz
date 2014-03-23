@@ -3,6 +3,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serializable
@@ -78,6 +79,15 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	{		
 		//need to have an overwrting element
 		playerScore.put(Id, score);
+	}
+	
+	
+	@Override
+	public int getPlayersScore(int Id) throws RemoteException
+	{				
+			int pScore = playerScore.get(Id);
+			return pScore;
+		
 	}
 	
 }

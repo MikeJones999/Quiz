@@ -77,10 +77,13 @@ private int playerScore;
 	}
 	
 	
-	
+	/**
+	 * Setup or retrieve player on connecting
+	 * @throws IOException
+	 */
 	public void playerSetup() throws IOException
 	{
-		String opt = readLineViaBuffer("Welcome, are you a returning player with an ID? y/n: ");
+		String opt = readLineViaBuffer("\nWelcome, are you a returning player with an ID? y/n: ");
 		if (opt.toLowerCase().equals("y"))
 		{
 			String name = readLineViaBuffer("Please enter your name.");
@@ -109,7 +112,7 @@ private int playerScore;
 	{
 		System.out.println("\nAll Scores for the Available Quizzes");
 	
-		
+		//iterates through two hashmaps to find the score for the Id provided or each quiz
 		 HashMap<Integer, Quiz> tempQHashMap = getAllQuizzes();
 		 int playerId = player.getId();
 			for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
@@ -124,10 +127,8 @@ private int playerScore;
 					else
 					{
 						System.out.println("Quiz ID: " + entry.getValue().getQuizId() + ", Name: " + entry.getValue().getQuizName() + "Not attempted");
-					}
-					
-				}
-				
+					}					
+				}				
 			}	
 		System.out.println();
 	}
@@ -144,19 +145,18 @@ private int playerScore;
 		System.out.println();
 		String opt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
 		//must deal with non int returned here
-		int option = Integer.parseInt(opt);	
-		
+		int option = Integer.parseInt(opt);			
 		
 		Quiz temp = serverConnect.getQuizFromID(option);
-		
+		//confirms the quiz chosen
 		System.out.println("Welcome to " + temp.getQuizName());
 		List <Question> quests = temp.getQuestions();
 		int questSize = quests.size();
-		
+		//create n amount of questions as indicated
 		for (int i = 0; i < questSize; i++)
 		{
 			Question tempQuest = quests.get(i);
-			System.out.println("Question: " + i);
+			System.out.println("Question: " + (i +1));
 			System.out.println(tempQuest.getQuestion());
 			String[] tempQuestArray = tempQuest.getAnswers();
 			System.out.println((0 + 1) + ":"  + tempQuestArray[0]);
@@ -168,20 +168,22 @@ private int playerScore;
 			int answer = Integer.parseInt(ans);	
 			
 			if (answer == correctAnswer)
-			{
-				System.out.println("That answer is Correct");
+			{				
+				System.out.println("\nThat answer is Correct");
+				System.out.println();
 				playerScore = playerScore + 1;
 			}
 			else
 			{
-				System.out.println("That answer is wrong");
+				System.out.println("\nThat answer is wrong");
+				System.out.println();
 			}
 			
 		}
 		
 		//HashMap<Integer, Integer> tempScoreHashMap = temp.getAllPlayerScores();
 		temp.addToPlayerScore(player.getId(), playerScore);
-		System.out.println("End of Quiz. Your Score was " + playerScore);
+		System.out.println("End of Quiz. Your Score was " + temp.getPlayersScore(player.getId()));
 		//reset score for next go or set of questions.
 		playerScore = 0;
 	}

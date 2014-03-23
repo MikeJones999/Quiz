@@ -60,16 +60,33 @@ public interface ServerManager extends Remote
 	HashMap<Integer, Quiz> returnAllQuizzes() throws RemoteException;
 	
 		
-	
+	/**
+	 * Adds new player to the Hashmap
+	 * @param name
+	 * @return
+	 * @throws RemoteException
+	 */
 	int addNewPlayer(String name) throws RemoteException;
 	
 	/**
-	 * 
+	 * TO DO
 	 * @param name
 	 * @param Id
 	 */
 	void returningPlayer(String name, int Id) throws RemoteException;
 	
+	/**
+	 * return a player from specific ID
+	 * @param Id
+	 * @return
+	 * @throws RemoteException
+	 */
 	public Player getPlayerFromId(int Id) throws RemoteException;
+	
+	
+	/**
+	 * Saves all data to Disk
+	 */
+	public void flush()  throws RemoteException;
 	
 }

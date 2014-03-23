@@ -30,7 +30,8 @@ public class SetUPMenu implements java.io.Serializable
 		boolean complete = false;
 		while(!complete)
 		{
-			System.out.println("************* Welcome to Mike's Quiz Setup *************");
+			
+			System.out.println("\n************* Welcome to Mike's Quiz Setup *************");
 			System.out.println();
 			System.out.println("What would you like to do? ");
 			System.out.println("1: Make a new Quiz?");
@@ -55,6 +56,11 @@ public class SetUPMenu implements java.io.Serializable
 				case 2: System.out.println("*** DEBUG **** Get All Available Quizzes");
 						getAllQuizzes();
 						break;
+						
+				//Not yet implemented	
+				//case 3: System.out.println("*** DEBUG **** Edit a quiz");
+						//break;
+						
 						
 				default: System.out.println("*** DEBUG **** Not an Option, try again");
 						break;

@@ -41,6 +41,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	@Override
 	public int createQuizId(Quiz quizTemp) throws RemoteException 
 	{
+		//updates quiz with ID
 		quizTemp.createQuizId(count);		
 		return count;
 	}
@@ -88,9 +89,9 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	public int addNewPlayer(String name) throws RemoteException 
 	{
 		//create ID - may need to synchronise this
-		int Id = quizId;
+		int Id = playerId;
 		Player newPlayer = new Player(Id, name);
-		quizId = quizId + 1;
+		playerId = playerId + 1;
 		players.put(Id, newPlayer);
 		return Id;
 	}
@@ -129,7 +130,16 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		return 0;	
 		
 	}
+
+	@Override
+	public void flush()  throws RemoteException 
+	{
+		
+		
+	}
 	
+	
+
 	
 
 

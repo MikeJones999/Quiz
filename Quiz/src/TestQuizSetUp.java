@@ -1,10 +1,15 @@
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +23,13 @@ public class TestQuizSetUp
 	@Before
 	public void startUp() throws RemoteException
 	{
-		newManager = new ServerManagerImpl();
-		
+		newManager = new ServerManagerImpl();		
 	}
 	
 	
 	
 	
-	
+	/*
 	@Test
 	public void test() throws IOException 
 	{
@@ -78,24 +82,148 @@ public class TestQuizSetUp
 		System.out.println("Corrrect Answer is: " + num);
 		System.out.println("Answer is: " + answers[num-1]);
 		assertEquals(num, 1);
-		
-		
-		
+			
 	}
 
 	
 	
 	
 	@Test
-	public void setUpMenu() throws IOException 
+	public void setUpQuestions() throws IOException 
 	{
 		
+				System.out.println();
+				System.out.println("************* Quiz Setup *************");
+				System.out.println();
+				String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
+				String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
+				int quantOfQuestions = Integer.parseInt(qAmount);	
+				
+				int returnedID = newManager.addNewQuiz(qName, quantOfQuestions);
+				Quiz tempQuiz = newManager.getQuizFromID(returnedID);
+				adQuestions(quantOfQuestions, tempQuiz);
+				List<Question> temp = tempQuiz.getQuestions();
+				assertEquals(temp.size(), quantOfQuestions);
+	}
+	
+	*/
+	
+	
+	@Test
+	public void saveQuizzesToFile() throws IOException
+	{
+		System.out.println();
+		System.out.println("************* Quiz Setup *************");
+		System.out.println();
+		String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
+		String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
+		int quantOfQuestions = Integer.parseInt(qAmount);	
 		
-	
-	
+		int returnedID = newManager.addNewQuiz(qName, quantOfQuestions);
+		Quiz tempQuiz = newManager.getQuizFromID(returnedID);
+		adQuestions(quantOfQuestions, tempQuiz);
+		List<Question> temp = tempQuiz.getQuestions();
+		
+		flush();
+		assertEquals(temp.size(), quantOfQuestions);
+		
+		
+		
 	}
 	
 	
+	
+	public void flush() throws RemoteException, IOException
+	{
+		if (checkFileExists("Quiz.txt"))
+		{			
+			FileWriter fileWite = new FileWriter("Quiz.txt");
+			BufferedWriter bufferWrite = new BufferedWriter(fileWite);				
+			FileReader file = new FileReader( "Quiz.txt");
+			BufferedReader buffer = new BufferedReader(file);
+			String line = null;
+			while ( (line = buffer.readLine()) != null)		
+			{
+				bufferWrite.newLine();
+			}
+		
+			int hMSize = newManager.returnAllQuizzes().size(); 
+			//System.out.println("***DEBUG*** HasMap size is: " + hMSize); 
+			bufferWrite.write(hMSize + "," + " Quizzes"); 
+			bufferWrite.newLine();
+			for(Map.Entry<Integer, Quiz> entry: newManager.returnAllQuizzes().entrySet())
+			{	
+					//System.out.println("***DEBUG*** Writing Contact: " + entry.getValue().getName() + " to file");
+					bufferWrite.write(entry.getValue().getQuizId() + "," + entry.getValue().getQuizName()); 
+					bufferWrite.newLine();
+					//gets list of questions associated to this quiz
+					List <Question> quests = entry.getValue().getQuestions();
+					int questSize = quests.size();
+					for (int i = 0; i < questSize; i++)
+					{
+						Question tempQuest = quests.get(i);	
+						String[] answers = tempQuest.getAnswers();
+						bufferWrite.write(tempQuest.getQuestion() + "," + answers[0] + "," + answers[1] + "," + answers[2] + "," + tempQuest.getCorrectAnswer()); 
+						bufferWrite.newLine();
+					}
+					
+			}		
+		
+		
+				bufferWrite.close();
+		}	
+		else
+		{
+			System.out.println("File does not exist");
+		}
+			
+
+	}
+	
+	
+		/**
+		 * Checks the provided File (String) actually exists, if not it creates one
+		 * @param fileName (String)
+		 */
+		public boolean checkFileExists(String fileName) throws RemoteException
+		{	
+			//No option to check the directory as do not know what it is -
+			//if user interface then this would be an option
+			File file = new File(fileName);
+			if(file.exists())
+			{
+				return true;
+			}		
+			return false;	
+		};
+	
+	
+	
+	
+	
+	
+	/**
+	 * Creates n number of questions in designated quiz
+	 * @param num
+	 * @param tempQuiz
+	 * @throws IOException
+	 */
+	public void adQuestions(int num, Quiz tempQuiz) throws IOException
+	{
+		for (int i = 0; i < num; i++)
+		{
+			System.out.println("Question: " + (i + 1));
+			String quest = readLineViaBuffer("Please Enter a Question: ");
+			String ansOne = readLineViaBuffer("Please Enter 1st Answer: ");
+			String ansTwo = readLineViaBuffer("Please Enter 2nd Answer: ");
+			String ansThree = readLineViaBuffer("Please Enter 3rd Answer: ");
+			String correctAns = readLineViaBuffer("Please Enter which is the correct Answer: 1,2, or 3: ");
+			int answer = Integer.parseInt(correctAns);
+		    Question questTemp = new Question(quest, ansOne, ansTwo, ansThree, answer);
+		    newManager.addQuestionToQuiz(tempQuiz, questTemp);		
+		}
+		
+	}
 	
 	//Saves repeating the request for input - requires the instructions of what your are asked to type
 	//require the throws IOException to allow buffer reader to work 
