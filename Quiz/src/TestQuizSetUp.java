@@ -10,12 +10,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class TestQuizSetUp {
-
+public class TestQuizSetUp 
+{
+	
+	ServerManager newManager; 
+	
 	@Before
 	public void startUp() throws RemoteException
 	{
-		//ServerManager newManager = new ServerManagerImpl();
+		newManager = new ServerManagerImpl();
+		
 	}
 	
 	
@@ -25,7 +29,7 @@ public class TestQuizSetUp {
 	@Test
 	public void test() throws IOException 
 	{
-		ServerManager newManager = new ServerManagerImpl();
+		//ServerManager newManager = new ServerManagerImpl();
 		
 		String quest = null; 
 	    String ansOne = null; 
@@ -38,7 +42,7 @@ public class TestQuizSetUp {
 		String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
 	    int quantOfQuestions = Integer.parseInt(qAmount);	    
 	    
-	    int returnedID = newManager.addNewQuiz(qName, quantOfQuestions);
+		int returnedID = newManager .addNewQuiz(qName, quantOfQuestions);
 	    
 	    Quiz tempQuiz = newManager.getQuizFromID(returnedID);
 	    
@@ -73,10 +77,25 @@ public class TestQuizSetUp {
 		String[] answers = temp.get(0).getAnswers();
 		System.out.println("Corrrect Answer is: " + num);
 		System.out.println("Answer is: " + answers[num-1]);
-		
 		assertEquals(num, 1);
+		
+		
+		
 	}
 
+	
+	
+	
+	@Test
+	public void setUpMenu() throws IOException 
+	{
+		
+		
+	
+	
+	}
+	
+	
 	
 	//Saves repeating the request for input - requires the instructions of what your are asked to type
 	//require the throws IOException to allow buffer reader to work 

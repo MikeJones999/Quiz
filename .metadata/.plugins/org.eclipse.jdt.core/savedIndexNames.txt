@@ -12,7 +12,6 @@ INDEX VERSION 1.126+E:\MSC\PIJ\Quiz\.metadata\.plugins\org.eclipse.jdt.core
 3974580528.index
 3065916431.index
 1299022128.index
-514154343.index
 3133528496.index
 4108727661.index
 1697886153.index

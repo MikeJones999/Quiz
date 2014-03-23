@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class QuizImpl extends UnicastRemoteObject implements Quiz
+public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serializable
 {
 
 	/**

@@ -54,14 +54,21 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 				throw new IllegalArgumentException ("Quiz " + Id + " Does not exist");
 		}			
 		return quizFound;
-	}
-	
+	}	
 	
 	
 	@Override
 	public void addQuestionToQuiz(Quiz quiz, Question q) throws RemoteException 
 	{
 		quiz.addQuestionToQuiz(q);
+		
+	}
+
+	@Override
+	public void addQuestionToQuiz(int Id, Question q) throws RemoteException 
+	{
+		Quiz temp = this.getQuizFromID(Id);
+		temp.addQuestionToQuiz(q);
 		
 	}
 

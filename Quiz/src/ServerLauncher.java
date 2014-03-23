@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ServerLauncher
 {
-
+		
 	public static void main(String[] args)
 	{
 		ServerLauncher start = new ServerLauncher();
@@ -29,7 +29,7 @@ public class ServerLauncher
 		try 
 		{
 			
-			
+			/*
 			//Test player creation
 			Player[] players = {new Player(1,"Mike", 0), new Player(2, "Stevo", 0)};
 			
@@ -39,7 +39,7 @@ public class ServerLauncher
 			{
 				playerList.add(players[i]);
 			}
-			
+			*/
 			
 				//2. Create the reg if there is not one
 				LocateRegistry.createRegistry(1099);
@@ -47,7 +47,11 @@ public class ServerLauncher
 				//3. Create the server object
 				//Create an implementation object, passing the
 				//above ArrayList to the constructor
-				EchoServer server = new EchoServer(playerList);
+				//EchoServer server = new EchoServer(playerList);
+				
+				
+				//gets created once when the server starts
+				ServerManager server = new ServerManagerImpl();
 				
 				//4. Register (bind) the server object on the reg.
 				// The registry may be on a different machine

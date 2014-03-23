@@ -1,7 +1,12 @@
 
 
-public class Question 
+public class Question implements java.io.Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String quest;
 	private String ansOne;
 	private String ansTwo;
