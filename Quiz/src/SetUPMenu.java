@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -84,7 +85,7 @@ public class SetUPMenu implements java.io.Serializable
 			
 			int returnedID = serverConnect.addNewQuiz(qName, quantOfQuestions);
 			Quiz tempQuiz = serverConnect.getQuizFromID(returnedID);
-			adQuestions(quantOfQuestions, tempQuiz);
+			addQuestions(quantOfQuestions, tempQuiz);
 
 		
 			/*
@@ -112,7 +113,7 @@ public class SetUPMenu implements java.io.Serializable
 	 * @param tempQuiz
 	 * @throws IOException
 	 */
-	public void adQuestions(int num, Quiz tempQuiz) throws IOException
+	public void addQuestions(int num, Quiz tempQuiz) throws IOException
 	{
 		for (int i = 0; i < num; i++)
 		{

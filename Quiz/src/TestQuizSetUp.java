@@ -108,6 +108,20 @@ public class TestQuizSetUp
 	
 	*/
 	
+	/*
+	@Test
+	public void savePlayerScores() throws IOException
+	{
+		
+		
+		
+	}
+	*/
+	
+	
+	
+	
+	
 	
 	@Test
 	public void saveQuizzesToFile() throws IOException
@@ -125,9 +139,7 @@ public class TestQuizSetUp
 		List<Question> temp = tempQuiz.getQuestions();
 		
 		flush();
-		assertEquals(temp.size(), quantOfQuestions);
-		
-		
+		assertEquals(temp.size(), quantOfQuestions);	
 		
 	}
 	

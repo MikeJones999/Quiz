@@ -1,0 +1,161 @@
+import java.rmi.Naming;
+import java.rmi.Remote;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+
+public class PlayerClient implements java.io.Serializable
+{
+	
+	private ServerManager serverConnect;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	//constructor - pass the serverConnect file retrieved from Server
+	public PlayerClient(ServerManager servMan)
+	{
+		this.serverConnect = servMan;
+	}
+		
+	
+	
+	public static void main (String[] args) throws MalformedURLException, RemoteException, NotBoundException
+	{
+		try {
+				new ClientConnect().launch();
+			}
+	  catch (IOException e) 
+			{
+				e.printStackTrace();
+			}	
+	}
+	
+	public void launch() throws NotBoundException, IOException
+	{
+		//call method to connect to server		
+		ServerManager serverConnect = initialConnect();			
+	}
+	
+	public void welcomeMenu() throws IOException
+	{
+		boolean complete = false;
+		while(!complete)
+		{
+			System.out.println("************* Welcome to Mike's Quiz Server *************");
+			System.out.println();
+			System.out.println("What would you like to do? ");
+			System.out.println("1: Play a quiz?");
+			System.out.println("2: Show all available Quizzes");
+			System.out.println("0: Exit");
+		
+			String opt = readLineViaBuffer("Please enter the required option: ");
+			//must deal with non int returned here
+			int option = Integer.parseInt(opt);	
+			
+			switch(option) 
+			{
+				case 0: System.out.println("Exiting: Thank you and good bye");
+						complete = true;
+						System.exit(0);
+						break;
+						
+				case 1: System.out.println("*** DEBUG **** Play a quiz");
+						playQuiz();
+						break;
+						
+				case 2: System.out.println("*** DEBUG **** Get All Available Quizzes");
+						getAllQuizzes();
+						break;
+						
+				default: System.out.println("*** DEBUG **** Not an Option, try again");
+						break;
+			}
+		}		
+	}
+	
+	
+
+	public void playQuiz() throws IOException 
+	{
+		System.out.println(); 
+		getAllQuizzes();
+		System.out.println();
+		String opt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
+		//must deal with non int returned here
+		int option = Integer.parseInt(opt);	
+		
+		
+		
+	}
+	
+
+	/**
+	 * Returns from server HashMap of all Quizzes available
+	 * @throws IOException
+	 */
+	public void getAllQuizzes() throws IOException 
+	{
+		HashMap<Integer, Quiz> tempHlist = serverConnect.returnAllQuizzes();
+		System.out.println(); 
+		System.out.println("List of Quizzes already on system");
+		System.out.println("---------------------------------");
+		for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+		{
+			System.out.println("QuizID: " + entry.getKey() + ". " + "Quiz Name: " + entry.getValue().getQuizName()); 
+		}
+		System.out.println(); 
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public ServerManager initialConnect() throws MalformedURLException, RemoteException, NotBoundException
+	{
+		
+		System.out.print("Insert IP: ");
+		String ip = System.console().readLine();
+		
+		System.out.print("Insert Port: ");
+		String port = System.console().readLine();		
+	
+		System.out.println("Looking up " + "//"+ip+":"+port +"/echo");
+		
+		ServerManager service = (ServerManager)Naming.lookup("//"+ip+":"+port +"/echo");
+		System.out.println("Looked up " + "//"+ip+":"+port +"/echo");
+			
+		return service;
+	}
+	
+	
+	/**
+	 * Reads and returns a line of strings 
+	 * @param instructions
+	 * @return
+	 * @throws IOException
+	 */
+	public String readLineViaBuffer(String instructions) throws IOException  
+	{
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+	    System.out.print(instructions);
+	    String stringRead = br1.readLine();				
+		return stringRead;
+	}
+	
+	
+}

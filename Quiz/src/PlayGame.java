@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -33,17 +35,20 @@ private int playerScore;
 	{
 		
 		playerSetup();		
-		
-		
+		String quizInt = null;
+		int quizId = 0;
 		boolean complete = false;
 		while(!complete)
 		{
+			System.out.println();
 			System.out.println("************* Welcome to Mike's Quiz Server *************");
 			System.out.println();
 			System.out.println("What would you like to do? ");
 			System.out.println("1: Play a quiz?");
 			System.out.println("2: Show all available Quizzes");
-			System.out.println("3: Show all your scores for all Quizzes");
+			System.out.println("3: Show all your scores for a particular Quiz");
+			System.out.println("4: Show all the scores for a particular Quiz");
+			System.out.println("5: Show all the scores for a all Quizzes");
 			System.out.println("0: Exit");
 		
 			String opt = readLineViaBuffer("Please enter the required option: ");
@@ -58,7 +63,13 @@ private int playerScore;
 						break;
 						
 				case 1: System.out.println("*** DEBUG **** Play a quiz");
-						playQuiz();
+						if(!serverConnect.returnAllQuizzes().isEmpty())
+						{	
+							playQuiz();
+						} else
+						{
+							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java");
+						}
 						break;
 						
 				case 2: System.out.println("*** DEBUG **** Get All Available Quizzes");
@@ -67,9 +78,44 @@ private int playerScore;
 					
 						
 				case 3: System.out.println("*** DEBUG **** Show all your scores");
-						playerScoreForEachQuiz();
+						displayAllQuizzes();
+						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
+						if(!serverConnect.returnAllQuizzes().isEmpty())
+						{	
+							//must deal with non int returned here
+							quizId = Integer.parseInt(quizInt);	
+							allPlayerScoresForQuizID(quizId);
+						} else
+						{
+							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
+						}						
 						break;
 				
+				case 4: System.out.println("*** DEBUG **** Show all your scores");
+						displayAllQuizzes();
+						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
+						if(!serverConnect.returnAllQuizzes().isEmpty())
+						{	
+							//must deal with non int returned here
+							quizId = Integer.parseInt(quizInt);	
+							playerScoreForQuizID(quizId, player.getId());
+						} else
+						{
+							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
+						}						
+						break;		
+						
+				case 5: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
+						if(!serverConnect.returnAllQuizzes().isEmpty())
+						{	
+								///call to show all scores for all quizzes
+							allScoresForAllQuizzes();
+						} else
+						{
+							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java");
+						}						
+						break;		
+						
 				default: System.out.println("*** DEBUG **** Not an Option, try again");
 						break;
 			}
@@ -108,30 +154,75 @@ private int playerScore;
 	 * Displays player's score for each quiz
 	 * @throws IOException
 	 */
-	public void playerScoreForEachQuiz() throws IOException
+	public void allScoresForAllQuizzes() throws IOException
 	{
 		System.out.println("\nAll Scores for the Available Quizzes");
 	
 		//iterates through two hashmaps to find the score for the Id provided or each quiz
 		 HashMap<Integer, Quiz> tempQHashMap = getAllQuizzes();
-		 int playerId = player.getId();
 			for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
-			{				
-				HashMap<Integer, Integer> tempPlayScore = entry.getValue().getAllPlayerScores();
-				for(Map.Entry<Integer, Integer> innerEntry: tempPlayScore.entrySet())
-				{
-					if(innerEntry.getKey() == playerId)
+			{			
+					System.out.println("QuizID: " + entry.getValue().getQuizId() + ", Quiz Name: " + entry.getValue().getQuizName());
+					System.out.println("---------------------------------------------------");
+					List<PlayerScores> allScores = entry.getValue().getScores();
+					int allScoresSize = allScores.size();
+					for (int i = 0; i < allScoresSize; i++)
 					{
-						System.out.println("Quiz ID: " + entry.getValue().getQuizId() + ", Name: " + entry.getValue().getQuizName() + " - Your Score: " + innerEntry.getValue());
+							System.out.println("PlayerId: " + allScores.get(i).getPlayerId() + ", Score = " + allScores.get(i).getScore());
 					}
-					else
-					{
-						System.out.println("Quiz ID: " + entry.getValue().getQuizId() + ", Name: " + entry.getValue().getQuizName() + "Not attempted");
-					}					
-				}				
 			}	
 		System.out.println();
 	}
+	
+	
+	
+	/**
+	 * gets all scores for a certain QuizID
+	 * @param Id
+	 * @throws RemoteException
+	 */
+	public void allPlayerScoresForQuizID(int quizId) throws IOException
+	{
+		System.out.println("\nAll player Scores for the Quiz ID: " + quizId);
+		System.out.println();
+		Quiz tempQ = serverConnect.getQuizFromID(quizId);
+		List<PlayerScores> pScores = tempQ.getScores();
+		System.out.println("***DEBUG*** Works to here");
+		int pScoresSize = pScores.size();
+		for (int i = 0; i < pScoresSize; i++)
+		{
+			if (pScores.get(i).getQuizID() == quizId)
+			{
+				System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Score = " + pScores.get(i).getScore());
+			}
+		}
+	}
+
+	
+	/**
+	 * Gets a players score from their id for a certain quiz
+	 * @param Id
+	 * @throws RemoteException
+	 */
+	public void playerScoreForQuizID(int quizId, int pId) throws IOException
+	{
+		System.out.println("\nAll your Scores for the Quiz ID: " + quizId);
+		System.out.println();
+		Quiz tempQ = serverConnect.getQuizFromID(quizId);
+		List<PlayerScores> pScores = tempQ.getScores();
+		int pScoresSize = pScores.size();
+		for (int i = 0; i < pScoresSize; i++)
+		{
+			if (pScores.get(i).getQuizID() == quizId)
+			{
+				if(pScores.get(i).getPlayerId() == pId)
+					{
+						System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Score = " + pScores.get(i).getScore());
+					}
+			}
+		}
+	}
+
 	
 	
 	/**
@@ -148,6 +239,7 @@ private int playerScore;
 		int option = Integer.parseInt(opt);			
 		
 		Quiz temp = serverConnect.getQuizFromID(option);
+		System.out.println();
 		//confirms the quiz chosen
 		System.out.println("Welcome to " + temp.getQuizName());
 		List <Question> quests = temp.getQuestions();
@@ -182,8 +274,13 @@ private int playerScore;
 		}
 		
 		//HashMap<Integer, Integer> tempScoreHashMap = temp.getAllPlayerScores();
-		temp.addToPlayerScore(player.getId(), playerScore);
-		System.out.println("End of Quiz. Your Score was " + temp.getPlayersScore(player.getId()));
+		PlayerScores pScore = new PlayerScores(option,player.getId(), playerScore);
+		temp.addToPlayerScore(pScore);
+		//temp.addToPlayerScore(player.getId(), playerScore);
+		
+		//to show the score has been saved and returned from server
+		//must add return function
+		System.out.println("End of Quiz. Your Score was " + playerScore);//temp.getPlayersScore(player.getId()));
 		//reset score for next go or set of questions.
 		playerScore = 0;
 	}
@@ -195,15 +292,23 @@ private int playerScore;
 	 */
 	public void displayAllQuizzes() throws IOException 
 	{
+		
 		HashMap<Integer, Quiz> tempHlist = getAllQuizzes();
-		System.out.println(); 
-		System.out.println("List of Quizzes already on system");
-		System.out.println("---------------------------------");
-		for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+		if (tempHlist.isEmpty())
 		{
-			System.out.println("QuizID: " + entry.getKey() + ". " + "Quiz Name: " + entry.getValue().getQuizName()); 
+			System.out.println("No Quizzes available");
 		}
-		System.out.println(); 
+		else
+		{
+			System.out.println(); 
+			System.out.println("List of Quizzes already on system");
+			System.out.println("---------------------------------");
+			for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+			{
+				System.out.println("QuizID: " + entry.getKey() + ". " + "Quiz Name: " + entry.getValue().getQuizName()); 
+			}
+			System.out.println(); 
+		}
 	}
 	
 	

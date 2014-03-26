@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 /**
  * Since this class is to be used in
@@ -15,7 +17,8 @@ public class Player implements java.io.Serializable
 	private static final long serialVersionUID = 1L;
 	//Instance variables…
 	private int id;
-	private String name;	
+	private String name;
+	private ArrayList<PlayerScores> scores;
 	
 	
 	//Constructor…
@@ -23,7 +26,7 @@ public class Player implements java.io.Serializable
 	{
 		this.id = id;
 		this.name = name;
-
+		scores = new ArrayList<PlayerScores>();
 	}
 	
 	
@@ -36,6 +39,11 @@ public class Player implements java.io.Serializable
 	public String getName()
 	{
 		return name;
+	}
+	
+	public ArrayList<PlayerScores> getScores()
+	{
+		return scores;
 	}
 
 	

@@ -26,6 +26,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
+	//consider synch here
 	public int addNewQuiz(String name, int questionNum) throws RemoteException 
 	{
 		QuizImpl quizTemp = new QuizImpl(name, questionNum);
@@ -39,6 +40,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		
 
 	@Override
+	//consider synch here
 	public int createQuizId(Quiz quizTemp) throws RemoteException 
 	{
 		//updates quiz with ID
@@ -86,6 +88,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
+	//consider synch here
 	public int addNewPlayer(String name) throws RemoteException 
 	{
 		//create ID - may need to synchronise this
@@ -134,7 +137,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	@Override
 	public void flush()  throws RemoteException 
 	{
-		
+		//to do
 		
 	}
 	
