@@ -109,6 +109,13 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	
 	
 	//loadPlayerFromFile
+
+	@Override
+	public HashMap<Integer, Player> returnAllPlayers() throws RemoteException 
+	{		
+		return players;
+	}
+		
 	
 
 	@Override

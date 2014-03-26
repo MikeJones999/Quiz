@@ -18,7 +18,7 @@ public class Player implements java.io.Serializable
 	//Instance variables…
 	private int id;
 	private String name;
-	private ArrayList<PlayerScores> scores;
+	//private ArrayList<PlayerScores> scores;
 	
 	
 	//Constructor…
@@ -26,7 +26,7 @@ public class Player implements java.io.Serializable
 	{
 		this.id = id;
 		this.name = name;
-		scores = new ArrayList<PlayerScores>();
+		//scores = new ArrayList<PlayerScores>();
 	}
 	
 	
@@ -41,10 +41,11 @@ public class Player implements java.io.Serializable
 		return name;
 	}
 	
+	/*
 	public ArrayList<PlayerScores> getScores()
 	{
 		return scores;
 	}
-
+	 */
 	
 }

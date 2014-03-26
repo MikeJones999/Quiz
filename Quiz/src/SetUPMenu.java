@@ -87,23 +87,6 @@ public class SetUPMenu implements java.io.Serializable
 			Quiz tempQuiz = serverConnect.getQuizFromID(returnedID);
 			addQuestions(quantOfQuestions, tempQuiz);
 
-		
-			/*
-		//returns list of questions for newly created quiz
-		List<Question> temp = tempQuiz.getQuestions();
-
-
-		for (int j= 0; j< temp.size(); j++)
-		{
-			System.out.println("Question " + (j+1) + ": ");
-			System.out.println(temp.get(j).getQuestion());
-		}
-
-		int num = temp.get(0).getCorrectAnswer();
-		String[] answers = temp.get(0).getAnswers();
-		System.out.println("Corrrect Answer is: " + num);
-		System.out.println("Answer is: " + answers[num-1]);
-		*/
 	}
 	
 	
@@ -138,15 +121,24 @@ public class SetUPMenu implements java.io.Serializable
 	 */
 	public void getAllQuizzes() throws IOException 
 	{
-		HashMap<Integer, Quiz> tempHlist = serverConnect.returnAllQuizzes();
+	
 		System.out.println(); 
-		System.out.println("List of Quizzes already on system");
-		System.out.println("---------------------------------");
-		for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+		if(!serverConnect.returnAllQuizzes().isEmpty())			
+		{	
+			HashMap<Integer, Quiz> tempHlist = serverConnect.returnAllQuizzes();
+			System.out.println("List of Quizzes already on system");
+			System.out.println("---------------------------------");		
+			for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+			{
+				System.out.println("QuizID: " + entry.getKey() + ". " + "Quiz Name: " + entry.getValue().getQuizName()); 
+			}
+			System.out.println(); 
+		} else
 		{
-			System.out.println("QuizID: " + entry.getKey() + ". " + "Quiz Name: " + entry.getValue().getQuizName()); 
-		}
-		System.out.println(); 
+			System.out.println("No Quizzes to display at present - you need to load ClientConnect.java to setup a quiz");
+		}	
+		
+	
 	}
 	
 	

@@ -35,44 +35,7 @@ public class ClientConnect
 		newSetup.welcomeMenu();
 		//System.out.println("quiz 1 = " + serverConnect.getQuizFromID(1).getQuizName());
 		
-		
-		
-	
-	//Saves repeating the request for input - requires the instructions of what your are asked to type
-	//require the throws IOException to allow buffer reader to work 
 
-	
-		/*
-		//cast the returned service to TestService Object
-		TestService echoService = service; 
-		//Remote echoService = (TestService) service; 
-		
-		//calls method on server and returns the set word
-		String receivedWord = echoService.returnWord();		
-		
-		//send STR and return same string and place in receivedEcho string
-		String receivedEcho = echoService.echo(str);	
-		
-		System.out.println("Server: " + receivedWord);
-		System.out.println("Word Sent and recieved: " + receivedEcho);	
-		
-		//System.out.println("Returned word from Server: " + receivedEcho + " Mike says: " + receivedWord);
-		
-		System.out.print("Insert Your Name: ");
-		String tempName = System.console().readLine();
-		
-		service.createNewPlayer(tempName);		
-		
-		System.out.println("Players on Server list: ");
-		ArrayList<Player> playerList = service.getPlayers();
-		for (int i=0; i<playerList.size(); i++)
-		{
-			Player temp = playerList.get(i);
-			System.out.println("ID: "	+ temp.getId());
-			System.out.println("Name: "+ temp.getName());
-			System.out.println("Score: " + temp.getScore());
-		}
-		*/
 	}
 
 	public ServerManager initialConnect() throws MalformedURLException, RemoteException, NotBoundException

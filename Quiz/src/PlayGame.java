@@ -84,7 +84,8 @@ private int playerScore;
 						{	
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
-							allPlayerScoresForQuizID(quizId);
+							playerScoreForQuizID(quizId, player.getId());
+						
 						} else
 						{
 							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
@@ -98,7 +99,7 @@ private int playerScore;
 						{	
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
-							playerScoreForQuizID(quizId, player.getId());
+							allPlayerScoresForQuizID(quizId);
 						} else
 						{
 							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
@@ -274,7 +275,7 @@ private int playerScore;
 		}
 		
 		//HashMap<Integer, Integer> tempScoreHashMap = temp.getAllPlayerScores();
-		PlayerScores pScore = new PlayerScores(option,player.getId(), playerScore);
+		PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);
 		temp.addToPlayerScore(pScore);
 		//temp.addToPlayerScore(player.getId(), playerScore);
 		
