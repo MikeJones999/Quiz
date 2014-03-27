@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -113,7 +112,7 @@ private int playerScore;
 							allScoresForAllQuizzes();
 						} else
 						{
-							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java");
+							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
 						}						
 						break;		
 						
@@ -133,18 +132,20 @@ private int playerScore;
 		String opt = readLineViaBuffer("\nWelcome, are you a returning player with an ID? y/n: ");
 		if (opt.toLowerCase().equals("y"))
 		{
-			String name = readLineViaBuffer("Please enter your name.");
-			String ident = readLineViaBuffer("Please enter your Id.");
+			//String name = readLineViaBuffer("Please enter your name.");
+			String ident = readLineViaBuffer("Please enter your Id: ");
 			int Id = Integer.parseInt(ident);	
 			//serverConnect.returningPlayer(name, Id);
 			player = serverConnect.getPlayerFromId(Id);
+			System.out.println("Welcome back " + player.getName());
 		}
 		else
 		{
-			String name = readLineViaBuffer("Please enter your name.");
+			String name = readLineViaBuffer("Please enter your name: ");
 			int Id = serverConnect.addNewPlayer(name);	
 			System.out.println();
-			System.out.println("Your Player ID is: " + Id + ". Please write this down and Keep it safe.");
+			System.out.println("*********************************************************************************");
+			System.out.println(name + ", Your Player ID is: " + Id + ". Please write this down and Keep it safe.");
 			System.out.println();
 			player = serverConnect.getPlayerFromId(Id);
 			//addNewPlayer

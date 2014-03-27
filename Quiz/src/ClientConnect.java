@@ -1,14 +1,9 @@
 
 
 import java.rmi.Naming;
-import java.rmi.Remote;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 
 public class ClientConnect
@@ -41,8 +36,8 @@ public class ClientConnect
 	public ServerManager initialConnect() throws MalformedURLException, RemoteException, NotBoundException
 	{
 		
-		System.out.print("Insert word to Send: ");
-		String str = System.console().readLine();
+		System.out.print("Quiz SetUp Starting...");
+		//String str = System.console().readLine();
 		
 		System.out.print("Insert IP: ");
 		String ip = System.console().readLine();
