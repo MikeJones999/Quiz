@@ -50,4 +50,10 @@ public interface Quiz extends Remote
 	int getPlayersScore(int Id) throws RemoteException;
 	
 	List<PlayerScores> getScores() throws RemoteException;
+	
+	int getQuestionTotal() throws RemoteException;
+
+	void setQuestionTotal(int questionTotal) throws RemoteException;
+
+	
 }

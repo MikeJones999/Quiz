@@ -32,20 +32,32 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		QuizImpl quizTemp = new QuizImpl(name, questionNum);
 		int id = createQuizId(quizTemp);
 		quizMap.put(id, quizTemp);
-		count = count + 1;
+		quizId = quizId + 1;
 		
 		return id;
 	}
 	
+	@Override
+	//consider synch here
+	public void addQuizFromFile(int Id, String name, int questionNum) throws RemoteException 
+	{
+		QuizImpl quizTemp = new QuizImpl(name, questionNum);
+		quizMap.put(Id, quizTemp);
+		quizTemp.createQuizId(Id);
 		
+		//adjust quizID for newley created quizzes
+		quizId = quizId + 1;	
+	}	
+	
+	
 
 	@Override
 	//consider synch here
 	public int createQuizId(Quiz quizTemp) throws RemoteException 
 	{
 		//updates quiz with ID
-		quizTemp.createQuizId(count);		
-		return count;
+		quizTemp.createQuizId(quizId);		
+		return quizId;
 	}
 
 	

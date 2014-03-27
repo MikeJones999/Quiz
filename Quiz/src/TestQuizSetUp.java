@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -109,7 +111,7 @@ public class TestQuizSetUp
 	
 	*/
 	
-	
+	/*
 	@Test
 	public void savePlayerScores() throws IOException
 	{
@@ -128,16 +130,19 @@ public class TestQuizSetUp
 		System.out.println();
 		System.out.println("************* Quiz Setup *************");
 		System.out.println();
-		String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
-		String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
-		int quantOfQuestions = Integer.parseInt(qAmount);	
-		
-		int returnedID = newManager.addNewQuiz(qName, quantOfQuestions);
-		Quiz tempQuiz = newManager.getQuizFromID(returnedID);
-		//adQuestions(quantOfQuestions, tempQuiz);
-		//List<Question> temp = tempQuiz.getQuestions();
-		
-		//flush();
+		Quiz tempQuiz = null;
+		for (int i = 0; i< 2; i++)
+		{
+			String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
+			String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
+			int quantOfQuestions = Integer.parseInt(qAmount);	
+			
+			int returnedID = newManager.addNewQuiz(qName, quantOfQuestions);
+			tempQuiz = newManager.getQuizFromID(returnedID);
+			adQuestions(quantOfQuestions, tempQuiz);
+			//List<Question> temp = tempQuiz.getQuestions();
+		};
+		flush();
 		//assertEquals(temp.size(), quantOfQuestions);	
 		
 
@@ -149,10 +154,116 @@ public class TestQuizSetUp
 		flushPlayers();
 		
 	}
+	*/
+	
+	@Test
+	public void recallQuizzesFromFile() throws RemoteException
+	{
+		   String fileName = "Quiz.txt";
+		   try {	//possible dont need this as us createNewfile() which checks for you
+				   if (!checkFileExists(fileName))
+			        {
+			        	File file = new File(fileName);
+			        	file.createNewFile();
+			        } 
+
+		   		Scanner s = null;
+	            s = new Scanner(new BufferedReader(new FileReader(fileName)));
+	            String line = null; 	
+	            //check to see file has contents - then iterate through contacts
+	            if(s.hasNext())
+	            {	   
+	            	line = s.nextLine();
+	            	//System.out.println("line = " + line + " Start of Meetings Method");
+	            	int QuizzesFound = itemsInFileFound(line);
+					for (int i = 0; i < QuizzesFound; i++)
+					{
+						 line = s.nextLine();	
+						 //System.out.println("***DEBUG*** " + line);	
+						 //call create contact method below - to use details from each line found
+						int[] quest = this.createQuizFromFile(line);
+						for (int j = 0; j < quest[1]; j++)
+						{
+							line = s.nextLine();
+							addQuestionsFromFileToQuiz(quest[0],line);
+						}
+												
+					}		            	
+              
+	            }
+	            else
+	            {
+	            	System.out.println("The file: " + fileName + " is empty");
+	            	  s.close();
+	            }
+	   		}
+	        catch(IOException e)
+			{
+					System.out.println("An error has occurred, Check file is not in use");				
+			}
+		   
+		    HashMap<Integer, Quiz> tempQuizMap = newManager.returnAllQuizzes();
+			//int hMSize = tempQuizMap.size();
+			String[] quizNames = new String[10];
+			for(Map.Entry<Integer, Quiz> entry: tempQuizMap.entrySet())
+			{	
+				quizNames[entry.getKey()] = entry.getValue().getQuizName();
+				System.out.println("QuizId: " + entry.getValue().getQuizId() + ", QuizName: " +  entry.getValue().getQuizName());
+				List<Question> tempQ =  entry.getValue().getQuestions();
+				int tempQsize = tempQ.size();
+				for (int i = 0; i < tempQsize; i++)
+				{
+					System.out.println("Question: " + tempQ.get(i).getQuestion());
+				}
+			}
+			
+			
+		  assertEquals(quizNames[0], "mikes quiz");
+	}
+
+
+	/**
+	 *  Checks a line in the CSV/txt file for the first int.
+	 *  This is how many records of that type to iterate through 
+	 * @param line
+	 * @return itemsFound (Int)
+	 */
+	public int itemsInFileFound(String line)
+	{		
+		line = line.trim();					
+		String[] stringArray = line.split(",");
+		int itemsFound = Integer.parseInt(stringArray[0].trim());
+		//System.out.println("***DEBUG*** Items Found: " + itemsFound);	
+		return itemsFound;
+	}
+	
+	public int[] createQuizFromFile(String lineRead) throws RemoteException, FileNotFoundException
+	{
+		//need to read the first line to establish how many questions per quiz.
+		String[] stringArray = lineRead.split(",");
+		int id = Integer.parseInt(stringArray[0].trim());
+		String quizName = stringArray[1].trim();
+		int numberOfQuests = Integer.parseInt(stringArray[2].trim());
+		newManager.addQuizFromFile(id, quizName, numberOfQuests);
+        int[] quizInit = {id, numberOfQuests};  
+		return quizInit;
+				 
+	}
 	
 	
-	
-	
+	public void addQuestionsFromFileToQuiz(int quizId, String lineRead) throws RemoteException
+	{
+		String[] stringArray = lineRead.split(",");
+		String question = stringArray[0].trim();
+		String ansOne = stringArray[1].trim();
+		String ansTwo = stringArray[2].trim();
+		String ansThree = stringArray[3].trim();
+		String corAnswer = stringArray[4].trim();
+		int answer = Integer.parseInt(corAnswer);
+		
+		Question q = new Question(question, ansOne, ansTwo, ansThree, answer);
+		newManager.addQuestionToQuiz(quizId, q);
+	}
 	
 	/*
 	
@@ -192,14 +303,15 @@ public class TestQuizSetUp
 				bufferWrite.newLine();
 			}
 		
-			int hMSize = newManager.returnAllQuizzes().size(); 
+			HashMap<Integer, Quiz> tempQuizMap = newManager.returnAllQuizzes();
+			int hMSize = tempQuizMap.size(); 
 			//System.out.println("***DEBUG*** HasMap size is: " + hMSize); 
 			bufferWrite.write(hMSize + "," + " Quizzes"); 
 			bufferWrite.newLine();
-			for(Map.Entry<Integer, Quiz> entry: newManager.returnAllQuizzes().entrySet())
+			for(Map.Entry<Integer, Quiz> entry: tempQuizMap.entrySet())
 			{	
 					//System.out.println("***DEBUG*** Writing Contact: " + entry.getValue().getName() + " to file");
-					bufferWrite.write(entry.getValue().getQuizId() + "," + entry.getValue().getQuizName()); 
+					bufferWrite.write(entry.getValue().getQuizId() + "," + entry.getValue().getQuizName() + "," + entry.getValue().getQuestionTotal()); 
 					bufferWrite.newLine();
 					//gets list of questions associated to this quiz
 					List <Question> quests = entry.getValue().getQuestions();

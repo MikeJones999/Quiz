@@ -20,6 +20,16 @@ public interface ServerManager extends Remote
 	int addNewQuiz(String name, int questionNum) throws RemoteException;
 	
 	/**
+	 * Adds a quiz loaded from .txt file
+	 * @param Id
+	 * @param name
+	 * @param questionNum
+	 * @throws RemoteException
+	 */
+	public void addQuizFromFile(int Id, String name, int questionNum) throws RemoteException; 
+	
+	
+	/**
 	 * 
 	 * @param quizTemp
 	 * @return

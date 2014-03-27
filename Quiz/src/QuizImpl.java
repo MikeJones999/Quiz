@@ -24,7 +24,7 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	public QuizImpl(String quizName, int questionTotal) throws RemoteException 
 	{
 		this.quizName = quizName;
-		this.questionTotal = questionTotal;
+		this.setQuestionTotal(questionTotal);
 	}
 
 
@@ -100,6 +100,18 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	public List<PlayerScores> getScores() throws RemoteException
 	{
 		return scores;
+	}
+
+	@Override
+	public int getQuestionTotal() throws RemoteException
+	{
+		return questionTotal;
+	}
+
+	@Override
+	public void setQuestionTotal(int questionTotal) throws RemoteException
+	{
+		this.questionTotal = questionTotal;
 	}
 	
 }

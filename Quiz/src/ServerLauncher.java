@@ -28,17 +28,6 @@ public class ServerLauncher
 		try 
 		{
 			
-			/*
-			//Test player creation
-			Player[] players = {new Player(1,"Mike", 0), new Player(2, "Stevo", 0)};
-			
-			ArrayList<Player> playerList = new ArrayList<Player>();
-			//Insert the Player objects into the ArrayList
-			for (int i=0; i<players.length; i++)
-			{
-				playerList.add(players[i]);
-			}
-			*/
 			
 				//2. Create the reg if there is not one
 				LocateRegistry.createRegistry(1099);
