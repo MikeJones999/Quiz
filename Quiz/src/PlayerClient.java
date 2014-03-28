@@ -47,6 +47,7 @@ public class PlayerClient implements java.io.Serializable
 	 */
 	public ServerManager initialConnect() throws MalformedURLException, RemoteException, NotBoundException
 	{
+		System.out.println("Just Setting up the playerClient to Server connection...");
 		
 		System.out.print("Insert IP: ");
 		String ip = System.console().readLine();

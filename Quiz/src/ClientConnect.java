@@ -36,7 +36,7 @@ public class ClientConnect
 	public ServerManager initialConnect() throws MalformedURLException, RemoteException, NotBoundException
 	{
 		
-		System.out.print("Quiz SetUp Starting...");
+		System.out.println("Quiz SetUp Starting...");
 		//String str = System.console().readLine();
 		
 		System.out.print("Insert IP: ");

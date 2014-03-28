@@ -43,7 +43,7 @@ public interface Quiz extends Remote
 	
 	void addToPlayerScore(int Id, int score) throws RemoteException;
 	
-	void addToPlayerScore(PlayerScores pScore) throws RemoteException;
+	String addToPlayerScore(PlayerScores pScore) throws RemoteException;
 	
 	HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException;
 	
@@ -54,6 +54,10 @@ public interface Quiz extends Remote
 	int getQuestionTotal() throws RemoteException;
 
 	void setQuestionTotal(int questionTotal) throws RemoteException;
+	
+	void setTopScore(PlayerScores p) throws RemoteException;
+	
+	PlayerScores getTopScore() throws RemoteException;
 
 	
 }

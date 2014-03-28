@@ -15,6 +15,7 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	private String quizName;
 	private int questionTotal;
 	private int quizId;
+	private PlayerScores topScore = null;
 	private List<Question> quizQuestions = new ArrayList<Question>(); 
 	private List<PlayerScores> scores  = new ArrayList<PlayerScores>();
 	//adds players ID and Score to this Quiz
@@ -81,10 +82,28 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	
 
 	@Override
-	public void addToPlayerScore(PlayerScores pScore) throws RemoteException
+	public String addToPlayerScore(PlayerScores pScore) throws RemoteException
 	{		
+		String update = "";
 		//need to have an overwrting element
+		if (getTopScore() == null)
+		{	
+			if(pScore.getScore() > 0)
+			{
+				setTopScore(pScore);
+				update = "**** CONGRATULATIONS NEW TOP SCORE *****";
+			}
+		}
+		else
+		{
+			if (pScore.getScore() > topScore.getScore())
+			{
+				setTopScore(pScore);
+				update = "**** CONGRATULATIONS NEW TOP SCORE *****";
+			}
+		}
 		scores.add(pScore);
+		return update;
 	}
 	
 	
@@ -112,6 +131,20 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	public void setQuestionTotal(int questionTotal) throws RemoteException
 	{
 		this.questionTotal = questionTotal;
+	}
+
+
+	@Override
+	public void setTopScore(PlayerScores p) throws RemoteException 
+	{
+		this.topScore = p;
+	}
+
+
+	@Override
+	public PlayerScores getTopScore() throws RemoteException
+	{
+		return topScore;
 	}
 	
 }
