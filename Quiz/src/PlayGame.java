@@ -50,6 +50,7 @@ private int playerScore;
 			System.out.println("5: Show all the scores for a all Quizzes");
 			System.out.println("6: Show all the Top Scores for a all Quizzes");
 			System.out.println("7: Show Top Score for a particular Quiz");
+			System.out.println("99: ***DEBUG*** Save all Quizzes to file");			
 			System.out.println("0: Exit");
 		
 			String opt = readLineViaBuffer("Please enter the required option: ");
@@ -146,6 +147,20 @@ private int playerScore;
 						}						
 						break;
 						
+				case 99: System.out.println("*** DEBUG **** Save all Quizzes to file");
+							displayAllQuizzes();
+						
+							if(!serverConnect.returnAllQuizzes().isEmpty())
+							{	
+								System.out.println("***DEBUG *** Flushing!!!!");
+								serverConnect.runflush();
+							} 
+							else
+							{
+								System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
+							}						
+							break;
+						
 				default: System.out.println("*** DEBUG **** Not an Option, try again");
 						break;
 			}
@@ -231,10 +246,7 @@ private int playerScore;
 		//iterrate through scores to find
 		for (int i = 0; i < pScoresSize; i++)
 		{
-			//if (pScores.get(i).getQuizID() == quizId)
-			//{
 				System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Name: " + pScores.get(i).getPlayerName() + ", Score = " + pScores.get(i).getScore());
-			//}
 		}
 		System.out.println();
 	}
@@ -256,13 +268,10 @@ private int playerScore;
 		int pScoresSize = pScores.size();
 		for (int i = 0; i < pScoresSize; i++)
 		{
-			//if (pScores.get(i).getQuizID() == quizId)
-			//{
 				if(pScores.get(i).getPlayerId() == pId)
 					{
 						System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Name: " + pScores.get(i).getPlayerName() + ", Score = " + pScores.get(i).getScore());
 					}
-			//}
 		}
 	}
 

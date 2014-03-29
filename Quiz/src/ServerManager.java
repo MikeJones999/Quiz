@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -98,9 +99,14 @@ public interface ServerManager extends Remote
 	public Player getPlayerFromId(int Id) throws RemoteException;
 	
 	
+	
+	public void runflush() throws RemoteException, IOException;
+	
+	
 	/**
 	 * Saves all data to Disk
+	 * @throws IOException 
 	 */
-	public void flush()  throws RemoteException;
+	public void flush()  throws RemoteException, IOException;
 	
 }

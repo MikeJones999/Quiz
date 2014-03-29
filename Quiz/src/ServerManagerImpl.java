@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager 
+public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager, Serializable  
 {
 	private static int count = 0; 
 	
@@ -54,10 +57,16 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		quizMap.put(Id, quizTemp);
 		quizTemp.createQuizId(Id);
 		
-		//adjust quizID for newley created quizzes
-		quizId = quizId + 1;	
+		//adjust quizID for newly created quizzes - every time quiz is recalled ensure quizId grows with it.
+		increaseQuizId();
+		// or if this method is synched - 	quizId = quizId + 1;	
 	}	
 	
+	//this should be synched
+	public void increaseQuizId()
+	{
+		quizId = quizId + 1;	
+	}
 	
 
 	@Override
@@ -151,11 +160,10 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 				System.out.println("***DEBUG*** Player ID: " + entry.getKey() + ". " + "Player Name: " + entry.getValue().getName());
 			}
 		}
-		return tempPlayer;
-	
+		return tempPlayer;	
 	}
 	
-	
+	//probably remove this
 	public int createPlayerID() throws RemoteException 
 	{
 		return 0;	
@@ -163,10 +171,55 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
-	public void flush()  throws RemoteException 
+	public void runflush() throws RemoteException, IOException
 	{
-		//to do
+	 flush();			
+	}
+	
+	@Override
+	public void flush() throws IOException, RemoteException
+	{
+		if (checkFileExists("Quiz.txt"))
+		{			
+			FileWriter fileWite = new FileWriter("Quiz.txt");
+			BufferedWriter bufferWrite = new BufferedWriter(fileWite);				
+			FileReader file = new FileReader( "Quiz.txt");
+			BufferedReader buffer = new BufferedReader(file);
+			String line = null;
+			while ( (line = buffer.readLine()) != null)		
+			{
+				bufferWrite.newLine();
+			}
 		
+			HashMap<Integer, Quiz> tempQuizMap = returnAllQuizzes();
+			int hMSize = tempQuizMap.size(); 
+			//System.out.println("***DEBUG*** HasMap size is: " + hMSize); 
+			bufferWrite.write(hMSize + "," + " Quizzes"); 
+			bufferWrite.newLine();
+			for(Map.Entry<Integer, Quiz> entry: tempQuizMap.entrySet())
+			{	
+					//System.out.println("***DEBUG*** Writing Quiz: " + entry.getValue().getQuizName() + " to file");
+					bufferWrite.write(entry.getValue().getQuizId() + "," + entry.getValue().getQuizName() + "," + entry.getValue().getQuestionTotal()); 
+					bufferWrite.newLine();
+					//gets list of questions associated to this quiz
+					List <Question> quests = entry.getValue().getQuestions();
+					int questSize = quests.size();
+					//add each question, answer1,2,3 and correctAnswer to file
+					for (int i = 0; i < questSize; i++)
+					{
+						Question tempQuest = quests.get(i);	
+						String[] answers = tempQuest.getAnswers();
+						bufferWrite.write(tempQuest.getQuestion() + "," + answers[0] + "," + answers[1] + "," + answers[2] + "," + tempQuest.getCorrectAnswer()); 
+						bufferWrite.newLine();
+					}					
+			}				
+		
+				bufferWrite.close();
+		}	
+		else
+		{
+			System.out.println("File does not exist");
+		}
 	}
 	
 	
@@ -213,8 +266,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	        catch(IOException e)
 			{
 					System.out.println("An error has occurred, Check file is not in use");				
-			}
-		   
+			}		   
 	}
 
 
