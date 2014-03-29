@@ -84,7 +84,7 @@ public interface ServerManager extends Remote
 	 * @param name
 	 * @param Id
 	 */
-	void returningPlayer(String name, int Id) throws RemoteException;
+	public void addPlayersFromFile(String name, int Id) throws RemoteException;
 	
 	
 	public HashMap<Integer, Player> returnAllPlayers() throws RemoteException;

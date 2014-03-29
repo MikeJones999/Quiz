@@ -157,6 +157,113 @@ public class TestQuizSetUp
 	*/
 	
 	@Test
+	public void readPlayersAndScoresFromFile() throws RemoteException
+	{
+		   String fileName = "PlayerStats.txt";
+		   try {	//possible dont need this as us createNewfile() which checks for you
+				   if (!checkFileExists(fileName))
+			        {
+			        	File file = new File(fileName);
+			        	file.createNewFile();
+			        } 
+
+		   		Scanner s = null;
+	            s = new Scanner(new BufferedReader(new FileReader(fileName)));
+	            String line = null; 	
+	            //check to see file has contents - then iterate through contacts
+	            if(s.hasNext())
+	            {	   
+	            	line = s.nextLine();
+	            	//Read and save to server all players
+	            	int playersFound = itemsInFileFound(line);
+					for (int i = 0; i < playersFound; i++)
+					{
+						 line = s.nextLine();	
+						 getPlayerFromLine(line);								
+					}	
+					
+					//now read Quiz ID and add that to scores
+					
+					int quizzesFound = itemsInFileFound(line);
+					for (int i = 0; i < quizzesFound; i++)
+					{
+						line = s.nextLine();
+						int [] result = getQuizIdAndAttemptsFromFile(line);
+						Quiz tempQuiz = newManager.getQuizFromID(result[0]);	
+						for (int j = 0; j < result[1]; j++)
+						{
+							line = s.nextLine();
+							//create playerscore from file
+							PlayerScores tempPscores = returnPlayerScoresFromFile(result[1], line);
+							//add the above playerscore to the designated quiz
+							tempQuiz.addToPlayerScore(tempPscores);
+						}
+						
+					}
+              
+	            }
+	            else
+	            {
+	            	System.out.println("The file: " + fileName + " is empty");
+	            	  s.close();
+	            }
+	   		}
+	        catch(IOException e)
+			{
+					System.out.println("An error has occurred, Check file is not in use");				
+			}
+		   
+		    HashMap<Integer, Quiz> tempQuizMap = newManager.returnAllQuizzes();
+			//int hMSize = tempQuizMap.size();
+			String[] quizNames = new String[10];
+			for(Map.Entry<Integer, Quiz> entry: tempQuizMap.entrySet())
+			{	
+				quizNames[entry.getKey()] = entry.getValue().getQuizName();
+				System.out.println("QuizId: " + entry.getValue().getQuizId() + ", QuizName: " +  entry.getValue().getQuizName());
+				List<Question> tempQ =  entry.getValue().getQuestions();
+				int tempQsize = tempQ.size();
+				for (int i = 0; i < tempQsize; i++)
+				{
+					System.out.println("Question: " + tempQ.get(i).getQuestion());
+				}
+			}
+			
+			
+		  assertEquals(quizNames[0], "mikes quiz");
+	}
+	
+	
+	public int[] getQuizIdAndAttemptsFromFile(String line)
+	{
+		String[] stringArray = line.split(",");
+		int quizId = Integer.parseInt(stringArray[1].trim());
+		int quizAttempts = Integer.parseInt(stringArray[3].trim());	
+		int[] result = {quizId, quizAttempts};
+		return result;
+	}
+	
+	public PlayerScores returnPlayerScoresFromFile(int quizId, String line)
+	{
+		String[] stringArray = line.split(",");
+		int playerID = Integer.parseInt(stringArray[0].trim());
+		String pName = stringArray[1].trim();
+		int score = Integer.parseInt(stringArray[2].trim());
+		PlayerScores p = new PlayerScores(quizId, playerID, pName, score);
+		return p;
+	}
+	
+	
+	public void getPlayerFromLine(String line) throws RemoteException
+	{
+		String[] stringArray = line.split(",");
+		int Id = Integer.parseInt(stringArray[0].trim());
+		String pName = stringArray[1].trim();
+		newManager.addPlayersFromFile(pName, Id);
+		
+	}
+	
+	
+	@Test
 	public void recallQuizzesFromFile() throws RemoteException
 	{
 		   String fileName = "Quiz.txt";
@@ -367,21 +474,27 @@ public class TestQuizSetUp
 			}		
 		
 		
+			//get all quizzes and their scores and add write them to file
 			 HashMap<Integer, Quiz> tempQHashMap =  newManager.returnAllQuizzes();
+			 int numOfQuizzes = tempQHashMap.size();
+			 //first add the number of quizzes to iterate through on recalling
+			 bufferWrite.write(numOfQuizzes + "," + "Number of Quizzes");
+			 bufferWrite.newLine();
 				for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
-				{			
-						System.out.println("QuizID: " + entry.getValue().getQuizId() + ", Quiz Name: " + entry.getValue().getQuizName());
-						System.out.println("---------------------------------------------------");
-						bufferWrite.write("QuizID: " + entry.getValue().getQuizId() + "," + "Quiz Name: " + entry.getValue().getQuizName()); 
-						bufferWrite.newLine();
-						List<PlayerScores> allScores = entry.getValue().getScores();
-						int allScoresSize = allScores.size();
-						for (int i = 0; i < allScoresSize; i++)
-						{
-								System.out.println("PlayerId: " + allScores.get(i).getPlayerId() + ", Score = " + allScores.get(i).getScore());
-								bufferWrite.write(allScores.get(i).getPlayerId() + "," + allScores.get(i).getPlayerName() + "," + allScores.get(i).getScore()); 
-								bufferWrite.newLine();
-						}
+				{		
+					//get list of all scores for each quiz
+					List<PlayerScores> allScores = entry.getValue().getScores();
+					int allScoresSize = allScores.size();
+					//System.out.println("QuizID: " + "," + entry.getValue().getQuizId() + "," + allScoresSize + ", Quiz Name: " + entry.getValue().getQuizName());
+					//System.out.println("---------------------------------------------------");
+					bufferWrite.write("QuizID" + "," + entry.getValue().getQuizId() + "," + "Quiz Attempts" + "," + allScoresSize + ", Quiz Name: " + entry.getValue().getQuizName());
+					bufferWrite.newLine();
+					for (int i = 0; i < allScoresSize; i++)
+					{
+							System.out.println("PlayerId: " + allScores.get(i).getPlayerId() + ", Score = " + allScores.get(i).getScore());
+							bufferWrite.write(allScores.get(i).getPlayerId() + "," + allScores.get(i).getPlayerName() + "," + allScores.get(i).getScore()); 
+							bufferWrite.newLine();
+					}
 				}	
 			
 			

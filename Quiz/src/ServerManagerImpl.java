@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,6 +36,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		super();	
 		//call quizzes from file
 		recallQuizzesFromFile();
+		readPlayersAndScoresFromFile();
 	}
 
 	@Override
@@ -121,6 +123,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	//consider synch here
 	public int addNewPlayer(String name) throws RemoteException 
 	{
+		//need to add throws exception for null string
+		
 		//create ID - may need to synchronise this
 		int Id = playerId;
 		Player newPlayer = new Player(Id, name);
@@ -129,12 +133,14 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		return Id;
 	}
 
+	//probably needs synching
 	@Override
-	public void returningPlayer(String name, int Id) throws RemoteException 
+	public void addPlayersFromFile(String name, int Id) throws RemoteException 
 	{
-		// TODO Auto-generated method stub
-		
-		//players.put(Id, newPlayer);
+		Player returningPlayer = new Player(Id, name);
+		players.put(Id, returningPlayer);
+		playerId = playerId + 1;
+		//no need to return ID		
 	}
 	
 	
@@ -173,9 +179,12 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	@Override
 	public void runflush() throws RemoteException, IOException
 	{
-	 flush();			
+		flush();			
+		flushPlayers();
 	}
 	
+	
+	//need to remove this from user sight
 	@Override
 	public void flush() throws IOException, RemoteException
 	{
@@ -223,6 +232,163 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	
+	public void flushPlayers() throws RemoteException, IOException
+	{
+		if (checkFileExists("PlayerStats.txt"))
+		{			
+			FileWriter fileWite = new FileWriter("PlayerStats.txt");
+			BufferedWriter bufferWrite = new BufferedWriter(fileWite);				
+			FileReader file = new FileReader( "PlayerStats.txt");
+			BufferedReader buffer = new BufferedReader(file);
+			String line = null;
+			while ( (line = buffer.readLine()) != null)		
+			{
+				bufferWrite.newLine();
+			}
+		
+			HashMap<Integer, Player> tempPlayerMap = returnAllPlayers();
+			int hMSize = tempPlayerMap.size(); 
+
+			bufferWrite.write(hMSize + "," + " Players"); 
+			bufferWrite.newLine();
+			//get all players and their ID and write to file first
+			for(Map.Entry<Integer, Player> entry: tempPlayerMap.entrySet())
+			{	
+					//System.out.println("***DEBUG*** Writing Player: " + entry.getValue().getName() + " to file");
+					bufferWrite.write(entry.getValue().getId() + "," + entry.getValue().getName()); 
+					bufferWrite.newLine();
+			}		
+		
+			//get all quizzes and their scores and add write them to file
+			 HashMap<Integer, Quiz> tempQHashMap =  returnAllQuizzes();
+			 int numOfQuizzes = tempQHashMap.size();
+			 //first add the number of quizzes to iterate through on recalling
+			 bufferWrite.write(numOfQuizzes + "," + "Number of Quizzes");
+			 bufferWrite.newLine();
+				for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
+				{		
+					//get list of all scores for each quiz
+					List<PlayerScores> allScores = entry.getValue().getScores();
+					int allScoresSize = allScores.size();
+					//System.out.println("QuizID: " + "," + entry.getValue().getQuizId() + "," + allScoresSize + ", Quiz Name: " + entry.getValue().getQuizName());
+					//System.out.println("---------------------------------------------------");
+					bufferWrite.write("QuizID" + "," + entry.getValue().getQuizId() + "," + "Quiz Attempts" + "," + allScoresSize + ", Quiz Name: " + entry.getValue().getQuizName());
+					bufferWrite.newLine();
+					for (int i = 0; i < allScoresSize; i++)
+					{
+							System.out.println("PlayerId: " + allScores.get(i).getPlayerId() + ", Score = " + allScores.get(i).getScore());
+							bufferWrite.write(allScores.get(i).getPlayerId() + "," + allScores.get(i).getPlayerName() + "," + allScores.get(i).getScore()); 
+							bufferWrite.newLine();
+					}
+				}	
+			
+			
+			
+		
+				bufferWrite.close();
+		}	
+		else
+		{
+			System.out.println("File does not exist");
+		}
+	}
+	
+	
+	public void readPlayersAndScoresFromFile() throws RemoteException
+	{
+		System.out.println("***DEBUG*** Reading players and scores from file");
+		System.out.println();
+		   String fileName = "PlayerStats.txt";
+		   try {	//possible dont need this as us createNewfile() which checks for you
+				   if (!checkFileExists(fileName))
+			        {
+			        	File file = new File(fileName);
+			        	file.createNewFile();
+			        } 
+
+		   		Scanner s = null;
+	            s = new Scanner(new BufferedReader(new FileReader(fileName)));
+	            String line = null; 	
+	            //check to see file has contents - then iterate through contacts
+	            if(s.hasNext())
+	            {	   
+	            	line = s.nextLine();
+	            	//Read and save to server all players
+	            	int playersFound = itemsInFileFound(line);
+					for (int i = 0; i < playersFound; i++)
+					{
+						 line = s.nextLine();	
+						 getPlayerFromLine(line);								
+					}	
+					
+					//now read Quiz ID and add that to scores
+					line = s.nextLine();
+					int quizzesFound = itemsInFileFound(line);
+					for (int i = 0; i < quizzesFound; i++)
+					{
+						line = s.nextLine();
+						int [] result = getQuizIdAndAttemptsFromFile(line);
+						//get quiz id from line above
+						Quiz tempQuiz = getQuizFromID(result[0]);	
+						System.out.println("***DEBUG*** Quiz: " + tempQuiz.getQuizId() + " found");
+						//iterrate through the scores adding them to quiz
+						for (int j = 0; j < result[1]; j++)
+						{
+							line = s.nextLine();
+							//create playerscore from file
+							PlayerScores tempPscores = returnPlayerScoresFromFile(result[1], line);
+							//add the above playerscore to the designated quiz
+							String holder = tempQuiz.addToPlayerScore(tempPscores);
+							
+						}
+						
+					}
+              
+	            }
+	            else
+	            {
+	            	System.out.println("The file: " + fileName + " is empty");
+	            	  s.close();
+	            }
+	   		}
+	        catch(IOException e)
+			{
+					System.out.println("An error has occurred, Check file is not in use");				
+			}
+
+	}
+	
+	public int[] getQuizIdAndAttemptsFromFile(String line)
+	{
+		String[] stringArray = line.split(",");
+		int quizId = Integer.parseInt(stringArray[1].trim());
+		int quizAttempts = Integer.parseInt(stringArray[3].trim());	
+		int[] result = {quizId, quizAttempts};
+		return result;
+	}
+	
+	public PlayerScores returnPlayerScoresFromFile(int quizId, String line)
+	{
+		String[] stringArray = line.split(",");
+		int playerID = Integer.parseInt(stringArray[0].trim());
+		String pName = stringArray[1].trim();
+		int score = Integer.parseInt(stringArray[2].trim());
+		PlayerScores p = new PlayerScores(quizId, playerID, pName, score);
+		return p;
+	}
+	
+	
+	public void getPlayerFromLine(String line) throws RemoteException
+	{
+		String[] stringArray = line.split(",");
+		int Id = Integer.parseInt(stringArray[0].trim());
+		String pName = stringArray[1].trim();
+		addPlayersFromFile(pName, Id);
+		
+	}
+	
+	
+	
 	public void recallQuizzesFromFile() throws RemoteException
 	{
 		   String fileName = "Quiz.txt";
@@ -268,7 +434,6 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 					System.out.println("An error has occurred, Check file is not in use");				
 			}		   
 	}
-
 
 	/**
 	 *  Checks a line in the CSV/txt file for the first int.
