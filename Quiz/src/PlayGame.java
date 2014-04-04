@@ -46,10 +46,12 @@ private int playerScore;
 			System.out.println("1: Play a quiz?");
 			System.out.println("2: Show all available Quizzes");
 			System.out.println("3: Show all your scores for a particular Quiz");
-			System.out.println("4: Show all the scores for a particular Quiz");
-			System.out.println("5: Show all the scores for a all Quizzes");
-			System.out.println("6: Show all the Top Scores for a all Quizzes");
-			System.out.println("7: Show Top Score for a particular Quiz");
+			System.out.println("4: Show all your scores for all Quizzes");
+			System.out.println("5: Show all the scores for a particular Quiz");
+			System.out.println("6: Show all the scores for a all Quizzes");
+			System.out.println("7: Show all the Top Scores for a all Quizzes");
+			System.out.println("8: Show Top Score for a particular Quiz");
+			System.out.println("9: Go to Score menu - Not yet Implemenetd");
 			System.out.println("99: ***DEBUG*** Save all Quizzes to file");			
 			System.out.println("0: Exit");
 		
@@ -93,8 +95,22 @@ private int playerScore;
 							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
 						}						
 						break;
-				
-				case 4: System.out.println("*** DEBUG **** Show all your scores");
+						
+				case 4: System.out.println("*** DEBUG **** Show all your scores for All Quizzes");
+						if(!serverConnect.returnAllQuizzes().isEmpty())
+						{	
+							//must deal with non int returned here
+							allPlayerScoreForQuizID(player.getId());
+							
+						} else
+						{
+							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
+						}						
+						break;						
+						
+						
+						
+				case 5: System.out.println("*** DEBUG **** Show all your scores for quiz ID");
 						displayAllQuizzes();
 						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
 						if(!serverConnect.returnAllQuizzes().isEmpty())
@@ -108,7 +124,7 @@ private int playerScore;
 						}						
 						break;		
 						
-				case 5: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
+				case 6: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
 						if(!serverConnect.returnAllQuizzes().isEmpty())
 						{	
 								///call to show all scores for all quizzes
@@ -121,7 +137,7 @@ private int playerScore;
 						
 						
 						
-				case 6: System.out.println("*** DEBUG **** Show all Top scores for All Quizzes");
+				case 7: System.out.println("*** DEBUG **** Show all Top scores for All Quizzes");
 						if(!serverConnect.returnAllQuizzes().isEmpty())
 						{	
 								///call to show all scores for all quizzes
@@ -133,7 +149,7 @@ private int playerScore;
 						break;
 				
 				
-				case 7: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
+				case 8: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
 						displayAllQuizzes();
 						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view Top Score: ");
 						if(!serverConnect.returnAllQuizzes().isEmpty())
@@ -162,7 +178,7 @@ private int playerScore;
 							break;
 						
 				default: System.out.println("*** DEBUG **** Not an Option, try again");
-						break;
+						 break;
 			}
 		}		
 	}
@@ -266,14 +282,59 @@ private int playerScore;
 		System.out.println("---------------------------------------------------");
 		List<PlayerScores> pScores = tempQ.getScores();
 		int pScoresSize = pScores.size();
+		int total = 0;
+		int ave = 0;
+		int count = 0;
+		//iterate through the quiz scores to find the matching player ID
 		for (int i = 0; i < pScoresSize; i++)
 		{
+				//get all the player's scores for said Quiz 
 				if(pScores.get(i).getPlayerId() == pId)
 					{
-						System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Name: " + pScores.get(i).getPlayerName() + ", Score = " + pScores.get(i).getScore());
+						int score = pScores.get(i).getScore();
+						System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Name: " + pScores.get(i).getPlayerName() + ", Score = " + score);
+						total = total + score;
+						count = count + 1;						
 					}
+			
+				
+		}
+		//print out average score for the player
+		if (count != 0)
+		{
+			ave = total/count;				
+			System.out.println("Your Average Score over " + count + " attempt(s) is: " + ave);
+		}
+		else
+		{
+			System.out.println("You have not attempted this quiz");
 		}
 	}
+	
+	/**
+	 * Prints the players Scores for all quizzes
+	 * @param pId
+	 * @throws IOException
+	 */
+	public void allPlayerScoreForQuizID(int pId) throws IOException
+	{
+		//get list of all quizzes then for each quiz print out the score for the player ID
+		HashMap<Integer, Quiz> tempHlist = getAllQuizzes();
+		if (tempHlist.isEmpty())
+		{
+			System.out.println("No Quizzes available");
+		}
+		else
+		{
+			for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+			{
+				playerScoreForQuizID(entry.getKey(), pId);				
+			}
+		}
+		
+		
+	}
+	
 
 	/**
 	 * Gets Top score from certain quiz
