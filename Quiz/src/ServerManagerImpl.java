@@ -33,7 +33,28 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 
 	protected ServerManagerImpl() throws RemoteException 
 	{
-		super();	
+		super();
+		
+		//shutdown hook - to flush all data upon completion
+		  Runtime.getRuntime().addShutdownHook(new Thread() 
+	        {
+	        	
+	            public void run() 
+	            {      
+	            	System.out.println("Thank You and GoodBye - Exit");
+	            	try {
+	            			//flush all data to two files
+							masterFlush();
+						} catch (RemoteException e)
+						{
+							e.printStackTrace();
+						} catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+	            }
+	        });
+		
 		//call quizzes from file
 		recallQuizzesFromFile();
 		readPlayersAndScoresFromFile();
@@ -43,30 +64,41 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	//consider synch here
 	 public synchronized int addNewQuiz(String name, int questionNum) throws RemoteException 
 	{
-		QuizImpl quizTemp = new QuizImpl(name, questionNum);
-		int id = createQuizId(quizTemp);
-		quizMap.put(id, quizTemp);
-		quizId = quizId + 1;
-		
-		return id;
+		if(name == null || questionNum == 0)
+		{
+			throw new NullPointerException("One of the Parameters is Null");
+		} 
+		else
+		{
+			QuizImpl quizTemp = new QuizImpl(name, questionNum);
+			int id = createQuizId(quizTemp);
+			quizMap.put(id, quizTemp);
+			increaseQuizId();		
+			return id;
+		}
 	}
 	
 	@Override
 	public void addQuizFromFile(int Id, String name, int questionNum) throws RemoteException 
 	{
-		QuizImpl quizTemp = new QuizImpl(name, questionNum);
-		quizMap.put(Id, quizTemp);
-		quizTemp.createQuizId(Id);
-		
-		//adjust quizID for newly created quizzes - every time quiz is recalled ensure quizId grows with it.
-		increaseQuizId();
-		// or if this method is synched - 	quizId = quizId + 1;	
+		if(name == null || questionNum == 0)
+		{
+			throw new NullPointerException("One of the Parameters is Null");
+		} 
+		else
+		{
+			QuizImpl quizTemp = new QuizImpl(name, questionNum);
+			quizMap.put(Id, quizTemp);
+			quizTemp.createQuizId(Id);			
+			//adjust quizID for newly created quizzes - every time quiz is recalled ensure quizId grows with it.
+			increaseQuizId();
+		}
 	}	
 	
+
 	/**
-	 * 
+	 * increases the QuizID ready for newly created quizzes
 	 */
-	//this should be synched
 	public void increaseQuizId()
 	{
 		quizId = quizId + 1;	
@@ -77,6 +109,10 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	//consider synch here
 	public int createQuizId(Quiz quizTemp) throws RemoteException 
 	{
+		if (quizTemp == null) 
+		{
+			throw new IllegalArgumentException("Quiz does not exist");
+		}
 		//updates quiz with ID
 		quizTemp.createQuizId(quizId);		
 		return quizId;
@@ -103,6 +139,10 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	@Override
 	public void addQuestionToQuiz(Quiz quiz, Question q) throws RemoteException 
 	{
+		if (quiz == null || q == null) 
+		{
+			throw new IllegalArgumentException("Quiz/Question does not exist");
+		}
 		quiz.addQuestionToQuiz(q);
 		
 	}
@@ -110,6 +150,10 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	@Override
 	public void addQuestionToQuiz(int Id, Question q) throws RemoteException 
 	{
+		if (q == null) 
+		{
+			throw new IllegalArgumentException("Question does not exist");
+		}
 		Quiz temp = this.getQuizFromID(Id);
 		temp.addQuestionToQuiz(q);
 		
@@ -122,31 +166,40 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
-	//consider synch here
 	public synchronized int addNewPlayer(String name) throws RemoteException 
 	{
 		//need to add throws exception for null string
-		
-		//create ID - may need to synchronise this
-		int Id = playerId;
-		Player newPlayer = new Player(Id, name);
-		playerId = playerId + 1;
-		players.put(Id, newPlayer);
-		return Id;
+		if(name == null)
+		{
+			throw new NullPointerException("Name Parameters is Null");
+		} 
+		else
+		{
+			//create ID - may need to synchronise this
+			int Id = playerId;
+			Player newPlayer = new Player(Id, name);
+			playerId = playerId + 1;
+			players.put(Id, newPlayer);
+			return Id;
+		}
 	}
 
-	//probably needs synching
 	@Override
 	public void addPlayersFromFile(String name, int Id) throws RemoteException 
 	{
-		Player returningPlayer = new Player(Id, name);
-		players.put(Id, returningPlayer);
-		playerId = playerId + 1;
-		//no need to return ID		
+		if(name == null)
+		{
+			throw new NullPointerException("Name Parameters is Null");
+		} 
+		else
+		{
+			Player returningPlayer = new Player(Id, name);
+			players.put(Id, returningPlayer);
+			playerId = playerId + 1;
+			//no need to return ID here - this is from file	
+		}
 	}
 	
-	
-	//loadPlayerFromFile
 
 	@Override
 	public HashMap<Integer, Player> returnAllPlayers() throws RemoteException 
@@ -176,7 +229,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	
 
 	@Override
-	public void runflush() throws RemoteException, IOException
+	public void masterFlush() throws RemoteException, IOException
 	{
 		flush();			
 		flushPlayers();
@@ -184,7 +237,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	
 	
 	/**
-	 * 
+	 * Saves Quiz data to file - this is automatically done when server shuts down
 	 * @throws IOException
 	 * @throws RemoteException
 	 */
@@ -224,7 +277,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 						bufferWrite.write(tempQuest.getQuestion() + "," + answers[0] + "," + answers[1] + "," + answers[2] + "," + tempQuest.getCorrectAnswer()); 
 						bufferWrite.newLine();
 					}					
-			}				
+			}	
 		
 				bufferWrite.close();
 		}	
@@ -235,7 +288,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	/**
-	 * 
+	 * Saves Player data and playerScores data to file - this is automatically done when server shuts down
 	 * @throws RemoteException
 	 * @throws IOException
 	 */
@@ -298,7 +351,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	
 	
 	/**
-	 * 
+	 * Reads Quiz data and player/playerScore data from file. 
+	 * This is done automatically upon server creation.	 *
 	 * @throws RemoteException
 	 */
 	public void readPlayersAndScoresFromFile() throws RemoteException
@@ -359,13 +413,13 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 			{
 					System.out.println("An error has occurred, Check file is not in use");				
 			}
-
 	}
 	
+	
 	/**
-	 * 
+	 * Reads the QuizId and Attempts from File
 	 * @param line
-	 * @return
+	 * @return result array {quizID, quizAttempts}.
 	 */
 	public int[] getQuizIdAndAttemptsFromFile(String line)
 	{
@@ -377,7 +431,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	/**
-	 * 
+	 * Returns PlayerScores from File
 	 * @param quizId
 	 * @param line
 	 * @return
@@ -393,7 +447,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	/**
-	 * 
+	 * Identifies Player name and ID from the given string line
+	 * Then calls the addPlayersFromFile method, adding that player to the server 
 	 * @param line
 	 * @throws RemoteException
 	 */
@@ -407,7 +462,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	
 	
 	/**
-	 * 
+	 * Recalls and adds quizzes from file to the server
 	 * @throws RemoteException
 	 */
 	public void recallQuizzesFromFile() throws RemoteException
@@ -461,52 +516,73 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	 * @return itemsFound (Int)
 	 */
 	public int itemsInFileFound(String line)
-	{		
-		line = line.trim();					
-		String[] stringArray = line.split(",");
-		int itemsFound = Integer.parseInt(stringArray[0].trim());
-		System.out.println("***DEBUG*** Items Found: " + itemsFound);	
-		return itemsFound;
+	{	
+		if(line == null)
+		{
+			throw new NullPointerException("line read from File appears to be Null");
+		} 
+		else
+		{
+			line = line.trim();					
+			String[] stringArray = line.split(",");
+			int itemsFound = Integer.parseInt(stringArray[0].trim());
+			System.out.println("***DEBUG*** Items Found: " + itemsFound);	
+			return itemsFound;
+		}
 	}
 	
 	/**
-	 * 
+	 * Creates a new quiz from a saved quiz on file.
 	 * @param lineRead
-	 * @return
+	 * @return QuizID and Number of questions in that quiz
 	 * @throws RemoteException
 	 * @throws FileNotFoundException
 	 */
 	public int[] createQuizFromFile(String lineRead) throws RemoteException, FileNotFoundException
 	{
-		//need to read the first line to establish how many questions per quiz.
-		String[] stringArray = lineRead.split(",");
-		int id = Integer.parseInt(stringArray[0].trim());
-		String quizName = stringArray[1].trim();
-		int numberOfQuests = Integer.parseInt(stringArray[2].trim());
-		addQuizFromFile(id, quizName, numberOfQuests);
-        int[] quizInit = {id, numberOfQuests};  
-		return quizInit;
+		if(lineRead == null)
+		{
+			throw new NullPointerException("line read from File appears to be Null");
+		} 
+		else
+		{
+			//need to read the first line to establish how many questions per quiz.
+			String[] stringArray = lineRead.split(",");
+			int id = Integer.parseInt(stringArray[0].trim());
+			String quizName = stringArray[1].trim();
+			int numberOfQuests = Integer.parseInt(stringArray[2].trim());
+			addQuizFromFile(id, quizName, numberOfQuests);
+	        int[] quizInit = {id, numberOfQuests};  
+			return quizInit;
+		}
 				 
 	}
 	
 	/**
-	 * 
+	 * Adds questions to a quiz that was returned from File
 	 * @param quizId
 	 * @param lineRead
 	 * @throws RemoteException
 	 */
 	public void addQuestionsFromFileToQuiz(int quizId, String lineRead) throws RemoteException
 	{
-		String[] stringArray = lineRead.split(",");
-		String question = stringArray[0].trim();
-		String ansOne = stringArray[1].trim();
-		String ansTwo = stringArray[2].trim();
-		String ansThree = stringArray[3].trim();
-		String corAnswer = stringArray[4].trim();
-		int answer = Integer.parseInt(corAnswer);
-		
-		Question q = new Question(question, ansOne, ansTwo, ansThree, answer);
-		addQuestionToQuiz(quizId, q);
+		if(lineRead == null)
+		{
+			throw new NullPointerException("line read from File appears to be Null");
+		} 
+		else
+		{
+			String[] stringArray = lineRead.split(",");
+			String question = stringArray[0].trim();
+			String ansOne = stringArray[1].trim();
+			String ansTwo = stringArray[2].trim();
+			String ansThree = stringArray[3].trim();
+			String corAnswer = stringArray[4].trim();
+			int answer = Integer.parseInt(corAnswer);
+			
+			Question q = new Question(question, ansOne, ansTwo, ansThree, answer);
+			addQuestionToQuiz(quizId, q);
+		}
 	}
 	
 	/**
@@ -526,8 +602,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void run() 
+	{		// TODO Auto-generated method stub
 		
 	};
 

@@ -72,21 +72,21 @@ public class SetUPMenu implements java.io.Serializable
 	 * @throws IOException
 	 */
 	public void makeNewQuiz() throws IOException
-	{
-		
+	{		
 			System.out.println();
 			System.out.println("************* Quiz Setup *************");
 			System.out.println();
 			String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
 			String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
 			int quantOfQuestions = Integer.parseInt(qAmount);	
-			
+			//create new quiz and return its ID
 			int returnedID = serverConnect.addNewQuiz(qName, quantOfQuestions);
 			Quiz tempQuiz = serverConnect.getQuizFromID(returnedID);
 			addQuestions(quantOfQuestions, tempQuiz);
-
+			System.out.println();
+			System.out.println("Congratulations, Quiz Setup Complete.");
+			System.out.println("****** Your Quiz ID: " + returnedID + ". Please Make a note of this. ******");
 	}
-	
 	
 	/**
 	 * Creates n number of questions in designated quiz
@@ -107,8 +107,7 @@ public class SetUPMenu implements java.io.Serializable
 			int answer = Integer.parseInt(correctAns);
 		    Question questTemp = new Question(quest, ansOne, ansTwo, ansThree, answer);
 		    serverConnect.addQuestionToQuiz(tempQuiz, questTemp);		
-		}
-		
+		}		
 	}
 	
 	
@@ -118,8 +117,7 @@ public class SetUPMenu implements java.io.Serializable
 	 * @throws IOException
 	 */
 	public void getAllQuizzes() throws IOException 
-	{
-	
+	{	
 		System.out.println(); 
 		if(!serverConnect.returnAllQuizzes().isEmpty())			
 		{	

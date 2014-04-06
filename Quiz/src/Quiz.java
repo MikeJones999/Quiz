@@ -46,7 +46,7 @@ public interface Quiz extends Remote
 	 * @param score
 	 * @throws RemoteException
 	 */
-	void addToPlayerScore(int Id, int score) throws RemoteException;
+	//void addToPlayerScore(int Id, int score) throws RemoteException;
 	
 	/**
 	 * 
@@ -61,7 +61,7 @@ public interface Quiz extends Remote
 	 * @return
 	 * @throws RemoteException
 	 */
-	HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException;
+	//HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException;
 	
 	
 	/**
@@ -70,7 +70,7 @@ public interface Quiz extends Remote
 	 * @return
 	 * @throws RemoteException
 	 */
-	int getPlayersScore(int Id) throws RemoteException;
+	//int getPlayersScore(int Id) throws RemoteException;
 	
 	/**
 	 * Returns List of PlayerScores for this particular Quiz

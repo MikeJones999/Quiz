@@ -1,4 +1,9 @@
-
+/**
+ * PlayerScores object - these are individual scores for individual Quizzes
+ * They are linked to the Quiz object once it has been attempted by player
+ * @author mikieJ
+ *
+ */
 
 
 public class PlayerScores implements java.io.Serializable
@@ -21,23 +26,37 @@ public class PlayerScores implements java.io.Serializable
 		this.score = score;
 	}
 	
-	
+	/**
+	 * Returns Quiz Id to which the scores are linked
+	 * @return quizId
+	 */
 	public int getQuizID()
 	{
 		return quizId;
 	}
 	
+	/**
+	 * Returns the score for a particular attempt of a quiz
+	 * @return score
+	 */
 	public int getScore()  
 	{
 		return score;
 	}
 	
-	
+	/**
+	 * Returns the player ID for a player attempt of a quiz
+	 * @return playerID
+	 */
 	public int getPlayerId()
 	{
 		return playerID;
 	}
 	
+	/**
+	 * Returns the player name for a player attempt of a quiz
+	 * @return pName
+	 */
 	public String getPlayerName()
 	{
 		return pName;

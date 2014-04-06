@@ -64,9 +64,7 @@ private int playerScore;
 			System.out.println("5: Show all the scores for a particular Quiz");
 			System.out.println("6: Show all the scores for a all Quizzes");
 			System.out.println("7: Show all the Top Scores for a all Quizzes");
-			System.out.println("8: Show Top Score for a particular Quiz");
-			System.out.println("9: Go to Score menu - Not yet Implemenetd");
-			System.out.println("99: ***DEBUG*** Save all Quizzes to file");			
+			System.out.println("8: Show Top Score for a particular Quiz");			
 			System.out.println("0: Exit");
 		
 			String opt = readLineViaBuffer("Please enter the required option: ");
@@ -98,7 +96,7 @@ private int playerScore;
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
+							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view your Scores: ");
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
 							playerScoreForQuizID(quizId, player.getId());
@@ -118,7 +116,7 @@ private int playerScore;
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
+							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view all the Scores: ");
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
 							allPlayerScoresForQuizID(quizId);
@@ -152,22 +150,8 @@ private int playerScore;
 							getTopScoreForQuizId(quizId);
 						}							
 						break;
-						
-				case 99: System.out.println("*** DEBUG **** Save all Quizzes to file");
-						displayAllQuizzes();
-					
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
-							System.out.println("***DEBUG *** Flushing!!!!");
-							serverConnect.runflush();
-						} 
-						else
-						{
-							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
-						}						
-						break;
-						
-				default: System.out.println("*** DEBUG **** Not an Option, try again");
+				
+				default: System.out.println("That is not an Option, try again");
 						 break;
 			}
 		}		
@@ -269,20 +253,15 @@ private int playerScore;
 			{
 				System.out.println("\nThat answer is wrong");
 				System.out.println();
-			}
-			
-		}
-		
-		//HashMap<Integer, Integer> tempScoreHashMap = temp.getAllPlayerScores();
-		PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);
-		
+			}			
+		}		
+		PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);		
 		//returns a string if top score added
 		String returned = temp.addToPlayerScore(pScore);
 		if (!returned.equals(""))
 		{
 			System.out.println(returned);
-		}
-				
+		}				
 		//to show the score has been saved and returned from server
 		//must add return function
 		System.out.println("End of Quiz. Your Score was " + playerScore);//temp.getPlayersScore(player.getId()));

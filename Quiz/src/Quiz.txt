@@ -1,4 +1,4 @@
-4, Quizzes
+6, Quizzes
 0,mikes quiz,2
 whats my name,Mark,mike,mick,2
 whats my age,33,35,36,2
@@ -15,3 +15,13 @@ who used to be called Abbey National,HSBC,Santander,Natwest,2
 who has a horse on their logo,loyds,Santander,TSB,1
 which bank is based in china,Credit Suisse,HSBC,Capital One,2
 which is the oldest British Bank in the list,Barclays,Natwest,RBS,1
+4,Billy Joel Quiz,5
+What is Billy Joel known as?,Trumpet Man,Piano Man,Guitar Man,2
+What land did he sing about?,No Mans Land,iceLand,Ireland,1
+which of the following was his wife,chrisey birkley,jenny agatar,Judy Judy,1
+where was Billy saying goodbye to?,los Angeles,HollyWood,California,2
+what girl did he sing about?,Uptown Girl,Port Talbot Girl,Sexual diseased Girl,1
+5,Evans Quiz,3
+Who was he name after,indiana jones,Inspector Gadjet,Tom Cruis,1
+When was he born,30.03.14,29.03.14,01.04.14,1
+who is his mummy,Leah Jaybe,Leah John,Leah Jayne,3

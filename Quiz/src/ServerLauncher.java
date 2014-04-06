@@ -16,15 +16,16 @@ public class ServerLauncher
 	}
 
 
-
+	/**
+	 * launch method to start server running
+	 */
 	private void launch()
 	{
 		//1. If there is no security manager, start one
 		if(System.getSecurityManager() == null)
 		{
 			System.setSecurityManager(new RMISecurityManager());
-		}
-		
+		}		
 		try 
 		{			
 				//2. Create the reg if there is not one
@@ -42,9 +43,9 @@ public class ServerLauncher
 				//4. Register (bind) the server object on the reg.
 				// The registry may be on a different machine
 				String registryHost = "//localhost/";
-				String serviceName = "echo";
+				String serviceName = "MikesServer";
 				Naming.rebind(registryHost + serviceName, server);
-				System.out.println("Server in waiting for connections...");
+				System.out.println("Server is waiting for connections...");
 		} 
 		catch (MalformedURLException ex)
 		{

@@ -110,7 +110,7 @@ public interface ServerManager extends Remote
 	 * @throws RemoteException
 	 * @throws IOException
 	 */
-	public void runflush() throws RemoteException, IOException;
+	public void masterFlush() throws RemoteException, IOException;
 	
 	
 }

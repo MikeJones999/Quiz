@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Quiz class that create a quiz object and is saved in the ServerManagerImpl class
+ * Each Quiz is made up of a number of Question objects
+ * This class holds the quiz ID, Number of questions for this quiz, and Top Score
+ * @author mikieJ
+ *
+ */
 public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serializable
 {
 
@@ -19,7 +25,7 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	private List<Question> quizQuestions = new ArrayList<Question>(); 
 	private List<PlayerScores> scores  = new ArrayList<PlayerScores>();
 	//adds players ID and Score to this Quiz
-	private HashMap<Integer, Integer> playerScore = new HashMap<Integer, Integer>();
+	//private HashMap<Integer, Integer> playerScore = new HashMap<Integer, Integer>();
 
 	
 	public QuizImpl(String quizName, int questionTotal) throws RemoteException 
@@ -65,22 +71,6 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 		
 	}
 
-
-	
-	public HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException
-	{		
-		return playerScore;
-	}
-
-
-	@Override
-	public void addToPlayerScore(int Id, int score) throws RemoteException
-	{		
-		//need to have an overwrting element
-		playerScore.put(Id, score);
-	}
-	
-
 	@Override
 	public String addToPlayerScore(PlayerScores pScore) throws RemoteException
 	{		
@@ -104,14 +94,6 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 		}
 		scores.add(pScore);
 		return update;
-	}
-	
-	
-	@Override
-	public int getPlayersScore(int Id) throws RemoteException
-	{				
-			int pScore = playerScore.get(Id);
-			return pScore;		
 	}
 	
 	

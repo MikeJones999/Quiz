@@ -1,10 +1,9 @@
-
-
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+
 
 public class ClientConnect
 {
