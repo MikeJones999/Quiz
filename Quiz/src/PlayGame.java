@@ -32,11 +32,20 @@ private int playerScore;
 	
 	public void welcomeMenu() throws IOException
 	{
-		
-		playerSetup();		
 		String quizInt = null;
 		int quizId = 0;
+		boolean setUpComplete = false;
 		boolean complete = false;
+		//loop until correctly establish if new player or returning player
+		while (!setUpComplete)
+		{
+			if(playerSetup())
+			{
+				setUpComplete = true;
+			}
+		}
+		
+		//setup player complete - now load Quiz options for Player Client
 		while(!complete)
 		{
 			System.out.println();
@@ -58,7 +67,7 @@ private int playerScore;
 			String opt = readLineViaBuffer("Please enter the required option: ");
 			//must deal with non int returned here
 			int option = Integer.parseInt(opt);	
-			
+						
 			switch(option) 
 			{
 				case 0: System.out.println("Exiting: Thank you and good bye");
@@ -67,12 +76,10 @@ private int playerScore;
 						break;
 						
 				case 1: System.out.println("*** DEBUG **** Play a quiz");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
-							playQuiz();
-						} else
+				
+						if (quizListEmpty())
 						{
-							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java");
+							playQuiz();
 						}
 						break;
 						
@@ -82,100 +89,78 @@ private int playerScore;
 					
 						
 				case 3: System.out.println("*** DEBUG **** Show all your scores");
-						displayAllQuizzes();
-						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
+						
+						if (quizListEmpty())
+						{
+							displayAllQuizzes();
+							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
 							playerScoreForQuizID(quizId, player.getId());
-						
-						} else
-						{
-							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
-						}						
+						}									
 						break;
 						
 				case 4: System.out.println("*** DEBUG **** Show all your scores for All Quizzes");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
-							//must deal with non int returned here
-							allPlayerScoreForQuizID(player.getId());
-							
-						} else
+						if (quizListEmpty())
 						{
-							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
-						}						
-						break;						
-						
+							allPlayerScoreForQuizID(player.getId());
+						}				
+						break;							
 						
 						
 				case 5: System.out.println("*** DEBUG **** Show all your scores for quiz ID");
-						displayAllQuizzes();
-						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
+						
+						if (quizListEmpty())
+						{
+							displayAllQuizzes();
+							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to play: ");
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
 							allPlayerScoresForQuizID(quizId);
-						} else
-						{
-							System.out.println("No Quizzes to display at present - you need to load ClientConnect.java");
-						}						
+						}				
 						break;		
 						
 				case 6: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
-								///call to show all scores for all quizzes
-							allScoresForAllQuizzes();
-						} else
+						if (quizListEmpty())
 						{
-							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
-						}						
+							allScoresForAllQuizzes();
+						}					
 						break;	
 						
 						
 						
 				case 7: System.out.println("*** DEBUG **** Show all Top scores for All Quizzes");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
-								///call to show all scores for all quizzes
-							getAllTopScoresForAllQuizzes();
-						} else
+						if (quizListEmpty())
 						{
-							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
-						}						
+							getAllTopScoresForAllQuizzes();
+						}				
 						break;
 				
 				
 				case 8: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
-						displayAllQuizzes();
-						quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view Top Score: ");
-						if(!serverConnect.returnAllQuizzes().isEmpty())
-						{	
+						if (quizListEmpty())
+						{
+							displayAllQuizzes();
+							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view Top Score: ");
 							//must deal with non int returned here
 							quizId = Integer.parseInt(quizInt);	
 							getTopScoreForQuizId(quizId);
-						} else
+						}							
+						break;
+						
+				case 99: System.out.println("*** DEBUG **** Save all Quizzes to file");
+						displayAllQuizzes();
+					
+						if(!serverConnect.returnAllQuizzes().isEmpty())
+						{	
+							System.out.println("***DEBUG *** Flushing!!!!");
+							serverConnect.runflush();
+						} 
+						else
 						{
 							System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
 						}						
 						break;
-						
-				case 99: System.out.println("*** DEBUG **** Save all Quizzes to file");
-							displayAllQuizzes();
-						
-							if(!serverConnect.returnAllQuizzes().isEmpty())
-							{	
-								System.out.println("***DEBUG *** Flushing!!!!");
-								serverConnect.runflush();
-							} 
-							else
-							{
-								System.out.println("No Quizzes to play at present - you need to load ClientConnect.java to setup a quiz");
-							}						
-							break;
 						
 				default: System.out.println("*** DEBUG **** Not an Option, try again");
 						 break;
@@ -188,209 +173,55 @@ private int playerScore;
 	 * Setup or retrieve player on connecting
 	 * @throws IOException
 	 */
-	public void playerSetup() throws IOException
+	public boolean playerSetup() throws IOException
 	{
-		String opt = readLineViaBuffer("\nWelcome, are you a returning player with an ID? y/n: ");
+		boolean setUpComplete = false;
+		System.out.println();
+		String opt = readLineViaBuffer("Welcome, are you a returning player with an ID? y/n: ");
+		//Returning player - get them from the server
 		if (opt.toLowerCase().equals("y"))
 		{
-			//String name = readLineViaBuffer("Please enter your name.");
 			String ident = readLineViaBuffer("Please enter your Id: ");
 			int Id = Integer.parseInt(ident);	
 			//serverConnect.returningPlayer(name, Id);
 			player = serverConnect.getPlayerFromId(Id);
-			System.out.println("Welcome back " + player.getName());
+			if (player != null)
+			{
+				System.out.println();
+				System.out.println("Welcome back " + player.getName());
+				setUpComplete = true;
+			}
+			else
+			{
+				System.out.println("That player ID Does not exist, please try again");
+			}
 		}
-		else
+		// New Player
+		else if (opt.toLowerCase().equals("n"))
 		{
 			String name = readLineViaBuffer("Please enter your name: ");
 			int Id = serverConnect.addNewPlayer(name);	
 			System.out.println();
-			System.out.println("*********************************************************************************");
+			System.out.println("**********************************************************************");
 			System.out.println(name + ", Your Player ID is: " + Id + ". Please write this down and Keep it safe.");
+			System.out.println("**********************************************************************");
 			System.out.println();
 			player = serverConnect.getPlayerFromId(Id);
-			//addNewPlayer
-		}		
-	}
-	
-	/**
-	 * Displays player's score for each quiz
-	 * @throws IOException
-	 */
-	public void allScoresForAllQuizzes() throws IOException
-	{
-		System.out.println("\nAll Scores for the Available Quizzes");
-	
-		//iterates through two hashmaps to find the score for the Id provided or each quiz
-		 HashMap<Integer, Quiz> tempQHashMap = getAllQuizzes();
-			for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
-			{			
-					System.out.println();
-					System.out.println("QuizID: " + entry.getValue().getQuizId() + ", Quiz Name: " + entry.getValue().getQuizName());
-					System.out.println("---------------------------------------------------");
-					List<PlayerScores> allScores = entry.getValue().getScores();
-					int allScoresSize = allScores.size();
-					for (int i = 0; i < allScoresSize; i++)
-					{
-							System.out.println("PlayerId: " + allScores.get(i).getPlayerId() + ", Name: " + allScores.get(i).getPlayerName() + ", Score = " + allScores.get(i).getScore());
-					}
-			  System.out.println();
-			  System.out.println("---------------------------------------------------");
-			}	
-		
-	}
-	
-	
-	
-	/**
-	 * gets all scores for a certain QuizID
-	 * @param Id
-	 * @throws RemoteException
-	 */
-	public void allPlayerScoresForQuizID(int quizId) throws IOException
-	{
-		System.out.println("\nAll player Scores for the Quiz ID: " + quizId);
-		System.out.println();
-		//return from ID
-		Quiz tempQ = serverConnect.getQuizFromID(quizId);
-		System.out.println("QuizID: " + tempQ.getQuizId() + ", Quiz Name: " + tempQ.getQuizName());
-		System.out.println("---------------------------------------------------");
-		//list all players scores for that quiz
-		List<PlayerScores> pScores = tempQ.getScores();
-		//System.out.println("***DEBUG*** Works to here");
-		int pScoresSize = pScores.size();
-		//iterrate through scores to find
-		for (int i = 0; i < pScoresSize; i++)
-		{
-				System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Name: " + pScores.get(i).getPlayerName() + ", Score = " + pScores.get(i).getScore());
+			setUpComplete = true;			
 		}
-		System.out.println();
-	}
-
-	
-	/**
-	 * Gets a players score from their id for a certain quiz
-	 * @param Id
-	 * @throws RemoteException
-	 */
-	public void playerScoreForQuizID(int quizId, int pId) throws IOException
-	{
-		System.out.println("\nAll your Scores for the Quiz ID: " + quizId);
-		System.out.println();
-		Quiz tempQ = serverConnect.getQuizFromID(quizId);
-		System.out.println("QuizID: " + tempQ.getQuizId() + ", Quiz Name: " + tempQ.getQuizName());
-		System.out.println("---------------------------------------------------");
-		List<PlayerScores> pScores = tempQ.getScores();
-		int pScoresSize = pScores.size();
-		int total = 0;
-		int ave = 0;
-		int count = 0;
-		//iterate through the quiz scores to find the matching player ID
-		for (int i = 0; i < pScoresSize; i++)
-		{
-				//get all the player's scores for said Quiz 
-				if(pScores.get(i).getPlayerId() == pId)
-					{
-						int score = pScores.get(i).getScore();
-						System.out.println("PlayerId: " + pScores.get(i).getPlayerId() + ", Name: " + pScores.get(i).getPlayerName() + ", Score = " + score);
-						total = total + score;
-						count = count + 1;						
-					}
-			
-				
-		}
-		//print out average score for the player
-		if (count != 0)
-		{
-			ave = total/count;				
-			System.out.println("Your Average Score over " + count + " attempt(s) is: " + ave);
-		}
+		//User did not correctly enter option
 		else
 		{
-			System.out.println("You have not attempted this quiz");
+			System.out.println("You have not entered a recognised option - try again!");
 		}
+		return setUpComplete;		
 	}
 	
-	/**
-	 * Prints the players Scores for all quizzes
-	 * @param pId
-	 * @throws IOException
-	 */
-	public void allPlayerScoreForQuizID(int pId) throws IOException
-	{
-		//get list of all quizzes then for each quiz print out the score for the player ID
-		HashMap<Integer, Quiz> tempHlist = getAllQuizzes();
-		if (tempHlist.isEmpty())
-		{
-			System.out.println("No Quizzes available");
-		}
-		else
-		{
-			for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
-			{
-				playerScoreForQuizID(entry.getKey(), pId);				
-			}
-		}
-		
-		
-	}
 	
-
-	/**
-	 * Gets Top score from certain quiz
-	 * @param Id
-	 * @throws RemoteException
-	 */
-	public void getTopScoreForQuizId(int quizId) throws IOException
-	{
-		System.out.println("\nTop Score for the Quiz ID: " + quizId);
-		System.out.println();
-		Quiz tempQ = serverConnect.getQuizFromID(quizId);
-		if (tempQ.getTopScore() != null)
-		{
-			System.out.println("QuizID: " + tempQ.getQuizId() + ", Quiz Name: " + tempQ.getQuizName());
-			System.out.println("---------------------------------------------------");
-			System.out.println("TOP SCORE: " + tempQ.getTopScore().getScore() + ", Obtained by: " + tempQ.getTopScore().getPlayerName() + "(ID: " + tempQ.getTopScore().getPlayerId() + ")");
-		}
-		else
-		{
-			System.out.println("No Top Score Recorded for QuizId: " + tempQ.getQuizId() + " Quiz Name: "  + tempQ.getQuizName());
-		}
-	} 
-
-
+	
 	
 	/**
-	 * Displays Top score for each quiz
-	 * @throws IOException
-	 */
-	public void getAllTopScoresForAllQuizzes() throws IOException
-	{
-		System.out.println("\nTop Scores for the Available Quizzes");
-	
-		//iterates through two hashmaps to find the score for the Id provided or each quiz
-		 HashMap<Integer, Quiz> tempQHashMap = getAllQuizzes();
-			for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
-			{			
-					if (entry.getValue().getTopScore() != null)
-					{
-						System.out.println();
-						System.out.println("QuizID: " + entry.getValue().getQuizId() + ", Quiz Name: " + entry.getValue().getQuizName());
-						System.out.println("---------------------------------------------------");
-						System.out.println("TOP SCORE: " + entry.getValue().getTopScore().getScore() + ", Obtained by: " + entry.getValue().getTopScore().getPlayerName() + "(ID: " + entry.getValue().getTopScore().getPlayerId() + ")");
-						System.out.println();
-						System.out.println("---------------------------------------------------");
-					}
-					else
-					{
-						System.out.println("No Top Score Recorded for QuizId: " + entry.getValue().getQuizId() + " Quiz Name: "  + entry.getValue().getQuizName());
-					}
-			}	
-		
-	}
-	
-	/**
-	 * 
+	 * Loads The Desired Quiz from Input, then allows user to input answers for each question
 	 * @throws IOException
 	 */
 	public void playQuiz() throws IOException 
@@ -454,14 +285,113 @@ private int playerScore;
 		playerScore = 0;
 	}
 	
-
+	
+	
 	/**
-	 * Displays all Quizzes available
+	 * Displays player's score for each quiz
 	 * @throws IOException
 	 */
-	public void displayAllQuizzes() throws IOException 
+	public void allScoresForAllQuizzes() throws IOException
 	{
-		
+		System.out.println();
+		System.out.println("All Scores for the Available Quizzes");
+	
+		//iterates through two hashmaps to find the score for the Id provided or each quiz
+		 HashMap<Integer, Quiz> tempQHashMap = getAllQuizzes();
+			for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
+			{			
+					System.out.println();
+					printRecalledQuizDets( entry.getValue());
+					underline();
+					List<PlayerScores> allScores = entry.getValue().getScores();
+					int allScoresSize = allScores.size();
+					for (int i = 0; i < allScoresSize; i++)
+					{
+						printRecalledPlayerDets(allScores.get(i));
+					}
+			  System.out.println();
+			  underline();
+			}			
+	}
+	
+	
+
+	
+	/**
+	 * gets all scores for a certain QuizID
+	 * @param Id
+	 * @throws RemoteException
+	 */
+	public void allPlayerScoresForQuizID(int quizId) throws IOException
+	{
+		System.out.println();
+		System.out.println("All player Scores for the Quiz ID: " + quizId);
+		System.out.println();
+		//return from ID
+		Quiz tempQ = serverConnect.getQuizFromID(quizId);
+		printRecalledQuizDets(tempQ);
+		underline();
+		//list all players scores for that quiz
+		List<PlayerScores> pScores = tempQ.getScores();
+		int pScoresSize = pScores.size();
+		for (int i = 0; i < pScoresSize; i++)
+		{
+				printRecalledPlayerDets(pScores.get(i));
+		}
+		System.out.println();
+	}
+
+	
+	/**
+	 * Gets a players score from their id for a certain quiz
+	 * @param Id
+	 * @throws RemoteException
+	 */
+	public void playerScoreForQuizID(int quizId, int pId) throws IOException
+	{
+		System.out.println();
+		System.out.println("All your Scores for the Quiz ID: " + quizId);
+		System.out.println();
+		Quiz tempQ = serverConnect.getQuizFromID(quizId);
+		printRecalledQuizDets(tempQ);
+		underline();
+		List<PlayerScores> pScores = tempQ.getScores();
+		int pScoresSize = pScores.size();
+		int total = 0;
+		int ave = 0;
+		int count = 0;
+		//iterate through the quiz scores to find the matching player ID
+		for (int i = 0; i < pScoresSize; i++)
+		{
+				//get all the player's scores for said Quiz 
+				if(pScores.get(i).getPlayerId() == pId)
+					{
+						int score = pScores.get(i).getScore();
+						printRecalledPlayerDets(pScores.get(i));
+						total = total + score;
+						count = count + 1;						
+					}				
+		}
+		//print out average score for the player
+		if (count != 0)
+		{
+			ave = total/count;				
+			System.out.println("Your Average Score over " + count + " attempt(s) is: " + ave);
+		}
+		else
+		{
+			System.out.println("You have not attempted this quiz");
+		}
+	}
+	
+	/**
+	 * Prints the players Scores for all quizzes
+	 * @param pId
+	 * @throws IOException
+	 */
+	public void allPlayerScoreForQuizID(int pId) throws IOException
+	{
+		//get list of all quizzes then for each quiz print out the score for the player ID
 		HashMap<Integer, Quiz> tempHlist = getAllQuizzes();
 		if (tempHlist.isEmpty())
 		{
@@ -469,10 +399,84 @@ private int playerScore;
 		}
 		else
 		{
+			for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+			{
+				playerScoreForQuizID(entry.getKey(), pId);				
+			}
+		}		
+	}
+	
+
+	/**
+	 * Gets Top score from certain quiz
+	 * @param Id
+	 * @throws RemoteException
+	 */
+	public void getTopScoreForQuizId(int quizId) throws IOException
+	{
+		System.out.println("\nTop Score for the Quiz ID: " + quizId);
+		System.out.println();
+		Quiz tempQ = serverConnect.getQuizFromID(quizId);
+		//print top score
+		if (tempQ.getTopScore() != null)
+		{
+			printRecalledQuizDets(tempQ);
+			underline();
+			System.out.println("TOP SCORE: " + tempQ.getTopScore().getScore() + ", Obtained by: " + tempQ.getTopScore().getPlayerName() + "(ID: " + tempQ.getTopScore().getPlayerId() + ")");
+		}
+		//if no top score saved
+		else
+		{
+			System.out.println("No Top Score Recorded for QuizId: " + tempQ.getQuizId() + " Quiz Name: "  + tempQ.getQuizName());
+		}
+	} 
+
+
+	
+	/**
+	 * Displays Top score for each quiz
+	 * @throws IOException
+	 */
+	public void getAllTopScoresForAllQuizzes() throws IOException
+	{
+		System.out.println("\nTop Scores for the Available Quizzes");
+	
+		//iterates through two hashmaps to find the score for the Id provided or each quiz
+		 HashMap<Integer, Quiz> tempQHashMap = getAllQuizzes();
+			for(Map.Entry<Integer, Quiz> entry: tempQHashMap.entrySet())
+			{			
+					if (entry.getValue().getTopScore() != null)
+					{
+						System.out.println();
+						printRecalledQuizDets(entry.getValue());
+						underline();
+						System.out.println("TOP SCORE: " + entry.getValue().getTopScore().getScore() + ", Obtained by: " + entry.getValue().getTopScore().getPlayerName() + "(ID: " + entry.getValue().getTopScore().getPlayerId() + ")");
+						System.out.println();
+						underline();
+					}
+					else
+					{
+						System.out.println("No Top Score Recorded for QuizId: " + entry.getValue().getQuizId() + " Quiz Name: "  + entry.getValue().getQuizName());
+					}
+			}	
+	}
+	
+
+	
+
+	/**
+	 * Displays all Quizzes available
+	 * @throws IOException
+	 */
+	public void displayAllQuizzes() throws IOException 
+	{		
+		HashMap<Integer, Quiz> tempHList = getAllQuizzes();		
+		if (tempHList != null)
+		{
 			System.out.println(); 
 			System.out.println("List of Quizzes already on system");
-			System.out.println("---------------------------------");
-			for(Map.Entry<Integer, Quiz> entry: tempHlist.entrySet())
+			underline();
+			for(Map.Entry<Integer, Quiz> entry: tempHList.entrySet())
 			{
 				System.out.println("QuizID: " + entry.getKey() + ". " + "Quiz Name: " + entry.getValue().getQuizName()); 
 			}
@@ -487,7 +491,12 @@ private int playerScore;
 	 */
 	public HashMap<Integer, Quiz> getAllQuizzes() throws IOException 
 	{
-		HashMap<Integer, Quiz> tempHlist = serverConnect.returnAllQuizzes();
+		HashMap<Integer, Quiz> tempHlist = null;
+		if (quizListEmpty())
+		{
+			tempHlist = serverConnect.returnAllQuizzes();
+		}
+		
 		return tempHlist;
 	}
 	
@@ -504,6 +513,56 @@ private int playerScore;
 	    System.out.print(instructions);
 	    String stringRead = br1.readLine();				
 		return stringRead;
+	}
+	
+	
+	/**
+	 * Checks if the server Quiz list is empty or not
+	 * @return true/false
+	 * @throws RemoteException
+	 * @throws IOException
+	 */
+	public boolean quizListEmpty() throws RemoteException, IOException
+	{
+		if(!serverConnect.returnAllQuizzes().isEmpty())
+		{	
+			return true;
+		} 
+		else
+		{
+			System.out.println();
+			System.out.println("No Quizzes on server at present - you need to load ClientConnect.java");
+			return false;
+		}	
+	}
+	
+	/**
+	 * Prints a Quiz's ID and Name
+	 * @param q
+	 * @throws RemoteException
+	 */
+	public void printRecalledQuizDets(Quiz q) throws RemoteException
+	{
+		System.out.println("Quiz ID: " + q.getQuizId() + ", Quiz Name: " + q.getQuizName());
+	}
+	
+	/**
+	 * Prints a PlayerScores details
+	 * @param p
+	 * @throws RemoteException
+	 */
+	public void printRecalledPlayerDets(PlayerScores p) throws RemoteException
+	{
+		System.out.println("Player Id: " + p.getPlayerId() + ", Name: " + p.getPlayerName() + ", Score = " + p.getScore());	
+	}
+	
+	
+	/**
+	 * Prints a simple dashed underLine
+	 */
+	public void underline()
+	{
+		System.out.println("---------------------------------------------------");
 	}
 	
 }

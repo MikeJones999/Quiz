@@ -158,12 +158,15 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	public Player getPlayerFromId(int Id) throws RemoteException 
 	{
 		Player tempPlayer = null;
-		for(Map.Entry<Integer, Player> entry: players.entrySet())
+		if(!players.isEmpty())
 		{
-			if (entry.getKey() == Id)
+			for(Map.Entry<Integer, Player> entry: players.entrySet())
 			{
-				tempPlayer = entry.getValue();
-				System.out.println("***DEBUG*** Player ID: " + entry.getKey() + ". " + "Player Name: " + entry.getValue().getName());
+				if (entry.getKey() == Id)
+				{
+					tempPlayer = entry.getValue();
+					System.out.println("***DEBUG*** Player ID: " + entry.getKey() + ". " + "Player Name: " + entry.getValue().getName());
+				}
 			}
 		}
 		return tempPlayer;	
