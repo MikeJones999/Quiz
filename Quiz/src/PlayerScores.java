@@ -21,6 +21,7 @@ public class PlayerScores implements java.io.Serializable
 		this.score = score;
 	}
 	
+	
 	public int getQuizID()
 	{
 		return quizId;

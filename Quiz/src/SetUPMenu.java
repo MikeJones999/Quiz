@@ -25,7 +25,10 @@ public class SetUPMenu implements java.io.Serializable
 	}
 	
 
-	
+	/**
+	 * Welcome method. Initial screen seen by client - gives ability to view and create quizzes
+	 * @throws IOException
+	 */
 	public void welcomeMenu() throws IOException
 	{
 		boolean complete = false;
@@ -57,12 +60,7 @@ public class SetUPMenu implements java.io.Serializable
 				case 2: System.out.println("*** DEBUG **** Get All Available Quizzes");
 						getAllQuizzes();
 						break;
-						
-				//Not yet implemented	
-				//case 3: System.out.println("*** DEBUG **** Edit a quiz");
-						//break;
-						
-						
+					
 				default: System.out.println("*** DEBUG **** Not an Option, try again");
 						break;
 			}
@@ -137,8 +135,6 @@ public class SetUPMenu implements java.io.Serializable
 		{
 			System.out.println("No Quizzes to display at present - you need to load ClientConnect.java to setup a quiz");
 		}	
-		
-	
 	}
 	
 	
@@ -160,64 +156,5 @@ public class SetUPMenu implements java.io.Serializable
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }//class
 
-
-/*
-String quest = null; 
-String ansOne = null; 
-String ansTwo = null; 
-String ansThree = null; 
-String correctAns = null;
-int answer = 0;
-
-
-String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
-String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
-int quantOfQuestions = Integer.parseInt(qAmount);	    
-
-int returnedID = serverConnect .addNewQuiz(qName, quantOfQuestions);
-
-Quiz tempQuiz = serverConnect.getQuizFromID(returnedID);
-
-//QuizImpl quiz1 = new QuizImpl(qName, quantOfQuestions);
-
-
-
-for (int i = 0; i < quantOfQuestions; i++)
-{
-	System.out.println("Question: " + (i + 1));
-	quest = readLineViaBuffer("Please Enter a Question: ");
- 	ansOne = readLineViaBuffer("Please Enter 1st Answer: ");
-   	ansTwo = readLineViaBuffer("Please Enter 2nd Answer: ");
-  	ansThree = readLineViaBuffer("Please Enter 3rd Answer: ");
-	correctAns = readLineViaBuffer("Please Enter which is the correct Answer: 1,2, or 3: ");
-    answer = Integer.parseInt(correctAns);
-    Question questTemp = new Question(quest, ansOne, ansTwo, ansThree, answer);
-    serverConnect.addQuestionToQuiz(tempQuiz, questTemp);
-}
-
-
-List<Question> temp = tempQuiz.getQuestions();
-
-
-for (int j= 0; j< temp.size(); j++)
-{
-	System.out.println("Question " + (j+1) + ": ");
-	System.out.println(temp.get(j).getQuestion());
-}
-
-int num = temp.get(0).getCorrectAnswer();
-String[] answers = temp.get(0).getAnswers();
-System.out.println("Corrrect Answer is: " + num);
-System.out.println("Answer is: " + answers[num-1]);
-*/

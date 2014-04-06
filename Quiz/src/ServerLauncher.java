@@ -26,9 +26,7 @@ public class ServerLauncher
 		}
 		
 		try 
-		{
-			
-			
+		{			
 				//2. Create the reg if there is not one
 				LocateRegistry.createRegistry(1099);
 				

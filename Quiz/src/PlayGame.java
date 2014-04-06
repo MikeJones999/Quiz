@@ -30,6 +30,11 @@ private int playerScore;
 	}
 	
 	
+	/**
+	 * Main menu which runs in a loop until exit
+	 * Provides options for the user to view and play Quizzes
+	 * @throws IOException
+	 */
 	public void welcomeMenu() throws IOException
 	{
 		String quizInt = null;
@@ -270,14 +275,14 @@ private int playerScore;
 		
 		//HashMap<Integer, Integer> tempScoreHashMap = temp.getAllPlayerScores();
 		PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);
+		
 		//returns a string if top score added
 		String returned = temp.addToPlayerScore(pScore);
 		if (!returned.equals(""))
 		{
 			System.out.println(returned);
 		}
-		//temp.addToPlayerScore(player.getId(), playerScore);
-		
+				
 		//to show the score has been saved and returned from server
 		//must add return function
 		System.out.println("End of Quiz. Your Score was " + playerScore);//temp.getPlayersScore(player.getId()));

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager, Serializable  
+public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager, Serializable, Runnable 
 {
 	private static int count = 0; 
 	
@@ -41,7 +41,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 
 	@Override
 	//consider synch here
-	public int addNewQuiz(String name, int questionNum) throws RemoteException 
+	 public synchronized int addNewQuiz(String name, int questionNum) throws RemoteException 
 	{
 		QuizImpl quizTemp = new QuizImpl(name, questionNum);
 		int id = createQuizId(quizTemp);
@@ -52,7 +52,6 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	@Override
-	//consider synch here
 	public void addQuizFromFile(int Id, String name, int questionNum) throws RemoteException 
 	{
 		QuizImpl quizTemp = new QuizImpl(name, questionNum);
@@ -64,6 +63,9 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		// or if this method is synched - 	quizId = quizId + 1;	
 	}	
 	
+	/**
+	 * 
+	 */
 	//this should be synched
 	public void increaseQuizId()
 	{
@@ -121,7 +123,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 
 	@Override
 	//consider synch here
-	public int addNewPlayer(String name) throws RemoteException 
+	public synchronized int addNewPlayer(String name) throws RemoteException 
 	{
 		//need to add throws exception for null string
 		
@@ -172,12 +174,6 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		return tempPlayer;	
 	}
 	
-	//probably remove this
-	public int createPlayerID() throws RemoteException 
-	{
-		return 0;	
-		
-	}
 
 	@Override
 	public void runflush() throws RemoteException, IOException
@@ -187,8 +183,12 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	
+	/**
+	 * 
+	 * @throws IOException
+	 * @throws RemoteException
+	 */
 	//need to remove this from user sight
-	@Override
 	public void flush() throws IOException, RemoteException
 	{
 		if (checkFileExists("Quiz.txt"))
@@ -234,7 +234,11 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @throws RemoteException
+	 * @throws IOException
+	 */
 	public void flushPlayers() throws RemoteException, IOException
 	{
 		if (checkFileExists("PlayerStats.txt"))
@@ -283,11 +287,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 							bufferWrite.write(allScores.get(i).getPlayerId() + "," + allScores.get(i).getPlayerName() + "," + allScores.get(i).getScore()); 
 							bufferWrite.newLine();
 					}
-				}	
-			
-			
-			
-		
+				}			
 				bufferWrite.close();
 		}	
 		else
@@ -297,6 +297,10 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 	
 	
+	/**
+	 * 
+	 * @throws RemoteException
+	 */
 	public void readPlayersAndScoresFromFile() throws RemoteException
 	{
 		System.out.println("***DEBUG*** Reading players and scores from file");
@@ -341,12 +345,9 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 							//create playerscore from file
 							PlayerScores tempPscores = returnPlayerScoresFromFile(result[1], line);
 							//add the above playerscore to the designated quiz
-							String holder = tempQuiz.addToPlayerScore(tempPscores);
-							
-						}
-						
-					}
-              
+							String holder = tempQuiz.addToPlayerScore(tempPscores);							
+						}						
+					}              
 	            }
 	            else
 	            {
@@ -361,6 +362,11 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 
 	}
 	
+	/**
+	 * 
+	 * @param line
+	 * @return
+	 */
 	public int[] getQuizIdAndAttemptsFromFile(String line)
 	{
 		String[] stringArray = line.split(",");
@@ -370,6 +376,12 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param quizId
+	 * @param line
+	 * @return
+	 */
 	public PlayerScores returnPlayerScoresFromFile(int quizId, String line)
 	{
 		String[] stringArray = line.split(",");
@@ -380,18 +392,24 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		return p;
 	}
 	
-	
+	/**
+	 * 
+	 * @param line
+	 * @throws RemoteException
+	 */
 	public void getPlayerFromLine(String line) throws RemoteException
 	{
 		String[] stringArray = line.split(",");
 		int Id = Integer.parseInt(stringArray[0].trim());
 		String pName = stringArray[1].trim();
-		addPlayersFromFile(pName, Id);
-		
+		addPlayersFromFile(pName, Id);		
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @throws RemoteException
+	 */
 	public void recallQuizzesFromFile() throws RemoteException
 	{
 		   String fileName = "Quiz.txt";
@@ -421,10 +439,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 						{
 							line = s.nextLine();
 							addQuestionsFromFileToQuiz(quest[0],line);
-						}
-												
-					}		            	
-              
+						}												
+					}	             
 	            }
 	            else
 	            {
@@ -453,6 +469,13 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		return itemsFound;
 	}
 	
+	/**
+	 * 
+	 * @param lineRead
+	 * @return
+	 * @throws RemoteException
+	 * @throws FileNotFoundException
+	 */
 	public int[] createQuizFromFile(String lineRead) throws RemoteException, FileNotFoundException
 	{
 		//need to read the first line to establish how many questions per quiz.
@@ -466,7 +489,12 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 				 
 	}
 	
-	
+	/**
+	 * 
+	 * @param quizId
+	 * @param lineRead
+	 * @throws RemoteException
+	 */
 	public void addQuestionsFromFileToQuiz(int quizId, String lineRead) throws RemoteException
 	{
 		String[] stringArray = lineRead.split(",");
@@ -495,6 +523,12 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 			return true;
 		}		
 		return false;	
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	};
 
 }

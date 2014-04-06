@@ -31,7 +31,7 @@ public interface ServerManager extends Remote
 	
 	
 	/**
-	 * 
+	 * Creates an Id for each quiz
 	 * @param quizTemp
 	 * @return
 	 * @throws RemoteException
@@ -40,7 +40,7 @@ public interface ServerManager extends Remote
 	
 	
 	/**
-	 * 
+	 * Returns the specified quiz from the given Id
 	 * @param Id
 	 * @return
 	 * @throws RemoteException
@@ -80,18 +80,23 @@ public interface ServerManager extends Remote
 	int addNewPlayer(String name) throws RemoteException;
 	
 	/**
-	 * TO DO
+	 * Adds players to server when loaded from file
 	 * @param name
 	 * @param Id
 	 */
 	public void addPlayersFromFile(String name, int Id) throws RemoteException;
 	
 	
+	/**
+	 * Returns hashmap of Players objects and their Ids
+	 * @return
+	 * @throws RemoteException
+	 */
 	public HashMap<Integer, Player> returnAllPlayers() throws RemoteException;
 	
 	
 	/**
-	 * return a player from specific ID
+	 * Return a player from specific ID
 	 * @param Id
 	 * @return
 	 * @throws RemoteException
@@ -99,14 +104,13 @@ public interface ServerManager extends Remote
 	public Player getPlayerFromId(int Id) throws RemoteException;
 	
 	
-	
+	/**
+	 * Central Location to call the flush methods
+	 * Flushes quizzes and players
+	 * @throws RemoteException
+	 * @throws IOException
+	 */
 	public void runflush() throws RemoteException, IOException;
 	
-	
-	/**
-	 * Saves all data to Disk
-	 * @throws IOException 
-	 */
-	public void flush()  throws RemoteException, IOException;
 	
 }
