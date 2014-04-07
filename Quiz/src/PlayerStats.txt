@@ -1,28 +1,8 @@
-7, Players
-0,Mike J
-1,Jonny Boy
-2,Paul
-3,Dean
-4,MikieJ
-5,Leah
-6,Davey
+0, Players
 6,Number of Quizzes
-QuizID,0,Quiz Attempts,4, Quiz Name: mikes quiz
-0,Mike J,1
-0,Mike J,2
-1,Jonny Boy,2
-2,Paul,1
-QuizID,1,Quiz Attempts,3, Quiz Name: leahs quiz
-0,Mike J,2
-0,Mike J,2
-2,Paul,2
-QuizID,2,Quiz Attempts,3, Quiz Name: Stevos Quiz
-0,Mike J,1
-0,Mike J,3
-1,Jonny Boy,3
-QuizID,3,Quiz Attempts,1, Quiz Name: Banks quiz
-3,Dean,1
-QuizID,4,Quiz Attempts,1, Quiz Name: Billy Joel Quiz
-0,Mike J,3
-QuizID,5,Quiz Attempts,1, Quiz Name: Evans Quiz
-6,Davey,3
+QuizID,0,Quiz Attempts,0, Quiz Name: mikes quiz
+QuizID,1,Quiz Attempts,0, Quiz Name: leahs quiz
+QuizID,2,Quiz Attempts,0, Quiz Name: Stevos Quiz
+QuizID,3,Quiz Attempts,0, Quiz Name: Banks quiz
+QuizID,4,Quiz Attempts,0, Quiz Name: Billy Joel Quiz
+QuizID,5,Quiz Attempts,0, Quiz Name: Evans Quiz

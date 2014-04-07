@@ -3,9 +3,4 @@
 1,Paul
 2,Mike
 3,Tom
-QuizID: 0,Quiz Name: mikes quiz
-QuizID: 1,Quiz Name: leahs quiz
-0,John,3
-1,Paul,6
-2,Mike,5
-3,Tom,13
+0,Number of Quizzes

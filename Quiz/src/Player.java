@@ -15,20 +15,15 @@ public class Player implements java.io.Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	private int id;
 	private String name;
-
-	
 	
 	//Constructor…
 	public Player(int id, String name)
 	{
 		this.id = id;
 		this.name = name;
-
 	}
-	
 	
 	//Methods…
 	public int getId()
@@ -40,7 +35,5 @@ public class Player implements java.io.Serializable
 	{
 		return name;
 	}
-	
-
 	
 }

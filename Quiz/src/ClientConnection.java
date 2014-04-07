@@ -5,10 +5,10 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 
 
-public class ClientConnection
+public abstract class ClientConnection
 {
 
-	
+	//constructor - not used
 	public ClientConnection()
 	{
 		
@@ -30,7 +30,7 @@ public class ClientConnection
 		System.out.println("Looking up " + "//"+ip+":"+port +"/MikesServer");		
 		ServerManager service = (ServerManager)Naming.lookup("//"+ip+":"+port +"/MikesServer");
 		System.out.println("Looked up " + "//"+ip+":"+port +"/MikesServer");
-			
+		//return the connected service - ServerManager	
 		return service;
 	}
 	

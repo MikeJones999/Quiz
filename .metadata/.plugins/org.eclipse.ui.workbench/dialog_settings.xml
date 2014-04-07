@@ -3,19 +3,37 @@
 	<section name="FileSystemImportWizard">
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="1025" key="dialogWidth"/>
-		<item value="525" key="dialogHeight"/>
+		<item value="1440" key="dialogWidth"/>
+		<item value="790" key="dialogHeight"/>
 		<list key="orderedProviders">
-			<item value="org.eclipse.ui.commands"/>
 		</list>
 		<list key="textArray">
-			<item value="show l"/>
 		</list>
 		<list key="orderedElements">
-			<item value="org.eclipse.ui.editors.lineNumberToggle"/>
 		</list>
 		<list key="textEntries">
-			<item value="1"/>
+		</list>
+	</section>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="-101" key="DIALOG_Y_ORIGIN"/>
+		<item value="-10" key="DIALOG_X_ORIGIN"/>
+	</section>
+	<section name="InstallationDialogSettings">
+		<item value="706" key="DIALOG_WIDTH"/>
+		<item value="-60" key="DIALOG_Y_ORIGIN"/>
+		<item value="88" key="DIALOG_X_ORIGIN"/>
+		<item value="743" key="DIALOG_HEIGHT"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="ShowViewDialog">
+		<item value="311" key="DIALOG_WIDTH"/>
+		<item value="de.tobject.findbugs.view.bugtreeview" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
+		<item value="236" key="DIALOG_Y_ORIGIN"/>
+		<item value="438" key="DIALOG_HEIGHT"/>
+		<item value="813" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="de.tobject.findbugs.view.findBugsCategory"/>
 		</list>
 	</section>
 	<section name="ImportExportAction">

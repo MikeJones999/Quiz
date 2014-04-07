@@ -1,10 +1,9 @@
 /**
- * PlayerScores object - these are individual scores for individual Quizzes
- * They are linked to the Quiz object once it has been attempted by player
+ * PlayerScores class - these are individual scores for individual Quizzes.
+ * They are linked to the Quiz object once it has been attempted by player.
  * @author mikieJ
  *
  */
-
 
 public class PlayerScores implements java.io.Serializable
 {

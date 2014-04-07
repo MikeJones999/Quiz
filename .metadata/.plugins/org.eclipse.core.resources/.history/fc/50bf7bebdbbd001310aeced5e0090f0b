@@ -1,0 +1,68 @@
+
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+
+public class SetUpClient
+{
+	public static void main (String[] args) throws MalformedURLException, RemoteException, NotBoundException
+	{
+		try {
+				new ClientConnect().launch();
+			}
+	  catch (IOException e) 
+			{
+				e.printStackTrace();
+			}	
+	}
+
+	/**
+	 * Launch method to initiate the connection to the server
+	 * @throws NotBoundException
+	 * @throws IOException
+	 */
+	public void launch() throws NotBoundException, IOException
+	{
+		//call method to connect to server		
+		ServerManager serverConnect = initialConnect();	
+	
+		//get Setup menu from server
+		SetUPMenu newSetup = new SetUPMenu(serverConnect);
+		newSetup.welcomeMenu();
+	}
+
+	
+	/**
+	 * initial screen seen
+	 * @return ServerManager
+	 * @throws MalformedURLException
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 */
+	public ServerManager initialConnect() throws MalformedURLException, RemoteException, NotBoundException
+	{
+		
+		System.out.println("Quiz SetUp Starting...");
+		//String str = System.console().readLine();
+		
+		System.out.print("Insert IP: ");
+		String ip = System.console().readLine();
+		
+		System.out.print("Insert Port: ");
+		String port = System.console().readLine();		
+	
+		System.out.println("Looking up " + "//"+ip+":"+port +"/echo");
+		
+		ServerManager service = (ServerManager)Naming.lookup("//"+ip+":"+port +"/echo");
+		System.out.println("Looked up " + "//"+ip+":"+port +"/echo");
+			
+		return service;
+	}
+	
+	
+
+//to run client// java -Djava.security.policy=client.policy EchoClient
+}

@@ -72,7 +72,7 @@ public interface ServerManager extends Remote
 	
 		
 	/**
-	 * Adds new player to the Hashmap
+	 * Adds new player to the HashMap
 	 * @param name
 	 * @return
 	 * @throws RemoteException
@@ -88,7 +88,7 @@ public interface ServerManager extends Remote
 	
 	
 	/**
-	 * Returns hashmap of Players objects and their Ids
+	 * Returns HashMap of Players objects and their Ids
 	 * @return
 	 * @throws RemoteException
 	 */

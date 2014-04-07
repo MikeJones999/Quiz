@@ -1,6 +1,5 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.List;
 
 public interface Quiz extends Remote
@@ -40,37 +39,16 @@ public interface Quiz extends Remote
 	 */
 	void createQuizId(int id) throws RemoteException;
 	
-	/**
-	 * 
-	 * @param Id
-	 * @param score
-	 * @throws RemoteException
-	 */
-	//void addToPlayerScore(int Id, int score) throws RemoteException;
 	
 	/**
-	 * 
+	 * Adds a players score (PlayerScores) to the quiz
+	 * If player has the highest score then they achieve this accolade 
 	 * @param pScore
 	 * @return
 	 * @throws RemoteException
 	 */
 	String addToPlayerScore(PlayerScores pScore) throws RemoteException;
 	
-	/**
-	 * Returns all scores for this particular Quiz
-	 * @return
-	 * @throws RemoteException
-	 */
-	//HashMap<Integer, Integer> getAllPlayerScores() throws RemoteException;
-	
-	
-	/**
-	 * 
-	 * @param Id
-	 * @return
-	 * @throws RemoteException
-	 */
-	//int getPlayersScore(int Id) throws RemoteException;
 	
 	/**
 	 * Returns List of PlayerScores for this particular Quiz

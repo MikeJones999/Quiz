@@ -3,9 +3,14 @@ import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
 
-
+/**
+ * ServerLauncher class is the program required to launch the server so that clients can connect.
+ * this loads one instance of SevermanagerImpl
+ * java -Djava.security.policy=server.policy ServerLauncher
+ * @author mikieJ
+ *
+ */
 public class ServerLauncher
 {
 		
@@ -58,7 +63,7 @@ public class ServerLauncher
 		System.out.println("Main thread ended");
 	}
 
-	//java -Djava.security.policy=server.policy ServerLauncher
+	
 	
 
 }

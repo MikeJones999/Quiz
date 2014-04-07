@@ -1,7 +1,6 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,10 +23,8 @@ public class QuizImpl extends UnicastRemoteObject implements Quiz,java.io.Serial
 	private PlayerScores topScore = null;
 	private List<Question> quizQuestions = new ArrayList<Question>(); 
 	private List<PlayerScores> scores  = new ArrayList<PlayerScores>();
-	//adds players ID and Score to this Quiz
-	//private HashMap<Integer, Integer> playerScore = new HashMap<Integer, Integer>();
-
 	
+	//Constructor
 	public QuizImpl(String quizName, int questionTotal) throws RemoteException 
 	{
 		this.quizName = quizName;

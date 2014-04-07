@@ -26,7 +26,7 @@ public class TestQuizSetUp
 	@Before
 	public void startUp() throws RemoteException
 	{
-		newManager = new ServerManagerImpl();		
+		//newManager = new ServerManagerImpl();		
 	}
 	
 	
@@ -156,6 +156,7 @@ public class TestQuizSetUp
 	}
 	*/
 	
+	/*
 	@Test
 	public void readPlayersAndScoresFromFile() throws RemoteException
 	{
@@ -231,8 +232,9 @@ public class TestQuizSetUp
 			
 		  assertEquals(quizNames[0], "mikes quiz");
 	}
+	*/
 	
-	
+	/*
 	public int[] getQuizIdAndAttemptsFromFile(String line)
 	{
 		String[] stringArray = line.split(",");
@@ -241,7 +243,10 @@ public class TestQuizSetUp
 		int[] result = {quizId, quizAttempts};
 		return result;
 	}
+	*/
 	
+	
+	/*
 	public PlayerScores returnPlayerScoresFromFile(int quizId, String line)
 	{
 		String[] stringArray = line.split(",");
@@ -251,8 +256,9 @@ public class TestQuizSetUp
 		PlayerScores p = new PlayerScores(quizId, playerID, pName, score);
 		return p;
 	}
+	*/
 	
-	
+	/*
 	public void getPlayerFromLine(String line) throws RemoteException
 	{
 		String[] stringArray = line.split(",");
@@ -261,8 +267,10 @@ public class TestQuizSetUp
 		newManager.addPlayersFromFile(pName, Id);
 		
 	}
+	*/
 	
 	
+	/*
 	@Test
 	public void recallQuizzesFromFile() throws RemoteException
 	{
@@ -327,7 +335,7 @@ public class TestQuizSetUp
 			
 		  assertEquals(quizNames[0], "mikes quiz");
 	}
-
+*/
 
 	/**
 	 *  Checks a line in the CSV/txt file for the first int.
@@ -335,6 +343,7 @@ public class TestQuizSetUp
 	 * @param line
 	 * @return itemsFound (Int)
 	 */
+	/*
 	public int itemsInFileFound(String line)
 	{		
 		line = line.trim();					
@@ -343,8 +352,9 @@ public class TestQuizSetUp
 		//System.out.println("***DEBUG*** Items Found: " + itemsFound);	
 		return itemsFound;
 	}
+	*/
 	
-	public int[] createQuizFromFile(String lineRead) throws RemoteException, FileNotFoundException
+	/*public int[] createQuizFromFile(String lineRead) throws RemoteException, FileNotFoundException
 	{
 		//need to read the first line to establish how many questions per quiz.
 		String[] stringArray = lineRead.split(",");
@@ -356,8 +366,8 @@ public class TestQuizSetUp
 		return quizInit;
 				 
 	}
-	
-	
+	*/
+	/*
 	public void addQuestionsFromFileToQuiz(int quizId, String lineRead) throws RemoteException
 	{
 		String[] stringArray = lineRead.split(",");
@@ -371,6 +381,7 @@ public class TestQuizSetUp
 		Question q = new Question(question, ansOne, ansTwo, ansThree, answer);
 		newManager.addQuestionToQuiz(quizId, q);
 	}
+	*/
 	
 	/*
 	
@@ -395,7 +406,7 @@ public class TestQuizSetUp
 	}
 	*/
 	
-	
+	/*
 	public void flush() throws RemoteException, IOException
 	{
 		if (checkFileExists("Quiz.txt"))
@@ -431,10 +442,9 @@ public class TestQuizSetUp
 						bufferWrite.newLine();
 					}
 					
-			}		
-		
-		
+			}				
 				bufferWrite.close();
+				buffer.close();
 		}	
 		else
 		{
@@ -443,8 +453,11 @@ public class TestQuizSetUp
 			
 
 	}
+	*/
 	
 	
+	
+	/*
 	public void flushPlayers() throws RemoteException, IOException
 	{
 		if (checkFileExists("PlayerStats.txt"))
@@ -496,11 +509,9 @@ public class TestQuizSetUp
 							bufferWrite.newLine();
 					}
 				}	
-			
-			
-			
-		
+
 				bufferWrite.close();
+				buffer.close();
 		}	
 		else
 		{
@@ -509,7 +520,7 @@ public class TestQuizSetUp
 			
 
 	}
-	
+	*/
 	
 	
 	
@@ -517,6 +528,7 @@ public class TestQuizSetUp
 		 * Checks the provided File (String) actually exists, if not it creates one
 		 * @param fileName (String)
 		 */
+	/*
 		public boolean checkFileExists(String fileName) throws RemoteException
 		{	
 			//No option to check the directory as do not know what it is -
@@ -530,7 +542,7 @@ public class TestQuizSetUp
 		};
 	
 	
-	
+	*/
 	
 	
 	
@@ -540,6 +552,7 @@ public class TestQuizSetUp
 	 * @param tempQuiz
 	 * @throws IOException
 	 */
+		/*
 	public void adQuestions(int num, Quiz tempQuiz) throws IOException
 	{
 		for (int i = 0; i < num; i++)
@@ -557,6 +570,41 @@ public class TestQuizSetUp
 		
 	}
 	
+	*/
+	
+	
+	
+	
+	@Test
+	public void inputErrorCheck() throws IOException
+	{
+		int option = stringToIntCheck("Please enter the required option: ");
+				
+		System.out.println("option Chosen: " + option);
+	}
+	
+
+	public int stringToIntCheck(String instruction) throws IOException
+	{		
+		boolean complete = false;
+		int option = 0;
+		while(!complete)
+		{
+			String opt = readLineViaBuffer(instruction);			
+			try{			
+					option = Integer.parseInt(opt);	
+					//System.out.println("You typed: " + option);
+					complete = true;					
+				}
+	     	catch(NumberFormatException e)
+				{
+					System.out.println("Wront format - try again");
+				}			
+		}		
+		return option;
+	}
+	
+	
 	//Saves repeating the request for input - requires the instructions of what your are asked to type
 	//require the throws IOException to allow buffer reader to work 
 	public String readLineViaBuffer(String instructions) throws IOException  
@@ -566,6 +614,12 @@ public class TestQuizSetUp
 	    String stringRead = br1.readLine();				
 		return stringRead;
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

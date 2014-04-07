@@ -1,15 +1,20 @@
-import java.rmi.Naming;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 
+
+/**
+ * PlayerClient is the connection file to the Server which allows a user to play quizzes
+ * java -Djava.security.policy=client.policy PlayerClient
+ * This file requests the IP and port of the serve to connect to
+ * On successful engagement with server - this file then loads up the PlayGame class
+ * @author mikieJ
+ *
+ */
 public class PlayerClient extends ClientConnection implements java.io.Serializable
 {
-		
-	
+
 	/**
 	 * 
 	 */

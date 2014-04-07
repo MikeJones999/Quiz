@@ -17,14 +17,11 @@ import java.util.Scanner;
 
 public class ServerManagerImpl extends UnicastRemoteObject implements ServerManager, Serializable, Runnable 
 {
-	private static int count = 0; 
-	
 	private HashMap<Integer, Quiz> quizMap = new HashMap<Integer, Quiz>(); 
 	private HashMap<Integer, Player> players = new HashMap<Integer, Player>(); 
 	
 	private static int playerId = 0;
-	private static int quizId = 0;		
-	
+	private static int quizId = 0;			
 	
 	/**
 	 * 
@@ -41,10 +38,11 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	        	
 	            public void run() 
 	            {      
-	            	System.out.println("Thank You and GoodBye - Exit");
+	            	System.out.println("Server saving Data.......");
 	            	try {
 	            			//flush all data to two files
 							masterFlush();
+							System.out.println("Data Saving Complete   :}");
 						} catch (RemoteException e)
 						{
 							e.printStackTrace();
@@ -61,8 +59,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
-	//consider synch here
-	 public synchronized int addNewQuiz(String name, int questionNum) throws RemoteException 
+	//Synched to ensure the QuizID is thread Safe
+    public synchronized int addNewQuiz(String name, int questionNum) throws RemoteException 
 	{
 		if(name == null || questionNum == 0)
 		{
@@ -71,8 +69,11 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		else
 		{
 			QuizImpl quizTemp = new QuizImpl(name, questionNum);
+			//creates quiz ID after object created
 			int id = createQuizId(quizTemp);
+			//add quiz to HashMap - quizMap
 			quizMap.put(id, quizTemp);
+			//now increase quizID count by 1
 			increaseQuizId();		
 			return id;
 		}
@@ -166,6 +167,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	}
 
 	@Override
+	//Synched to ensure the PlayerID is thread Safe
 	public synchronized int addNewPlayer(String name) throws RemoteException 
 	{
 		//need to add throws exception for null string
@@ -278,8 +280,9 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 						bufferWrite.newLine();
 					}					
 			}	
-		
+				
 				bufferWrite.close();
+				buffer.close();
 		}	
 		else
 		{
@@ -314,7 +317,6 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 			//get all players and their ID and write to file first
 			for(Map.Entry<Integer, Player> entry: tempPlayerMap.entrySet())
 			{	
-					//System.out.println("***DEBUG*** Writing Player: " + entry.getValue().getName() + " to file");
 					bufferWrite.write(entry.getValue().getId() + "," + entry.getValue().getName()); 
 					bufferWrite.newLine();
 			}		
@@ -330,18 +332,16 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 					//get list of all scores for each quiz
 					List<PlayerScores> allScores = entry.getValue().getScores();
 					int allScoresSize = allScores.size();
-					//System.out.println("QuizID: " + "," + entry.getValue().getQuizId() + "," + allScoresSize + ", Quiz Name: " + entry.getValue().getQuizName());
-					//System.out.println("---------------------------------------------------");
 					bufferWrite.write("QuizID" + "," + entry.getValue().getQuizId() + "," + "Quiz Attempts" + "," + allScoresSize + ", Quiz Name: " + entry.getValue().getQuizName());
 					bufferWrite.newLine();
 					for (int i = 0; i < allScoresSize; i++)
 					{
-							System.out.println("PlayerId: " + allScores.get(i).getPlayerId() + ", Score = " + allScores.get(i).getScore());
 							bufferWrite.write(allScores.get(i).getPlayerId() + "," + allScores.get(i).getPlayerName() + "," + allScores.get(i).getScore()); 
 							bufferWrite.newLine();
 					}
 				}			
 				bufferWrite.close();
+				buffer.close();
 		}	
 		else
 		{
@@ -360,7 +360,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		System.out.println("***DEBUG*** Reading players and scores from file");
 		System.out.println();
 		   String fileName = "PlayerStats.txt";
-		   try {	//possible dont need this as us createNewfile() which checks for you
+		   try {	
+			       //possibly dont need this as us createNewfile() which checks for you
 				   if (!checkFileExists(fileName))
 			        {
 			        	File file = new File(fileName);
@@ -392,7 +393,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 						//get quiz id from line above
 						Quiz tempQuiz = getQuizFromID(result[0]);	
 						System.out.println("***DEBUG*** Quiz: " + tempQuiz.getQuizId() + " found");
-						//iterrate through the scores adding them to quiz
+						//Iterate through the scores adding them to quiz
 						for (int j = 0; j < result[1]; j++)
 						{
 							line = s.nextLine();
@@ -434,7 +435,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	 * Returns PlayerScores from File
 	 * @param quizId
 	 * @param line
-	 * @return
+	 * @return p (PlayerScores)
 	 */
 	public PlayerScores returnPlayerScoresFromFile(int quizId, String line)
 	{
@@ -534,7 +535,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	/**
 	 * Creates a new quiz from a saved quiz on file.
 	 * @param lineRead
-	 * @return QuizID and Number of questions in that quiz
+	 * @return int[] QuizID and Number of questions in that quiz
 	 * @throws RemoteException
 	 * @throws FileNotFoundException
 	 */

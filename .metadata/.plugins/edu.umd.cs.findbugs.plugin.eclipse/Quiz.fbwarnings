@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="2.0.3" sequence="8" timestamp="1396873787806" analysisTimestamp="1396873786640" release="">
+  <Project projectName="Quiz">
+    <Jar>E:\MSC\PIJ\Quiz\Quiz\bin</Jar>
+    <AuxClasspathEntry>E:\MSC\PIJ\Quiz\Quiz\bin</AuxClasspathEntry>
+    <AuxClasspathEntry>E:\Java\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>E:\Java\eclipse\plugins\org.hamcrest.core_1.3.0.v201303031735.jar</AuxClasspathEntry>
+    <SrcDir>E:\MSC\PIJ\Quiz\Quiz\src</SrcDir>
+    <Cloud id="edu.umd.cs.findbugs.cloud.doNothingCloud" online="false"></Cloud>
+  </Project>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ClientConnection">
+      <SourceLine classname="ClientConnection" sourcefile="ClientConnection.java" sourcepath="ClientConnection.java"/>
+    </Class>
+    <Method classname="ClientConnection" name="readLineViaBuffer" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="ClientConnection" start="46" end="49" startBytecode="0" endBytecode="115" sourcefile="ClientConnection.java" sourcepath="ClientConnection.java"/>
+    </Method>
+    <Method classname="java.io.InputStreamReader" name="&lt;init&gt;" signature="(Ljava/io/InputStream;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.InputStreamReader"/>
+    </Method>
+    <SourceLine classname="ClientConnection" start="46" end="46" startBytecode="11" endBytecode="11" sourcefile="ClientConnection.java" sourcepath="ClientConnection.java"/>
+    <SourceLine classname="ClientConnection" start="46" end="46" startBytecode="11" endBytecode="11" sourcefile="ClientConnection.java" sourcepath="ClientConnection.java"/>
+  </BugInstance>
+  <BugInstance type="DM_CONVERT_CASE" priority="3" abbrev="Dm" category="I18N" first="6">
+    <Class classname="PlayGame">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Class>
+    <Method classname="PlayGame" name="playerSetup" signature="()Z" isStatic="false">
+      <SourceLine classname="PlayGame" start="167" end="206" startBytecode="0" endBytecode="474" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Method>
+    <SourceLine classname="PlayGame" start="171" end="171" startBytecode="16" endBytecode="16" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    <SourceLine classname="PlayGame" start="171" end="171" startBytecode="16" endBytecode="16" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="PlayGame">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Class>
+    <Method classname="PlayGame" name="readLineViaBuffer" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="PlayGame" start="496" end="499" startBytecode="0" endBytecode="115" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Method>
+    <Method classname="java.io.InputStreamReader" name="&lt;init&gt;" signature="(Ljava/io/InputStream;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.InputStreamReader"/>
+    </Method>
+    <SourceLine classname="PlayGame" start="496" end="496" startBytecode="11" endBytecode="11" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    <SourceLine classname="PlayGame" start="496" end="496" startBytecode="11" endBytecode="11" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+  </BugInstance>
+  <BugInstance type="DM_EXIT" priority="2" abbrev="Dm" category="BAD_PRACTICE" first="1">
+    <Class classname="PlayGame">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Class>
+    <Method classname="PlayGame" name="welcomeMenu" signature="()V" isStatic="false">
+      <SourceLine classname="PlayGame" start="40" end="158" startBytecode="0" endBytecode="892" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Method>
+    <SourceLine classname="PlayGame" start="78" end="78" startBytecode="208" endBytecode="208" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    <SourceLine classname="PlayGame" start="78" end="78" startBytecode="208" endBytecode="208" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE" first="6">
+    <Class classname="PlayGame">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Class>
+    <Field classname="PlayGame" name="player" signature="LPlayer;" isStatic="false">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Field>
+    <Method classname="PlayGame" name="playQuiz" signature="()V" isStatic="false">
+      <SourceLine classname="PlayGame" start="218" end="270" startBytecode="0" endBytecode="844" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Method>
+    <SourceLine classname="PlayGame" start="258" end="258" startBytecode="322" endBytecode="322" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    <SourceLine classname="PlayGame" start="258" end="258" startBytecode="322" endBytecode="322" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE" first="6">
+    <Class classname="PlayGame">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Class>
+    <Field classname="PlayGame" name="player" signature="LPlayer;" isStatic="false">
+      <SourceLine classname="PlayGame" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Field>
+    <Method classname="PlayGame" name="welcomeMenu" signature="()V" isStatic="false">
+      <SourceLine classname="PlayGame" start="40" end="158" startBytecode="0" endBytecode="892" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    </Method>
+    <SourceLine classname="PlayGame" start="109" end="109" startBytecode="317" endBytecode="317" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+    <SourceLine classname="PlayGame" start="109" end="109" startBytecode="317" endBytecode="317" sourcefile="PlayGame.java" sourcepath="PlayGame.java"/>
+  </BugInstance>
+  <BugInstance type="NM_CONFUSING" priority="3" abbrev="Nm" category="BAD_PRACTICE" first="6">
+    <Class classname="PlayerScores">
+      <SourceLine classname="PlayerScores" sourcefile="PlayerScores.java" sourcepath="PlayerScores.java"/>
+    </Class>
+    <Method classname="PlayerScores" name="getQuizID" signature="()I" isStatic="false">
+      <SourceLine classname="PlayerScores" start="35" end="35" startBytecode="0" endBytecode="46" sourcefile="PlayerScores.java" sourcepath="PlayerScores.java"/>
+    </Method>
+    <Class classname="QuizImpl">
+      <SourceLine classname="QuizImpl" sourcefile="QuizImpl.java" sourcepath="QuizImpl.java"/>
+    </Class>
+    <Method classname="QuizImpl" name="getQuizId" signature="()I" isStatic="false">
+      <SourceLine classname="QuizImpl" start="63" end="63" startBytecode="0" endBytecode="46" sourcefile="QuizImpl.java" sourcepath="QuizImpl.java"/>
+    </Method>
+  </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE" first="1">
+    <Class classname="Question">
+      <SourceLine classname="Question" sourcefile="Question.java" sourcepath="Question.java"/>
+    </Class>
+    <Method classname="Question" name="getAnswers" signature="()[Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="Question" start="46" end="46" startBytecode="0" endBytecode="46" sourcefile="Question.java" sourcepath="Question.java"/>
+    </Method>
+    <Field classname="Question" name="allAnswers" signature="[Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="Question" sourcefile="Question.java" sourcepath="Question.java"/>
+    </Field>
+    <SourceLine classname="Question" start="46" end="46" startBytecode="4" endBytecode="4" sourcefile="Question.java" sourcepath="Question.java"/>
+    <SourceLine classname="Question" start="46" end="46" startBytecode="4" endBytecode="4" sourcefile="Question.java" sourcepath="Question.java"/>
+  </BugInstance>
+  <BugInstance type="RI_REDUNDANT_INTERFACES" priority="3" abbrev="RI" category="STYLE" first="6">
+    <Class classname="QuizImpl">
+      <SourceLine classname="QuizImpl" start="24" end="129" sourcefile="QuizImpl.java" sourcepath="QuizImpl.java"/>
+    </Class>
+    <Class classname="java.io.Serializable" role="INTERFACE_TYPE">
+      <SourceLine classname="java.io.Serializable"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="247" end="288" startBytecode="0" endBytecode="875" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="251" end="251" startBytecode="37" endBytecode="37" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="251" end="251" startBytecode="37" endBytecode="37" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="247" end="288" startBytecode="0" endBytecode="875" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.FileWriter" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileWriter"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="249" end="249" startBytecode="17" endBytecode="17" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="249" end="249" startBytecode="17" endBytecode="17" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="297" end="350" startBytecode="0" endBytecode="1169" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="301" end="301" startBytecode="37" endBytecode="37" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="301" end="301" startBytecode="37" endBytecode="37" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="297" end="350" startBytecode="0" endBytecode="1169" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.FileWriter" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileWriter"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="299" end="299" startBytecode="17" endBytecode="17" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="299" end="299" startBytecode="17" endBytecode="17" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="readPlayersAndScoresFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="360" end="416" startBytecode="0" endBytecode="685" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="371" end="371" startBytecode="56" endBytecode="56" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="371" end="371" startBytecode="56" endBytecode="56" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="recallQuizzesFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="470" end="510" startBytecode="0" endBytecode="483" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="479" end="479" startBytecode="41" endBytecode="41" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="479" end="479" startBytecode="41" endBytecode="41" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM" priority="2" abbrev="OS" category="BAD_PRACTICE" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="247" end="288" startBytecode="0" endBytecode="156" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Reader;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Reader"/>
+    </Type>
+    <SourceLine classname="ServerManagerImpl" start="252" end="252" startBytecode="41" endBytecode="41" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="252" end="252" startBytecode="41" endBytecode="41" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM" priority="2" abbrev="OS" category="BAD_PRACTICE" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="297" end="350" startBytecode="0" endBytecode="219" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Reader;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Reader"/>
+    </Type>
+    <SourceLine classname="ServerManagerImpl" start="302" end="302" startBytecode="41" endBytecode="41" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="302" end="302" startBytecode="41" endBytecode="41" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM_EXCEPTION_PATH" priority="3" abbrev="OS" category="BAD_PRACTICE" first="6">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="247" end="288" startBytecode="0" endBytecode="156" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Writer;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Writer"/>
+    </Type>
+    <SourceLine classname="ServerManagerImpl" start="250" end="250" startBytecode="21" endBytecode="21" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="250" end="250" startBytecode="21" endBytecode="21" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM_EXCEPTION_PATH" priority="3" abbrev="OS" category="BAD_PRACTICE" first="6">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="297" end="350" startBytecode="0" endBytecode="219" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Writer;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Writer"/>
+    </Type>
+    <SourceLine classname="ServerManagerImpl" start="300" end="300" startBytecode="21" endBytecode="21" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="300" end="300" startBytecode="21" endBytecode="21" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="RI_REDUNDANT_INTERFACES" priority="3" abbrev="RI" category="STYLE" first="6">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" start="20" end="608" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Class classname="java.io.Serializable" role="INTERFACE_TYPE">
+      <SourceLine classname="java.io.Serializable"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" priority="2" abbrev="RV" category="BAD_PRACTICE" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="readPlayersAndScoresFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="360" end="416" startBytecode="0" endBytecode="685" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.File" name="createNewFile" signature="()Z" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.File"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="367" end="367" startBytecode="37" endBytecode="37" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="367" end="367" startBytecode="37" endBytecode="37" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" priority="2" abbrev="RV" category="BAD_PRACTICE" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="recallQuizzesFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="470" end="510" startBytecode="0" endBytecode="483" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Method classname="java.io.File" name="createNewFile" signature="()Z" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.File"/>
+    </Method>
+    <SourceLine classname="ServerManagerImpl" start="475" end="475" startBytecode="22" endBytecode="22" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="475" end="475" startBytecode="22" endBytecode="22" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="2" abbrev="ST" category="STYLE" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="addPlayersFromFile" signature="(Ljava/lang/String;I)V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="190" end="201" startBytecode="0" endBytecode="146" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Field classname="ServerManagerImpl" name="playerId" signature="I" isStatic="true">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Field>
+    <SourceLine classname="ServerManagerImpl" start="198" end="198" startBytecode="42" endBytecode="42" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="198" end="198" startBytecode="42" endBytecode="42" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="2" abbrev="ST" category="STYLE" first="1">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="increaseQuizId" signature="()V" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="104" end="105" startBytecode="0" endBytecode="54" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Field classname="ServerManagerImpl" name="quizId" signature="I" isStatic="true">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Field>
+    <SourceLine classname="ServerManagerImpl" start="104" end="104" startBytecode="5" endBytecode="5" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="104" end="104" startBytecode="5" endBytecode="5" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="3" abbrev="ST" category="STYLE" first="6">
+    <Class classname="ServerManagerImpl">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Class>
+    <Method classname="ServerManagerImpl" name="addNewPlayer" signature="(Ljava/lang/String;)I" isStatic="false">
+      <SourceLine classname="ServerManagerImpl" start="172" end="183" startBytecode="0" endBytecode="155" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Method>
+    <Field classname="ServerManagerImpl" name="playerId" signature="I" isStatic="true">
+      <SourceLine classname="ServerManagerImpl" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    </Field>
+    <SourceLine classname="ServerManagerImpl" start="181" end="181" startBytecode="33" endBytecode="33" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+    <SourceLine classname="ServerManagerImpl" start="181" end="181" startBytecode="33" endBytecode="33" sourcefile="ServerManagerImpl.java" sourcepath="ServerManagerImpl.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="SetUPMenu">
+      <SourceLine classname="SetUPMenu" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+    </Class>
+    <Method classname="SetUPMenu" name="readLineViaBuffer" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="SetUPMenu" start="150" end="153" startBytecode="0" endBytecode="115" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+    </Method>
+    <Method classname="java.io.InputStreamReader" name="&lt;init&gt;" signature="(Ljava/io/InputStream;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.InputStreamReader"/>
+    </Method>
+    <SourceLine classname="SetUPMenu" start="150" end="150" startBytecode="11" endBytecode="11" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+    <SourceLine classname="SetUPMenu" start="150" end="150" startBytecode="11" endBytecode="11" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+  </BugInstance>
+  <BugInstance type="DM_EXIT" priority="2" abbrev="Dm" category="BAD_PRACTICE" first="1">
+    <Class classname="SetUPMenu">
+      <SourceLine classname="SetUPMenu" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+    </Class>
+    <Method classname="SetUPMenu" name="welcomeMenu" signature="()V" isStatic="false">
+      <SourceLine classname="SetUPMenu" start="34" end="68" startBytecode="0" endBytecode="340" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+    </Method>
+    <SourceLine classname="SetUPMenu" start="53" end="53" startBytecode="103" endBytecode="103" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+    <SourceLine classname="SetUPMenu" start="53" end="53" startBytecode="103" endBytecode="103" sourcefile="SetUPMenu.java" sourcepath="SetUPMenu.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="401" end="445" startBytecode="0" endBytecode="873" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="405" end="405" startBytecode="37" endBytecode="37" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="405" end="405" startBytecode="37" endBytecode="37" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="401" end="445" startBytecode="0" endBytecode="873" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.FileWriter" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileWriter"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="403" end="403" startBytecode="17" endBytecode="17" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="403" end="403" startBytecode="17" endBytecode="17" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="450" end="511" startBytecode="0" endBytecode="1169" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="454" end="454" startBytecode="34" endBytecode="34" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="454" end="454" startBytecode="34" endBytecode="34" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="450" end="511" startBytecode="0" endBytecode="1169" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.FileWriter" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileWriter"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="452" end="452" startBytecode="15" endBytecode="15" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="452" end="452" startBytecode="15" endBytecode="15" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="readLineViaBuffer" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="564" end="567" startBytecode="0" endBytecode="115" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.InputStreamReader" name="&lt;init&gt;" signature="(Ljava/io/InputStream;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.InputStreamReader"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="564" end="564" startBytecode="11" endBytecode="11" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="564" end="564" startBytecode="11" endBytecode="11" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="readPlayersAndScoresFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="162" end="233" startBytecode="0" endBytecode="1065" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="171" end="171" startBytecode="40" endBytecode="40" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="171" end="171" startBytecode="40" endBytecode="40" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="DM_DEFAULT_ENCODING" priority="1" abbrev="Dm" category="I18N" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="recallQuizzesFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="269" end="329" startBytecode="0" endBytecode="930" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.FileReader" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.FileReader"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="278" end="278" startBytecode="41" endBytecode="41" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="278" end="278" startBytecode="41" endBytecode="41" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM" priority="2" abbrev="OS" category="BAD_PRACTICE" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="401" end="445" startBytecode="0" endBytecode="157" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Reader;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Reader"/>
+    </Type>
+    <SourceLine classname="TestQuizSetUp" start="406" end="406" startBytecode="41" endBytecode="41" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="406" end="406" startBytecode="41" endBytecode="41" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM" priority="2" abbrev="OS" category="BAD_PRACTICE" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="450" end="511" startBytecode="0" endBytecode="221" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Reader;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Reader"/>
+    </Type>
+    <SourceLine classname="TestQuizSetUp" start="455" end="455" startBytecode="38" endBytecode="38" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="455" end="455" startBytecode="38" endBytecode="38" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM_EXCEPTION_PATH" priority="3" abbrev="OS" category="BAD_PRACTICE" first="6">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flush" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="401" end="445" startBytecode="0" endBytecode="157" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Writer;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Writer"/>
+    </Type>
+    <SourceLine classname="TestQuizSetUp" start="404" end="404" startBytecode="21" endBytecode="21" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="404" end="404" startBytecode="21" endBytecode="21" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="OS_OPEN_STREAM_EXCEPTION_PATH" priority="3" abbrev="OS" category="BAD_PRACTICE" first="6">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="flushPlayers" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="450" end="511" startBytecode="0" endBytecode="221" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Type descriptor="Ljava/io/Writer;" role="TYPE_CLOSEIT">
+      <SourceLine classname="java.io.Writer"/>
+    </Type>
+    <SourceLine classname="TestQuizSetUp" start="453" end="453" startBytecode="19" endBytecode="19" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="453" end="453" startBytecode="19" endBytecode="19" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" priority="2" abbrev="RV" category="BAD_PRACTICE" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="readPlayersAndScoresFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="162" end="233" startBytecode="0" endBytecode="1065" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.File" name="createNewFile" signature="()Z" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.File"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="167" end="167" startBytecode="21" endBytecode="21" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="167" end="167" startBytecode="21" endBytecode="21" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" priority="2" abbrev="RV" category="BAD_PRACTICE" first="1">
+    <Class classname="TestQuizSetUp">
+      <SourceLine classname="TestQuizSetUp" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Class>
+    <Method classname="TestQuizSetUp" name="recallQuizzesFromFile" signature="()V" isStatic="false">
+      <SourceLine classname="TestQuizSetUp" start="269" end="329" startBytecode="0" endBytecode="930" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    </Method>
+    <Method classname="java.io.File" name="createNewFile" signature="()Z" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.File"/>
+    </Method>
+    <SourceLine classname="TestQuizSetUp" start="274" end="274" startBytecode="22" endBytecode="22" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+    <SourceLine classname="TestQuizSetUp" start="274" end="274" startBytecode="22" endBytecode="22" sourcefile="TestQuizSetUp.java" sourcepath="TestQuizSetUp.java"/>
+  </BugInstance>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Mon, 7 Apr 2014 00:27:58 +0100" total_classes="19" referenced_classes="118" total_bugs="40" total_size="1085" num_packages="1" vm_version="24.51-b03" cpu_seconds="2.45" clock_seconds="1.17" peak_mbytes="299.55" alloc_mbytes="455.00" gc_seconds="0.34" priority_3="11" priority_2="13" priority_1="16">
+    <PackageStats package="" total_bugs="40" total_types="19" total_size="1085" priority_3="11" priority_2="13" priority_1="16">
+      <ClassStats class="ClientConnect" sourceFile="ClientConnect.java" interface="false" size="24" bugs="0"/>
+      <ClassStats class="ClientConnection" sourceFile="ClientConnection.java" interface="false" size="19" bugs="1" priority_1="1"/>
+      <ClassStats class="EchoServer" sourceFile="EchoServer.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="GameSetupTest" sourceFile="GameSetupTest.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="PlayGame" sourceFile="PlayGame.java" interface="false" size="264" bugs="5" priority_3="3" priority_2="1" priority_1="1"/>
+      <ClassStats class="Player" sourceFile="Player.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="PlayerClient" sourceFile="PlayerClient.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="PlayerScores" sourceFile="PlayerScores.java" interface="false" size="21" bugs="1" priority_3="1"/>
+      <ClassStats class="Question" sourceFile="Question.java" interface="false" size="23" bugs="1" priority_2="1"/>
+      <ClassStats class="Quiz" sourceFile="Quiz.java" interface="true" size="12" bugs="0"/>
+      <ClassStats class="QuizImpl" sourceFile="QuizImpl.java" interface="false" size="52" bugs="1" priority_3="1"/>
+      <ClassStats class="ServerLauncher" sourceFile="ServerLauncher.java" interface="false" size="23" bugs="0"/>
+      <ClassStats class="ServerManager" sourceFile="ServerManager.java" interface="true" size="13" bugs="0"/>
+      <ClassStats class="ServerManagerImpl" sourceFile="ServerManagerImpl.java" interface="false" size="269" bugs="16" priority_3="4" priority_2="6" priority_1="6"/>
+      <ClassStats class="ServerManagerImpl$1" sourceFile="ServerManagerImpl.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="SetUPMenu" sourceFile="SetUPMenu.java" interface="false" size="74" bugs="2" priority_2="1" priority_1="1"/>
+      <ClassStats class="SetUpClient" sourceFile="SetUpClient.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="TestQuizSetUp" sourceFile="TestQuizSetUp.java" interface="false" size="206" bugs="13" priority_3="2" priority_2="4" priority_1="7"/>
+      <ClassStats class="TestService" sourceFile="TestService.java" interface="true" size="5" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.RepeatedConditionals" totalMilliseconds="325" invocations="19" avgMicrosecondsPerInvocation="17119" maxMicrosecondsPerInvocation="323316" standardDeviationMircosecondsPerInvocation="72171"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="104" invocations="623" avgMicrosecondsPerInvocation="168" maxMicrosecondsPerInvocation="10918" standardDeviationMircosecondsPerInvocation="621"/>
+      <ClassProfile name="de.tobject.findbugs.builder.FindBugs2Eclipse" totalMilliseconds="66" invocations="2" avgMicrosecondsPerInvocation="33118" maxMicrosecondsPerInvocation="39568" standardDeviationMircosecondsPerInvocation="6450"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="40" invocations="118" avgMicrosecondsPerInvocation="341" maxMicrosecondsPerInvocation="12335" standardDeviationMircosecondsPerInvocation="1178"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="37" invocations="133" avgMicrosecondsPerInvocation="283" maxMicrosecondsPerInvocation="4075" standardDeviationMircosecondsPerInvocation="559"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.StreamResourceTracker" totalMilliseconds="36" invocations="183" avgMicrosecondsPerInvocation="201" maxMicrosecondsPerInvocation="4149" standardDeviationMircosecondsPerInvocation="356"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="35" invocations="124" avgMicrosecondsPerInvocation="287" maxMicrosecondsPerInvocation="2885" standardDeviationMircosecondsPerInvocation="503"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="33" invocations="114" avgMicrosecondsPerInvocation="289" maxMicrosecondsPerInvocation="3723" standardDeviationMircosecondsPerInvocation="538"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="29" invocations="626" avgMicrosecondsPerInvocation="47" maxMicrosecondsPerInvocation="726" standardDeviationMircosecondsPerInvocation="45"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="28" invocations="89" avgMicrosecondsPerInvocation="322" maxMicrosecondsPerInvocation="7629" standardDeviationMircosecondsPerInvocation="862"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="26" invocations="309" avgMicrosecondsPerInvocation="87" maxMicrosecondsPerInvocation="1660" standardDeviationMircosecondsPerInvocation="133"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="26" invocations="114" avgMicrosecondsPerInvocation="231" maxMicrosecondsPerInvocation="2217" standardDeviationMircosecondsPerInvocation="446"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="23" invocations="114" avgMicrosecondsPerInvocation="209" maxMicrosecondsPerInvocation="1960" standardDeviationMircosecondsPerInvocation="328"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="17" invocations="114" avgMicrosecondsPerInvocation="152" maxMicrosecondsPerInvocation="5068" standardDeviationMircosecondsPerInvocation="476"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindOpenStream" totalMilliseconds="15" invocations="19" avgMicrosecondsPerInvocation="807" maxMicrosecondsPerInvocation="5016" standardDeviationMircosecondsPerInvocation="1601"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.URLProblems" totalMilliseconds="14" invocations="19" avgMicrosecondsPerInvocation="773" maxMicrosecondsPerInvocation="8238" standardDeviationMircosecondsPerInvocation="1949"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="11" invocations="151" avgMicrosecondsPerInvocation="78" maxMicrosecondsPerInvocation="4437" standardDeviationMircosecondsPerInvocation="361"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History>
+    <AppVersion sequence="0" timestamp="1396872969601" release="" codeSize="0" numClasses="0"/>
+    <AppVersion sequence="1" timestamp="1396872969602" release="" codeSize="1085" numClasses="19"/>
+    <AppVersion sequence="2" timestamp="1396873045053" release="" codeSize="1085" numClasses="19"/>
+    <AppVersion sequence="3" timestamp="1396873108874" release="" codeSize="2170" numClasses="38"/>
+    <AppVersion sequence="4" timestamp="1396873269486" release="" codeSize="1085" numClasses="19"/>
+    <AppVersion sequence="5" timestamp="1396873382863" release="" codeSize="1085" numClasses="19"/>
+    <AppVersion sequence="6" timestamp="1396873487389" release="" codeSize="1085" numClasses="19"/>
+    <AppVersion sequence="7" timestamp="1396873775428" release="" codeSize="1085" numClasses="19"/>
+  </History>
+</BugCollection>

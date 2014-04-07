@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -34,17 +32,15 @@ public class SetUPMenu implements java.io.Serializable
 		boolean complete = false;
 		while(!complete)
 		{
-			
-			System.out.println("\n************* Welcome to Mike's Quiz Setup *************");
+			System.out.println();
+			System.out.println("************* Welcome to Mike's Quiz Setup *************");
 			System.out.println();
 			System.out.println("What would you like to do? ");
 			System.out.println("1: Make a new Quiz?");
 			System.out.println("2: Show all available Quizzes");
-			System.out.println("0: Exit");
-		
-			String opt = readLineViaBuffer("Please enter the required option: ");
-			//must deal with non int returned here
-			int option = Integer.parseInt(opt);	
+			System.out.println("0: Exit");		
+			
+			int option = stringToIntCheck("Please enter the required option: ");
 			
 			switch(option) 
 			{
@@ -76,9 +72,10 @@ public class SetUPMenu implements java.io.Serializable
 			System.out.println();
 			System.out.println("************* Quiz Setup *************");
 			System.out.println();
-			String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	    
-			String qAmount = readLineViaBuffer("Please Enter quantity of Questions: ");
-			int quantOfQuestions = Integer.parseInt(qAmount);	
+			String qName = readLineViaBuffer("Please Enter a Name for your Quiz: ");	
+			
+			int quantOfQuestions = stringToIntCheck("Please Enter quantity of Questions: ");
+
 			//create new quiz and return its ID
 			int returnedID = serverConnect.addNewQuiz(qName, quantOfQuestions);
 			Quiz tempQuiz = serverConnect.getQuizFromID(returnedID);
@@ -89,7 +86,7 @@ public class SetUPMenu implements java.io.Serializable
 	}
 	
 	/**
-	 * Creates n number of questions in designated quiz
+	 * Creates a number of questions in designated quiz
 	 * @param num
 	 * @param tempQuiz
 	 * @throws IOException
@@ -103,13 +100,24 @@ public class SetUPMenu implements java.io.Serializable
 			String ansOne = readLineViaBuffer("Please Enter 1st Answer: ");
 			String ansTwo = readLineViaBuffer("Please Enter 2nd Answer: ");
 			String ansThree = readLineViaBuffer("Please Enter 3rd Answer: ");
-			String correctAns = readLineViaBuffer("Please Enter which is the correct Answer: 1,2, or 3: ");
-			int answer = Integer.parseInt(correctAns);
-		    Question questTemp = new Question(quest, ansOne, ansTwo, ansThree, answer);
-		    serverConnect.addQuestionToQuiz(tempQuiz, questTemp);		
+			
+			boolean complete = false;
+			while (!complete)
+			{
+				int answer = stringToIntCheck("Please Enter which is the correct Answer: 1,2, or 3: ");
+				if (answer < 4 && answer > 0)
+				{
+					complete = true; 
+					Question questTemp = new Question(quest, ansOne, ansTwo, ansThree, answer);
+					serverConnect.addQuestionToQuiz(tempQuiz, questTemp);	
+				}
+				else
+				{
+					System.out.println("That is not one of the options, try again");
+				}
+			} 	
 		}		
-	}
-	
+	}	
 	
 	
 	/**
@@ -133,10 +141,36 @@ public class SetUPMenu implements java.io.Serializable
 		{
 			System.out.println("No Quizzes to display at present - you need to load ClientConnect.java to setup a quiz");
 		}	
+	}	
+	
+	
+	/**
+	 * Returns an int from a string - through user input
+	 * this will keep requesting a int to be inserted until one is detected
+	 * @param instruction
+	 * @return option (int)
+	 * @throws IOException
+	 */
+	public int stringToIntCheck(String instruction) throws IOException
+	{		
+		boolean complete = false;
+		int option = 0;
+		while(!complete)
+		{
+			String opt = readLineViaBuffer(instruction);			
+			try{			
+					option = Integer.parseInt(opt);	
+					//System.out.println("You typed: " + option);
+					complete = true;					
+				}
+	     	catch(NumberFormatException e)
+				{
+	     			System.out.println();
+					System.out.println("Wrong format - Please insert a number !!!! try again !!!!");
+				}			
+		}		
+		return option;
 	}
-	
-	
-	
 	
 	
 	/**
@@ -152,7 +186,6 @@ public class SetUPMenu implements java.io.Serializable
 	    String stringRead = br1.readLine();				
 		return stringRead;
 	}
-
 	
-}//class
+}
 
