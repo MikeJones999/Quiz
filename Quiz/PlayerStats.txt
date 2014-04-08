@@ -1,6 +1,0 @@
-4, Players
-0,John
-1,Paul
-2,Mike
-3,Tom
-0,Number of Quizzes
