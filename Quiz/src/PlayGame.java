@@ -128,7 +128,7 @@ private int playerScore;
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view the Scores: ");
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view all the Scores: ");
 							if (serverConnect.returnAllQuizzes().containsKey(quizId))
 							{	
 								allPlayerScoresForQuizID(quizId);
@@ -161,7 +161,7 @@ private int playerScore;
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view the Top Scores: ");
 							if (serverConnect.returnAllQuizzes().containsKey(quizId))
 							{	
 								getTopScoreForQuizId(quizId);
