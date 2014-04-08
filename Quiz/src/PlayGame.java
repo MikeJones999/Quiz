@@ -551,7 +551,7 @@ private int playerScore;
 		else
 		{
 			System.out.println();
-			System.out.println("No Quizzes on server at present - you need to load ClientConnect.java");
+			System.out.println("No Quizzes on server at present - you need to load SetUpClient.java");
 			return false;
 		}	
 	}
