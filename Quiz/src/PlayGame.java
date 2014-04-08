@@ -102,8 +102,16 @@ private int playerScore;
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");							
-							playerScoreForQuizID(quizId, player.getId());
+							
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");		
+							if (serverConnect.returnAllQuizzes().containsKey(quizId))
+							{	
+								playerScoreForQuizID(quizId, player.getId());
+							}
+							else
+							{
+									quizNotPresent();
+							}
 						}									
 						break;
 						
@@ -121,7 +129,14 @@ private int playerScore;
 						{
 							displayAllQuizzes();
 							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");
-							allPlayerScoresForQuizID(quizId);
+							if (serverConnect.returnAllQuizzes().containsKey(quizId))
+							{	
+								allPlayerScoresForQuizID(quizId);
+							}
+							else
+							{
+									quizNotPresent();
+							}						
 						}				
 						break;		
 						
@@ -147,7 +162,14 @@ private int playerScore;
 						{
 							displayAllQuizzes();
 							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");
-							getTopScoreForQuizId(quizId);
+							if (serverConnect.returnAllQuizzes().containsKey(quizId))
+							{	
+								getTopScoreForQuizId(quizId);
+							}
+							else
+							{
+									quizNotPresent();
+							}		
 						}							
 						break;
 				
@@ -222,57 +244,63 @@ private int playerScore;
 		
 		
 		int option = stringToIntCheck("Please enter the ID of the Quiz in which you wish to play: ");
-		
-		Quiz temp = serverConnect.getQuizFromID(option);
-		System.out.println();
-		//confirms the quiz chosen
-		System.out.println("Welcome to " + temp.getQuizName());
-		List <Question> quests = temp.getQuestions();
-		int questSize = quests.size();
-		//create n amount of questions as indicated
-		for (int i = 0; i < questSize; i++)
-		{
-			Question tempQuest = quests.get(i);
-			System.out.println("Question: " + (i +1));
-			System.out.println(tempQuest.getQuestion());
-			String[] tempQuestArray = tempQuest.getAnswers();
-			System.out.println((0 + 1) + ":"  + tempQuestArray[0]);
-			System.out.println((1 + 1) + ":"  + tempQuestArray[1]);
-			System.out.println((2 + 1) + ":"  + tempQuestArray[2]);
-			int correctAnswer = tempQuest.getCorrectAnswer();
-			
-			int answer = stringToIntCheck("Please enter the number for the correct Answer: ");
+		if (serverConnect.returnAllQuizzes().containsKey(option))
+				{					
+					Quiz temp = serverConnect.getQuizFromID(option);					
 					
-			if (answer == correctAnswer)
-			{		
-				System.out.println();
-				System.out.println("That answer is Correct");
-				System.out.println();
-				playerScore = playerScore + 1;
-			}
-			else if (answer != correctAnswer && answer < 4) 
-			{
-				System.out.println();
-				System.out.println("That answer is wrong");
-				System.out.println();
-			}
-			else
-				{
-					System.out.println("That Answer is not an option - Going to class that as a wrong Answer!");
+					System.out.println();
+					//confirms the quiz chosen
+					System.out.println("Welcome to " + temp.getQuizName());
+					List <Question> quests = temp.getQuestions();
+					int questSize = quests.size();
+					//create n amount of questions as indicated
+					for (int i = 0; i < questSize; i++)
+					{
+						Question tempQuest = quests.get(i);
+						System.out.println("Question: " + (i +1));
+						System.out.println(tempQuest.getQuestion());
+						String[] tempQuestArray = tempQuest.getAnswers();
+						System.out.println((0 + 1) + ":"  + tempQuestArray[0]);
+						System.out.println((1 + 1) + ":"  + tempQuestArray[1]);
+						System.out.println((2 + 1) + ":"  + tempQuestArray[2]);
+						int correctAnswer = tempQuest.getCorrectAnswer();
+						
+						int answer = stringToIntCheck("Please enter the number for the correct Answer: ");
+								
+						if (answer == correctAnswer)
+						{		
+							System.out.println();
+							System.out.println("That answer is Correct");
+							System.out.println();
+							playerScore = playerScore + 1;
+						}
+						else if (answer != correctAnswer && answer < 4) 
+						{
+							System.out.println();
+							System.out.println("That answer is wrong");
+							System.out.println();
+						}
+						else
+							{
+								System.out.println("That Answer is not an option - Going to class that as a wrong Answer!");
+							}
+					}		
+					PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);		
+					//returns a string if top score added
+					String returned = temp.addToPlayerScore(pScore);
+					if (!returned.equals(""))
+					{
+						System.out.println(returned);
+					}				
+					//to show the score has been saved and returned from server
+					//must add return function
+					System.out.println("End of Quiz. Your Score was " + playerScore);
+					//reset score for next go or set of questions.
+					playerScore = 0;
 				}
-		}		
-		PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);		
-		//returns a string if top score added
-		String returned = temp.addToPlayerScore(pScore);
-		if (!returned.equals(""))
-		{
-			System.out.println(returned);
-		}				
-		//to show the score has been saved and returned from server
-		//must add return function
-		System.out.println("End of Quiz. Your Score was " + playerScore);
-		//reset score for next go or set of questions.
-		playerScore = 0;
+				else {
+						quizNotPresent();
+					 }
 	}
 	
 	
@@ -583,6 +611,16 @@ private int playerScore;
 	public void underline()
 	{
 		System.out.println("---------------------------------------------------");
+	}
+	
+	/**
+	 * Prints on screen that option of quiz is not available
+	 */
+	public void quizNotPresent()
+	{
+		System.out.println();
+		System.out.println("Quiz Does Not exist - Going back to the main Menu!!!");
+		System.out.println();
 	}
 	
 }
