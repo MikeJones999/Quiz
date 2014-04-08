@@ -5,7 +5,14 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * PlayGame is the class which acts as the main menu for playing the quizzes available on the server.
+ * You can also view all quizzes on the server, the client scores and the Top scores, for either a particular quiz or all quizzes.
+ * All score and data are collected locally where possible and then sent back to the server on completion.
+ * 
+ * @author mikieJ
+ *
+ */
 
 public class PlayGame implements java.io.Serializable
 {
@@ -77,7 +84,7 @@ private int playerScore;
 						System.exit(0);
 						break;
 						
-				case 1: System.out.println("*** DEBUG **** Play a quiz");
+				case 1: //System.out.println("*** DEBUG **** Play a quiz");
 				
 						if (quizListEmpty())
 						{
@@ -85,24 +92,22 @@ private int playerScore;
 						}
 						break;
 						
-				case 2: System.out.println("*** DEBUG **** Get All Available Quizzes");
+				case 2: //System.out.println("*** DEBUG **** Get All Available Quizzes");
 						displayAllQuizzes();
 						break;
 					
 						
-				case 3: System.out.println("*** DEBUG **** Show all your scores");
+				case 3: //System.out.println("*** DEBUG **** Show all your scores");
 						
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view your Scores: ");
-							//must deal with non int returned here
-							quizId = Integer.parseInt(quizInt);	
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");							
 							playerScoreForQuizID(quizId, player.getId());
 						}									
 						break;
 						
-				case 4: System.out.println("*** DEBUG **** Show all your scores for All Quizzes");
+				case 4: //System.out.println("*** DEBUG **** Show all your scores for All Quizzes");
 						if (quizListEmpty())
 						{
 							allPlayerScoreForQuizID(player.getId());
@@ -110,19 +115,17 @@ private int playerScore;
 						break;							
 						
 						
-				case 5: System.out.println("*** DEBUG **** Show all your scores for quiz ID");
+				case 5: //System.out.println("*** DEBUG **** Show all your scores for quiz ID");
 						
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view all the Scores: ");
-							//must deal with non int returned here
-							quizId = Integer.parseInt(quizInt);	
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");
 							allPlayerScoresForQuizID(quizId);
 						}				
 						break;		
 						
-				case 6: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
+				case 6: //System.out.println("*** DEBUG **** Show all scores for All Quizzes");
 						if (quizListEmpty())
 						{
 							allScoresForAllQuizzes();
@@ -131,7 +134,7 @@ private int playerScore;
 						
 						
 						
-				case 7: System.out.println("*** DEBUG **** Show all Top scores for All Quizzes");
+				case 7: //System.out.println("*** DEBUG **** Show all Top scores for All Quizzes");
 						if (quizListEmpty())
 						{
 							getAllTopScoresForAllQuizzes();
@@ -139,13 +142,11 @@ private int playerScore;
 						break;
 				
 				
-				case 8: System.out.println("*** DEBUG **** Show all scores for All Quizzes");
+				case 8: //System.out.println("*** DEBUG **** Show all scores for All Quizzes");
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizInt = readLineViaBuffer("Please enter the ID of the Quiz in which you wish to view Top Score: ");
-							//must deal with non int returned here
-							quizId = Integer.parseInt(quizInt);	
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");
 							getTopScoreForQuizId(quizId);
 						}							
 						break;
@@ -240,7 +241,7 @@ private int playerScore;
 			System.out.println((2 + 1) + ":"  + tempQuestArray[2]);
 			int correctAnswer = tempQuest.getCorrectAnswer();
 			
-			int answer = stringToIntCheck("Please enter the ID of the Quiz in which you wish to play: ");
+			int answer = stringToIntCheck("Please enter the number for the correct Answer: ");
 					
 			if (answer == correctAnswer)
 			{		
@@ -249,12 +250,16 @@ private int playerScore;
 				System.out.println();
 				playerScore = playerScore + 1;
 			}
-			else
+			else if (answer != correctAnswer && answer < 4) 
 			{
 				System.out.println();
 				System.out.println("That answer is wrong");
 				System.out.println();
-			}			
+			}
+			else
+				{
+					System.out.println("That Answer is not an option - Going to class that as a wrong Answer!");
+				}
 		}		
 		PlayerScores pScore = new PlayerScores(option, player.getId(), player.getName(), playerScore);		
 		//returns a string if top score added
@@ -265,7 +270,7 @@ private int playerScore;
 		}				
 		//to show the score has been saved and returned from server
 		//must add return function
-		System.out.println("End of Quiz. Your Score was " + playerScore);//temp.getPlayersScore(player.getId()));
+		System.out.println("End of Quiz. Your Score was " + playerScore);
 		//reset score for next go or set of questions.
 		playerScore = 0;
 	}
@@ -562,7 +567,7 @@ private int playerScore;
 	}
 	
 	/**
-	 * Prints a PlayerScores details
+	 * Prints a PlayerScores details - ID, Name and Score
 	 * @param p
 	 * @throws RemoteException
 	 */

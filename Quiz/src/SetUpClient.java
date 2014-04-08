@@ -40,7 +40,7 @@ public class SetUpClient extends ClientConnection  implements java.io.Serializab
 		ServerManager serverConnect = initialConnect();	
 	
 		//get Setup menu from server
-		SetUPMenu newSetup = new SetUPMenu(serverConnect);
+		SetUpMenu newSetup = new SetUpMenu(serverConnect);
 		newSetup.welcomeMenu();
 	}
 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SetUPMenu implements java.io.Serializable
+public class SetUpMenu implements java.io.Serializable
 {
 	
 	private ServerManager serverConnect;
@@ -17,7 +17,7 @@ public class SetUPMenu implements java.io.Serializable
 	
 	
 	//constructor - pass the serverConnect file retrieved from Server
-	public SetUPMenu(ServerManager servMan)
+	public SetUpMenu(ServerManager servMan)
 	{
 		this.serverConnect = servMan;
 	}
