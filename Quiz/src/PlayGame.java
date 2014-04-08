@@ -123,12 +123,12 @@ private int playerScore;
 						break;							
 						
 						
-				case 5: //System.out.println("*** DEBUG **** Show all your scores for quiz ID");
+				case 5: //System.out.println("*** DEBUG **** Show all the scores for quiz ID");
 						
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
-							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view your Scores: ");
+							quizId = stringToIntCheck("Please enter the ID of the Quiz in which you wish to view the Scores: ");
 							if (serverConnect.returnAllQuizzes().containsKey(quizId))
 							{	
 								allPlayerScoresForQuizID(quizId);
@@ -157,7 +157,7 @@ private int playerScore;
 						break;
 				
 				
-				case 8: //System.out.println("*** DEBUG **** Show all scores for All Quizzes");
+				case 8: //System.out.println("*** DEBUG **** Show Top Scores for particular Quiz");
 						if (quizListEmpty())
 						{
 							displayAllQuizzes();
