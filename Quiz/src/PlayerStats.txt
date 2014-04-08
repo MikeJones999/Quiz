@@ -1,8 +1,0 @@
-0, Players
-6,Number of Quizzes
-QuizID,0,Quiz Attempts,0, Quiz Name: mikes quiz
-QuizID,1,Quiz Attempts,0, Quiz Name: leahs quiz
-QuizID,2,Quiz Attempts,0, Quiz Name: Stevos Quiz
-QuizID,3,Quiz Attempts,0, Quiz Name: Banks quiz
-QuizID,4,Quiz Attempts,0, Quiz Name: Billy Joel Quiz
-QuizID,5,Quiz Attempts,0, Quiz Name: Evans Quiz
