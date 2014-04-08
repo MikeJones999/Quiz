@@ -22,6 +22,4 @@ java -Djava.security.policy=client.policy PlayerClient
 
 Choose from the menu for the appropriate option. 
 
-***NOTE*** several quizzes and players (and their scores) have been left in place for demonstartion purposes. 
 
-To wipe these, simply STOP the server if running, then delete the contents from both Quiz.txt and PlayerStats.txt - Do not delete the files themselves :)
