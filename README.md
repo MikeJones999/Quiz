@@ -21,3 +21,7 @@ Once you have made a quiz or quizzes, run PlayerClient to play the games
 java -Djava.security.policy=client.policy PlayerClient
 
 Choose from the menu for the appropriate option. 
+
+***NOTE*** several quizzes and players and their scores have been left in place for demonstartion purposes. 
+
+To wipe these simply, STOP server if running, then delete contents from both Quiz.txt and PlayerStats.txt - Do not delete the files themselves :)
