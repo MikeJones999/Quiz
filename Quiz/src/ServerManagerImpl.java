@@ -33,6 +33,8 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 		super();
 		
 		//shutdown hook - to flush all data upon completion
+		//ShutDown hook - obtained and Modified from following tutorial site...
+		//http://hellotojavaworld.blogspot.co.uk/2010/11/runtimeaddshutdownhook.html
 		  Runtime.getRuntime().addShutdownHook(new Thread() 
 	        {
 	        	
@@ -107,7 +109,6 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	
 
 	@Override
-	//consider synch here
 	public int createQuizId(Quiz quizTemp) throws RemoteException 
 	{
 		if (quizTemp == null) 
@@ -170,14 +171,13 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	//Synched to ensure the PlayerID is thread Safe
 	public synchronized int addNewPlayer(String name) throws RemoteException 
 	{
-		//need to add throws exception for null string
 		if(name == null)
 		{
 			throw new NullPointerException("Name Parameters is Null");
 		} 
 		else
 		{
-			//create ID - may need to synchronise this
+			//create ID 
 			int Id = playerId;
 			Player newPlayer = new Player(Id, name);
 			playerId = playerId + 1;
@@ -243,7 +243,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 	 * @throws IOException
 	 * @throws RemoteException
 	 */
-	//need to remove this from user sight
+	//removed from user sight
 	public void flush() throws IOException, RemoteException
 	{
 		if (checkFileExists("Quiz.txt"))
@@ -604,8 +604,7 @@ public class ServerManagerImpl extends UnicastRemoteObject implements ServerMana
 
 	@Override
 	public void run() 
-	{		// TODO Auto-generated method stub
-		
+	{				
 	};
 
 }
